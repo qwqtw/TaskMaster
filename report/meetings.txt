@@ -1,6 +1,6 @@
 7/9
-This was the first team meeting. We discussed the project, and decided to split the initial workflow tasks. Evan will work on the ER diagram. Quintian will work on all wireframes needed. Tamara will work on the to-do wireframe.
-We shared a few existing layouts to get some ideas for the layout, decided on our pages and decided the initial database structure. We discussed additional features, Quintian brought up task priority. Evan and Tamara discussed task order (drag and drop). Tamara brought up the possibility of implementing a calendar or a special list - github todos as additional features.
+This was the first team meeting. We discussed the project, and decided to split the initial workflow tasks. Evan will work on the ER diagram. Qiutian will work on all wireframes needed. Tamara will work on the to-do wireframe.
+We shared a few existing layouts to get some ideas for the layout, decided on our pages and decided the initial database structure. We discussed additional features, Qiutian brought up task priority. Evan and Tamara discussed task order (drag and drop). Tamara brought up the possibility of implementing a calendar or a special list - github todos as additional features.
 
 Next meeting: 7/10 after class.
 What to do: wireframes of the pages, ER diagram, think of a project name.
