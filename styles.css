@@ -1,11 +1,19 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Exo', sans-serif;
     padding: 20px;
 }
 
 .container {
     max-width: 800px;
-    margin: auto;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+#title {
+    text-align: left;
+    margin-left: 20%;
+    margin-top: 10%;
+    margin-bottom: -5%;
 }
 
 header {
@@ -44,7 +52,8 @@ main .main-content {
 
 main .text-content {
     flex: 1;
-    margin-right: 20px;
+    margin-right: 10%;
+    margin-left: -20%;
 }
 
 main h1 {
@@ -69,10 +78,16 @@ main ul {
     flex-shrink: 0;
     text-align: right;
     align-self: flex-end;
+    margin-right: -10%;
 }
 
 .contact-info .email, .contact-info .social-media {
     margin-bottom: 20px;
+}
+
+.contact-info .material-icons {
+    vertical-align: middle;
+    margin-right: 8px;
 }
 
 footer {
