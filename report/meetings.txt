@@ -4,3 +4,10 @@ We shared a few existing layouts to get some ideas for the layout, decided on ou
 
 Next meeting: 7/10 after class.
 What to do: wireframes of the pages, ER diagram, think of a project name.
+
+
+7/10
+Picked the wireframes, decided who would do which html. Evan will do the to-do, Qiutian will do the contact us and Tamara will do the login/sign up. The mockups are being worked on to decide font/colors/images. The project name was decided. TaskMaster. Updated the ER diagram with the added list order option.
+
+Next meeting: 7/11 short meeting to decide on font/colors/images
+What to do: mockups, logo.
