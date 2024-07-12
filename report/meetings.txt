@@ -11,3 +11,10 @@ Picked the wireframes, decided who would do which html. Evan will do the to-do, 
 
 Next meeting: 7/11 short meeting to decide on font/colors/images
 What to do: mockups, logo.
+
+
+7/11
+We got the mockups done for the initial workflow which also includes the newly designed logo by Tamara. We will try to do a scrum daily, while coding the html, css, js part of the website.
+
+Next meeting: next day, scrum
+What to do: html, css, js of our assigned page.

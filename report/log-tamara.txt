@@ -1,0 +1,8 @@
+7/9
+Wireframe done for the login/sign up and to-do list.
+
+7/10
+Mockup done for the login/sign up. Designed the logo since we decided on the name TaskMaster.
+
+7/11
+Helped with the to-do list mockup. Built the html, css for the login page.
