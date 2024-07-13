@@ -63,9 +63,19 @@ input[type=password] {
     font-size: 1.25rem;
 }
 
+/* Logo image */
+#logo img:nth-of-type(1) {
+    width: 20%;
+}
+/* Logo text */
+#logo img:nth-of-type(2) {
+    width: 78%;
+}
+
 #error-msg {
     border-radius: 5px;
     padding: 10px 0;
+    font-size: 0.9rem;
     min-height: 35px;
     visibility: hidden;
 }
@@ -91,7 +101,11 @@ form button {
 
 
 
-
 @media (min-width: 768px) {
 
+    /* Logo image and logo text */
+    #login-container #logo img:nth-of-type(1),
+    #login-container #logo img:nth-of-type(2) {
+        width: unset;
+    }
 }
