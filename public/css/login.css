@@ -37,13 +37,15 @@ a[role=button]:active {
 button,
 input[type=text],
 input[type=password],
+input[type=email],
 a[role=button] {
     border-radius: 60px;
     height: 48px;
 }
 
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=email] {
     border: 1px solid darkgray;
     text-align: center;
 }

@@ -12,11 +12,11 @@ class PagesController extends Controller
         echo $this->template->render("index.html");
     }
 
-    public function signUp($f3)
+    public function register($f3)
     {
-        $this->setPageTitle("Sign up");
-        $f3->set("form", "includes/sign-up.html");
-        $f3->set("container", "sign-up-container");
+        $this->setPageTitle("Register");
+        $f3->set("form", "includes/register.html");
+        $f3->set("container", "register-container");
 
         echo $this->template->render("index.html");
     }

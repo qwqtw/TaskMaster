@@ -16,7 +16,7 @@ $f3->set("DEBUG", 3);
 
 // Routes
 $f3->route("GET @home: /", "PagesController->login");
-$f3->route("GET @signUp: /sign-up", "PagesController->signUp");
+$f3->route("GET @register: /register", "PagesController->register");
 
 $f3->route("GET @contactUs: /contact-us", "PagesController->contactUs");
 
