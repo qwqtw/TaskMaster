@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>TaskMaster</title>
+</head>
+<body>
+
+    <!--  Main content for the page  -->
+    <div id="container">
+
+        <!--  list section -->
+        <div id="lists">
+
+
+            <!--  list creation input field  -->
+            <div class="list-wrapper">
+                <fieldset>
+                    <legend>Create list</legend>
+                    <div class="input-wrapper">
+                    <input type="text" id="list-name">
+                    <img src="/icon/add.png" alt="add icon" class="icon">
+                    </div>
+                </fieldset>
+            </div>
+
+
+            <!--  list items   -->
+            <div class="list-item">
+                <p>To-Do</p>
+
+                <div>
+                    <img src="/icon/move.png" alt="move icon" class="icon">
+                    <img src="/icon/trash-can.png" alt="trash icon" class="icon">
+                </div>
+            </div>
+        </div>
+        <!--  End of list section  -->
+
+        <!--  main content of the to-do manager -- all tasks are listed here  -->
+        <div id="content">
+
+
+            <!--  title of the currently selected list  -->
+            <div id="title">
+                <h2>To-Do</h2>
+            </div>
+
+            <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
+            <div class="tab-wrapper">
+                <div class="label-wrapper">
+                    <label>
+                        <input type="checkbox" active> All
+                    </label>
+                    <label>
+                        <input type="checkbox"> Active
+                    </label>
+                    <label>
+                        <input type="checkbox"> Completed
+                    </label>
+                </div>
+            
+
+                <!--  priority tab which uses a slider graphic  -->
+                <div id="priority">
+                    <p>By Priority</p>
+                    <div class="slider-container">
+                        <div class="slider" id="slider">
+                            <div class="bar"></div>
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!--  task items  -->
+            <div class="task-item">
+                <div>
+                    <img src="/icon/check-mark.png" alt="checkmark icon" class="icon">
+                    <p>Write my to-do list</p>
+                </div>
+                <div>
+                    <img src="/icon/edit.png" alt="edit icon" class="icon">
+                    <img src="/icon/trash-can.png" alt="trash icon" class="icon">
+                </div>
+            </div>
+        </div>
+        <!--  End of content section  -->
+
+    </div>
+    <!--  End of container  -->
+    
+</body>
+</html>
