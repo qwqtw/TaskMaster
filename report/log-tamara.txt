@@ -6,3 +6,6 @@ Mockup done for the login/sign up. Designed the logo since we decided on the nam
 
 7/11
 Helped with the to-do list mockup. Built the html, css for the login page.
+
+7/12
+Updated the login page, add the sign up page and rework the contact us button and the logo layout on mobile.
