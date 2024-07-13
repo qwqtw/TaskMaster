@@ -18,3 +18,10 @@ We got the mockups done for the initial workflow which also includes the newly d
 
 Next meeting: next day, scrum
 What to do: html, css, js of our assigned page.
+
+
+7/12
+Daily scrum. Tamara completed the login page and will look to implement the FatFree Framework after completing the sign up page. Evan is looking more into the framework as well.
+
+Next meeting: 7/14, scrum
+What to do: html, css, js of our assigned page. Look to implement the FatFree Framework.
