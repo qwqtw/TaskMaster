@@ -99,10 +99,17 @@ main ul {
     margin-bottom: 20px;
 }
 
-.contact-info .material-icons {
-    vertical-align: middle;
-    margin-right: 8px;
+.mdi {
+    color: black;
+    font-size: 24px;  
+    transition: color 0.3s ease;
 }
+
+
+a:hover .mdi {
+    color: #0197BC; 
+}
+
 
 footer {
     position: relative;  
