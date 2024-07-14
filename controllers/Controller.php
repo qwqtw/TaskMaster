@@ -1,21 +1,36 @@
 <?php
 // Parent controller class
 
-class Controller {
-
+class Controller
+{
     protected $f3;
     protected $template;
+
 
     function __construct($f3) 
     {
         $this->f3 = $f3;
         
         $f3->set("pageTitle", "TaskMaster");
-
-        $f3->set("errors", "");
+        $f3->set("errors", []);
 
         // Setup template
         $this->template = new Template;
+    }
+
+    /**
+     * Get value from the $f3 array
+     */
+    public function get($key)
+    {
+        return $this->f3->get($key);
+    }
+    /**
+     * Set value in the $f3 array
+     */
+    public function set($key, $value)
+    {
+        $this->f3->set($key, $value);
     }
 
     /**
@@ -28,15 +43,18 @@ class Controller {
     }
     */
 
+    /**
+     * Take the default and format it with the new title = "title | default title"
+     */
     public function setPageTitle($title)
     {
-        $currentTitle = $this->f3->get("pageTitle");
+        $currentTitle = $this->get("pageTitle");
         $newTitle = $title;
 
         if ($currentTitle != "") {
             $newTitle .= " | " . $currentTitle;
         }
 
-        $this->f3->set("pageTitle", $newTitle);
+        $this->set("pageTitle", $newTitle);
     }
 }
