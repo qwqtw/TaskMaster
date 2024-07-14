@@ -7,10 +7,10 @@
 <h2>Sign up</h2>
 
 <!-- Error messages -->
-<div id="error-msg" class="alert alert-warning my-2 p-1"></div>
+<div id="error-msg" class="alert alert-warning my-2 py-auto">{{ "<br>", @errors | implode }}</div>
 
 <!-- Form: Sign up -->
-<form id="sign-up" method="POST" action="">
+<form id="register" method="POST" action="">
 
     <!-- Input: Username -->
     <div class="form-group mb-3">
@@ -21,6 +21,7 @@
             name="username" 
             class="form-control" 
             placeholder="Enter a username" 
+            value="{{ isset(@username) ? @username : '' }}" 
             required>
     </div>
     
@@ -28,11 +29,12 @@
     <div class="form-group mb-3">
         <label for="email" class="form-label m-0">Email</label>
         <input 
-            type="text" 
+            type="email" 
             id="email" 
             name="email" 
             class="form-control" 
             placeholder="Enter your email" 
+            value="{{ isset(@email) ? @email : '' }}" 
             required>
     </div>
 

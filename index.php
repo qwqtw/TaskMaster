@@ -15,12 +15,17 @@ $f3->set("UI", "views/");
 $f3->set("DEBUG", 3);
 
 // Routes
-$f3->route("GET @home: /", "PagesController->login");
-$f3->route("GET @signUp: /sign-up", "PagesController->signUp");
+// index.html
+$f3->route("GET @home: /", "LoginController->render");
+$f3->route("POST @home: /", "LoginController->login");
+$f3->route("GET @register: /register", "RegisterController->render");
+$f3->route("POST @register: /register", "RegisterController->register");
 
+// contact-us.html
 $f3->route("GET @contactUs: /contact-us", "PagesController->contactUs");
 
-
+// main.html
+$f3->route("GET @main: /app", "PagesController->app");
 
 
 // Start

@@ -7,20 +7,21 @@
 <h3 class="mb-1">Where focus goes, energy flows.</h3>
 
 <!-- Error messages -->
-<div id="error-msg" class="alert alert-warning my-2 p-1"></div>
+<div id="error-msg" class="alert alert-warning my-2 py-auto">{{ "<br>", @errors | implode }}</div>
 
 <!-- Form: Login -->
 <form id="login" method="POST" action="">
 
-    <!-- Input: Username or Email -->
+    <!-- Input: Username -->
     <div class="form-group mb-3">
-        <label for="username-or-email" class="form-label m-0">Username or Email</label>
+        <label for="username" class="form-label m-0">Username</label>
         <input 
             type="text" 
-            id="username-or-email" 
-            name="username-or-email" 
+            id="username" 
+            name="username" 
             class="form-control" 
-            placeholder="Enter your username or email" 
+            placeholder="Enter your username" 
+            value="{{ isset(@username) ? @username : '' }}" 
             required>
     </div>
 
@@ -39,4 +40,4 @@
 </form>    
 
 <!-- Sign up -->
-<p>Don't have an account? <a href="{{ @BASE }}{{ 'signUp' | alias }}" class="text-decoration-none">Sign up.</a></p>
+<p>Don't have an account? <a href="{{ @BASE }}{{ 'register' | alias }}" class="text-decoration-none">Register.</a></p>
