@@ -9,13 +9,22 @@ body {
     margin-bottom: 10%;
 }
 
-#title {
-    text-align: left;
-    margin-left: 20%;
-    margin-top: 10%;
-    margin-bottom: -5%;
+.title, .subtitle {
+    font-weight:600;
 }
 
+.title {
+    color: #394A6D;
+    font-size: 48pt;
+}
+.subtitle {
+    color: #0197BC;
+    font-size: 18pt;
+}
+
+.description {
+    color: #6B6B6B;
+}
 header {
     display: flex;
     justify-content: flex-end;
@@ -54,6 +63,7 @@ main .text-content {
     flex: 1;
     margin-right: 10%;
     margin-left: -20%;
+    line-height: 2;
 }
 
 main h1 {
