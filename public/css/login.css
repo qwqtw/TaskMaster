@@ -1,5 +1,5 @@
 .splash-img {
-    background-image: url("../images/splash1.svg");
+    background-image: url("../images/splash1.webp");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 50%;
@@ -89,10 +89,25 @@ form label {
     font-weight: 500;
     text-transform: lowercase;
 }
-form button {
+form button[type=submit] {
     background-color: #0197BC;
     color: white;
 }
+/* 
+    Don't have an account or
+    have an account paragraph
+*/
+form + p > a,
+form + p > a:link,
+form + p > a:visited {
+    font-weight: 600;
+    color: #0197BC;
+}
+form + p > a:hover,
+form + p > a:active {
+    color: #394A6D;
+}
+
 
 #contact-us-btn {
     width: 200px;
