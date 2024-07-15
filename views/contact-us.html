@@ -18,8 +18,9 @@
                 <img src="images/logo-image.svg" alt="TaskMaster Logo" class="navbar-logo">
                 <img src="images/logo-text.svg" alt="TaskMaster" class="navbar-logo-text">
             </div>
-            <a href="todo.html">TO-DO List</a>
-            <a href="contact-us.html" class="nav-link active">Contact Us</a>
+            <a href="{{ @BASE }}{{ 'home' | alias }}">Login/Sign up</a>
+            <a href="{{ @BASE }}{{ 'main' | alias }}">TO-DO List</a>
+            <a href="{{ @BASE }}{{ 'contactUs' | alias }}" class="nav-link active">Contact Us</a>
             <span>Hi, Username</span>
             <div class="profile-icon">
                 <img src="profile-icon.png" alt="Profile Icon">
