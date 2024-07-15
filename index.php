@@ -6,13 +6,9 @@ require "vendor/autoload.php";
 // Load the framework
 $f3 = Base::instance();
 
-// Automatically load the controller classes and views
-$f3->set("AUTOLOAD", "controllers/");
-$f3->set("UI", "views/");
-
-// Enable debug
-// TODO: Remove for production
-$f3->set("DEBUG", 3);
+$f3->config("config.ini");
+// Database connection information
+$f3->config("access.ini");
 
 // Routes
 // index.html
