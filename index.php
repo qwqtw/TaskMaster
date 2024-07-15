@@ -23,6 +23,8 @@ $f3->route("POST @register: /register", "RegisterController->register");
 
 // contact-us.html
 $f3->route("GET @contactUs: /contact-us", "PagesController->contactUs");
+// contact-us-guest.html
+$f3->route("GET @contactUsGuest: /contact-us-guest", "PagesController->contactUsGuest");
 
 // main.html
 $f3->route("GET @main: /app", "PagesController->app");
