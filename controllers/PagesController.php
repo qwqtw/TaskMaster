@@ -18,5 +18,15 @@ class PagesController extends Controller
     public function app($f3)
     {
         echo $this->template->render("main.html");
+    /**
+     * Log out the user
+     */
+    public function logout()
+    {
+        // Expire cookies
+        $expiration = time() - 1;
+        setcookie("auth", "", $expiration);
+        setcookie("user_id", "", $expiration);
+        $this->f3->reroute("@home");
     }
 }

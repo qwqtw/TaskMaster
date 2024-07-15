@@ -22,9 +22,9 @@ $f3->route("GET @contactUs: /contact-us", "PagesController->contactUs");
 // contact-us-guest.html
 $f3->route("GET @contactUsGuest: /contact-us-guest", "PagesController->contactUsGuest");
 
-// main.html
-$f3->route("GET @main: /app", "PagesController->app");
-
+// app.html
+$f3->route("GET @app: /app", "PagesController->app");
+$f3->route("GET @logout: /logout", "PagesController->logout");
 
 // Start
 $f3->run();
