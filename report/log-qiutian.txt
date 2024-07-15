@@ -1,0 +1,17 @@
+7/9
+Wireframe done for the contact us page.
+
+7/10
+Mockup done for the contact us page.
+
+7/11
+Built the html, css for the contact us page.
+
+7/12
+Built the html, css for the contact us page.
+
+7/13
+Built the html, css for the contact us page.
+
+7/14
+Finalize the html and css for the contact us page.
