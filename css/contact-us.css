@@ -1,0 +1,177 @@
+body {
+    font-family: 'Exo', sans-serif;
+    background-color: #F3F3F3;
+}
+
+
+.container {
+    max-width: 800px;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.title,
+.subtitle {
+    font-weight: 600;
+}
+
+.title {
+    color: #394A6D;
+    font-size: 48pt;
+}
+
+.subtitle {
+    color: #0197BC;
+    font-size: 18pt;
+}
+
+.description {
+    color: #6B6B6B;
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: rgba(217, 217, 217, 0.5); 
+    padding: 50px;
+}
+
+
+header nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-link.active {
+    color: #0197BC; 
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+}
+
+.navbar-logo {
+    height: 50px;
+}
+
+.navbar-logo-text {
+    height: 30px; 
+}
+
+header nav a {
+    text-decoration: none;
+    color: black;
+}
+
+header nav a:hover {
+    color: #0197BC;
+}
+
+
+header nav {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+header nav a {
+    text-decoration: none !important;
+    color: black;
+    transition: color 0.3s ease;  
+}
+
+header nav a:hover {
+    color: #0197BC; 
+}
+
+header nav span {
+    font-weight: bold;
+}
+
+.profile-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+main .main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+}
+
+main .text-content {
+    flex: 1;
+    margin-right: 10%;
+    margin-left: -20%;
+    line-height: 2;
+}
+
+main h1 {
+    margin-bottom: 20px;
+}
+
+main p {
+    margin-bottom: 20px;
+}
+
+main h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+main ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.contact-info {
+    flex-shrink: 0;
+    text-align: right;
+    align-self: flex-end;
+    margin-right: -10%;
+}
+
+.contact-info .email,
+.contact-info .social-media {
+    margin-bottom: 20px;
+}
+
+.mdi {
+    color: black;
+    font-size: 24px;
+    transition: color 0.3s ease;
+}
+
+
+a:hover .mdi {
+    color: #0197BC;
+}
+
+
+footer {
+    position: relative;
+    text-align: center;
+    background-image: url("../images/contact-us-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+    width: 100%;
+    height: 200px;
+    color: #F3F3F3;
+}
+
+footer p {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 10px;
+    left: 0;
+    background-color: #394A6D;
+    padding: 5px;
+}
