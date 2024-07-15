@@ -2,7 +2,14 @@
 
 class RegisterController extends Controller
 {
-    private $post = [];
+    private $model;
+    
+
+    public function __construct($f3)
+    {
+        parent::__construct($f3);
+        $this->model = new User();
+    }
 
     /**
      * GET: Display the register page
@@ -21,24 +28,36 @@ class RegisterController extends Controller
      */
     public function register()
     {
-        $this->post = [
+        // Sanitize form inputs
+        $this->set("POST", [
             "username" => trim($this->get("POST.username")),
             "email" => trim($this->get("POST.email")),
             "password" => trim($this->get("POST.password")),
             "password-confirm" => trim($this->get("POST.password-confirm")),
-        ];
+        ]);
 
         if ($this->isFormValid()) {
-            // Add user to database
-            //$this->post;
+            // Try to add user to database
+            $user = $this->model->getUserByUsername("username");
 
-            $this->f3->reroute("@home");
+            // User doesn't exists
+            if (!$user) {
+                $this->model->createUser();
+                $this->f3->reroute("@home");
+            }
+            // User already exists
+            else {
+                $this->set("email", $this->get("POST.email"));
+                $this->set("errors", ["This username already exists."]);
+            }
         }
+        // Form is invalid
         else {
-            $this->set("username", $this->post["username"]);
-            $this->set("email", $this->post["email"]);
-            $this->render();
+            $this->set("username", $this->get("POST.username"));
+            $this->set("email", $this->get("POST.email"));
         }
+        // Form is invalid or the user already exists
+        $this->render();
     }
 
     /**
@@ -49,21 +68,24 @@ class RegisterController extends Controller
     {
         $errors = [];
 
-        if ($this->post["username"] == ""){
+        if ($this->get("POST.username") == ""){
             array_push($errors, "Username is required.");
         }
-        if ($this->post["email"] == ""){
+        if ($this->get("POST.email") == ""){
             array_push($errors, "Email is required.");
         }
         // Password validation
-        if ($this->post["password"] == ""){
+        $pass = $this->get("POST.password");
+        $passConfirm = $this->get("POST.password-confirm");
+
+        if ($pass == ""){
             array_push($errors, "Password is required.");
         }
-        else if ($this->post["password-confirm"] == "") {
+        else if ($passConfirm == "") {
             array_push($errors, "Please confirm the password.");
         }
         // Compare password/confirm to make sure they match.
-        else if (strcmp($this->post["password-confirm"], $this->post["password"]) != 0) {
+        else if (strcmp($passConfirm, $pass) != 0) {
             array_push($errors, "Password doesn't match.");
         }
 

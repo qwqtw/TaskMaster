@@ -7,7 +7,7 @@ class Controller
     protected $template;
 
 
-    function __construct($f3) 
+    public function __construct($f3) 
     {
         $this->f3 = $f3;
         
