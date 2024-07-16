@@ -15,3 +15,6 @@ Built the html, css for the contact us page.
 
 7/14
 Finalize the html and css for the contact us page.
+
+7/15
+Set up header and footer using Fatfree framework
