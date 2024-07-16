@@ -2,14 +2,26 @@
 
 class LoginController extends Controller
 {
-    // Sanitized
-    private $post = [];
+    private $model;
+
+
+    public function __construct($f3)
+    {
+        parent::__construct($f3);
+        $this->model = new User();
+    }
+
 
     /**
      * GET: Display the login page
      */
     public function render()
     {
+        // Logged in
+        if ($this->get("COOKIE.auth")) {
+            $this->f3->reroute("@main");
+        }
+        
         $this->setPageTitle("Login");
         $this->set("form", "includes/login.html");
         $this->set("container", "login-container");
@@ -22,23 +34,33 @@ class LoginController extends Controller
      */
     public function login()
     {
-        $this->post = [
+        // Sanitize form inputs
+        $this->set("POST", [
             "username" => trim($this->get("POST.username")),
             "password" => trim($this->get("POST.password")),
-        ];
+        ]);
 
         if ($this->isFormValid()) {
-            // TODO: Authenticate with database
-            //$this->post;
-    
-            // redirect user
-            $this->f3->reroute("@main");
+            // Get user
+            $user = $this->model->getUserByUsername($this->get("POST.username"));
+
+            // Compare password
+            if ($user and password_verify($this->get("POST.password"), $user["password"])) {
+                // Success! Cookies for everyone.
+                $expiration = time() + (60 * 60 * 24 * 2); // 48hrs
+                setcookie("auth", true, $expiration);
+                setcookie("user_id", $user["id"], $expiration);
+
+                // redirect user
+                $this->f3->reroute("@main");
+            }
+            else {
+                $this->set("errors", ["Invalid credentials. Please try again."]);
+            }
         }
-        // Form is not valid, reload and reset.
-        else {
-            $this->set("username", $this->post["username"]);
-            $this->render();
-        }
+        // Form is not valid or invalid password.
+        $this->set("username", $this->get("POST.username"));
+        $this->render();
     }
 
     /**
@@ -50,11 +72,11 @@ class LoginController extends Controller
         $errors = [];
 
         // Validate username
-        if ($this->post["username"] == ""){
+        if ($this->get("POST.username") == ""){
             array_push($errors, "Username is required.");
         }
         // Validate password
-        if ($this->post["password"] == ""){
+        if ($this->get("POST.password") == ""){
             array_push($errors, "Password is required.");
         }
 
