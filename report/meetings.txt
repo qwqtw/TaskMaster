@@ -25,3 +25,12 @@ Daily scrum. Tamara completed the login page and will look to implement the FatF
 
 Next meeting: 7/14, scrum
 What to do: html, css, js of our assigned page. Look to implement the FatFree Framework.
+
+
+7/15
+Qiutian is working on the contact us header and footer. Adjusting for php. Tamara implemented the FatFree Framework and completed the login/register in the framework.
+Tamara is setting up to do the to-do list. Qiutian is looking into profile modification.
+
+Next meeting: 7/16 or 7/17, scrum
+What to do: html, css, js for the project. To-do list page, profile modification dialog.
+
