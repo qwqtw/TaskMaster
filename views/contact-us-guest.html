@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <base href="{{ @BASE }}/public/">
     <meta charset="UTF-8">
@@ -7,55 +8,53 @@
     <title>Contact Us - TaskMaster Pro</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo:wght@400;600&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="css/contact-us.css">
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm container-fluid">
-            <div class="logo-container">
-                <img src="images/logo-image.svg" alt="TaskMaster Logo" class="navbar-logo">
-                <img src="images/logo-text.svg" alt="TaskMaster" class="navbar-logo-text">
-            </div>
-            <a href="{{ @BASE }}{{ 'home' | alias }}">Login/Sign up</a>
-            <a href="{{ @BASE }}{{ 'contactUsGuest' | alias }}" class="nav-link active">Contact Us</a>
-        </nav>
-        
-    </header>
-    
+
+    <include href="includes/header-guest.html" />
     <main class="container">
         <div class="main-content">
             <div class="text-content">
                 <h1 class="title">Contact Us</h1>
-                <p class="description">TaskMaster is a highly intuitive and robust to-do list application designed to streamline task management and enhance productivity for individuals and teams. Developed using the powerful Fatfree framework, TaskMaster Pro offers a seamless user experience with a clean, responsive design suitable for all devices.</p>
-                
+                <p class="description">TaskMaster is a highly intuitive and robust to-do list application designed to
+                    streamline task management and enhance productivity for individuals and teams. Developed using the
+                    powerful Fatfree framework, TaskMaster Pro offers a seamless user experience with a clean,
+                    responsive design suitable for all devices.</p>
+
                 <div class="features-section">
                     <h3 class="subtitle">Description Customization</h3>
-                    <p>Allows users to tailor task descriptions to their specific needs, enhancing clarity and personalization of task management.</p>
+                    <p>Allows users to tailor task descriptions to their specific needs, enhancing clarity and
+                        personalization of task management.</p>
                     <!-- Container for screenshots -->
                     <div class="screenshots">
                         <img src="images/" alt="Description Customization Screenshot">
                         <!-- Additional screenshots can be added here if needed -->
                     </div>
-                
+
                     <h3 class="subtitle">Deadlines</h3>
-                    <p>Set explicit deadlines for tasks, helping users manage their time efficiently and stay on track with their objectives.</p>
+                    <p>Set explicit deadlines for tasks, helping users manage their time efficiently and stay on track
+                        with their objectives.</p>
                     <!-- Container for screenshots -->
                     <div class="screenshots">
                         <img src="images/screenshot-1.png" alt="Setting Deadlines Screenshot">
                         <!-- Additional screenshots can be added here if needed -->
                     </div>
-                
+
                     <h3 class="subtitle">Priority Levels</h3>
-                    <p>Prioritize tasks with customizable levels, enabling users to focus on the most critical tasks at any given time.</p>
+                    <p>Prioritize tasks with customizable levels, enabling users to focus on the most critical tasks at
+                        any given time.</p>
                     <!-- Container for screenshots -->
                     <div class="screenshots">
                         <img src="images/" alt="Priority Levels Screenshot">
                         <!-- Additional screenshots can be added here if needed -->
                     </div>
                 </div>
-                
+
             </div>
             <div class="contact-info">
                 <div class="email">
@@ -69,15 +68,13 @@
                     <a href="#"><i class="mdi mdi-instagram"></i></a>
                 </div>
             </div>
-            
+
         </div>
-        
+
     </main>
-    
-    <footer>
-        <aside class="splash-img"></aside> 
-        <p>2024 TaskMaster. All Rights Reserved &copy;</p>
-    </footer>
-    
+    <include href="includes/footer.html" />
+
+
 </body>
+
 </html>

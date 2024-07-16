@@ -25,6 +25,13 @@ $f3->route("GET @contactUsGuest: /contact-us-guest", "PagesController->contactUs
 // app.html
 $f3->route("GET @app: /app", "PagesController->app");
 $f3->route("GET @logout: /logout", "PagesController->logout");
+// main.html
+$f3->route("GET @main: /app", "PagesController->app");
+
+// headers and footers
+$f3->route("GET @header: /header", "HeaderFooterController->header");
+$f3->route("GET @headerGuest: /header-guest", "HeaderFooterController->headerGuest");
+$f3->route("GET @footer: /footer", "HeaderFooterController->footer");
 
 // Start
 $f3->run();
