@@ -1,44 +1,170 @@
-<header>
-    <nav class="navbar navbar-expand-sm container-fluid">
+<header class="sticky-top mb-5">
+    <nav class="navbar navbar-expand-md px-2 px-md-4">
         <div class="logo-container">
             <img src="images/logo-image.svg" alt="TaskMaster Logo" class="navbar-logo">
             <img src="images/logo-text.svg" alt="TaskMaster" class="navbar-logo-text">
         </div>
-        <a href="{{ @BASE }}{{ 'home' | alias }}">Login/Sign up</a>
-        <a href="{{ @BASE }}{{ 'app' | alias }}">TO-DO List</a>
-        <a href="{{ @BASE }}{{ 'contactUs' | alias }}" class="nav-link active">Contact Us</a>
-        <span>Hi, Username</span>
-        <div class="profile-icon">
-            <img src="images/avatar.png" alt="Profile Icon">
+        
+        <div class="offcanvas offcanvas-end p-2" tabindex="-1" id="main-nav">
+            <div class="offcanvas-header">
+                <span>Hi, <strong>{{ @username }}</strong></span>
+                <button type="button" class="btn-close fs-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end align-items-center flex-grow-1">
+
+                    <!-- Taskmaster App -->
+                    <li class="nav-item me-md-5">
+                        <a class="nav-link" href="{{ @BASE }}{{ 'app' | alias }}">TO-DO
+                            list</a>
+                    </li>
+                    <!-- Contact us -->
+                    <li class="nav-item me-md-5">
+                        <a class="nav-link"  href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact
+                            us</a>
+                    </li>
+                    <!-- Welcome user -->
+                    <li class="nav-item d-none d-md-block me-md-3 mb-5 mb-md-0 text-center">
+                        <span>Hi, <strong>{{ @username }}</strong></span>
+                    </li>
+                    <!-- Avatar drop down -->
+                    <li class="nav-item dropdown d-none d-md-block text-center me-2">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="images/avatar.png" alt="avatar picture" class="rounded-circle"
+                                style="width:50px;">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="update-account dropdown-item" id="triggerProfileModal">Update account</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="logout dropdown-item" href="{{ @BASE }}{{ 'logout' | alias }}">Log out</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item d-md-none me-md-5">
+                        <a data-bs-dismiss="offcanvas" class="update-account dropdown-item" >Update account</a>
+                    </li>
+                    <li class="nav-item d-md-none me-md-5">
+                        <a data-bs-dismiss="offcanvas" class="logout dropdown-item"
+                            href="{{ @BASE }}{{ 'home' | alias }}">Log out</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
+    <!-- Profile Customization Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Profile Settings</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="profileForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="profile_picture">Profile Picture</label>
+                            <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                        <!-- Confirm Password Field -->
+                        <div class="form-group">
+                            <label for="password-confirm">Confirm Password</label>
+                            <input type="password" class="form-control" id="password-confirm" name="password-confirm">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </header>
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#triggerProfileModal').on('click', function () {
+            $('#profileModal').modal('show');
+        });
+    });
+
+    $('#profileForm').on('submit', function (e) {
+        e.preventDefault();
+        var password = $('#password').val();
+        var confirmPassword = $('#password-confirm').val();
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match.');
+            return; // Stop the form submission
+        }
+
+        var formData = new FormData(this);
+        $.ajax({
+            url: 'path/to/profile/update', // Adjust URL as needed
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                alert('Profile updated successfully!');
+                $('#profileModal').modal('hide');
+            },
+            error: function () {
+                alert('Error updating profile.');
+            }
+        });
+    });
+
+
+</script>
+
 
 <style>
     header {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
+        font-family: 'Exo', sans-serif;
         margin-bottom: 20px;
         background-color: rgba(217, 217, 217, 0.5);
-        padding: 50px;
+
     }
 
+    header nav a {
+        text-decoration: none;
+        color: black;
+        transition: color 0.3s ease;
+    }
 
-    header nav {
-        display: flex;
-        gap: 20px;
-        align-items: center;
+    header nav span {
+        font-weight: bold;
+    }
+
+    .nav-link{
+        color: black;
+    }
+
+    .nav-link:hover {
+        color: #0197BC;
     }
 
     .nav-link.active {
         color: #0197BC;
-    }
-
-    .logo-container {
-        display: flex;
-        align-items: center;
-        margin-right: auto;
     }
 
     .navbar-logo {
@@ -49,38 +175,14 @@
         height: 30px;
     }
 
-    header nav a {
-        text-decoration: none;
-        color: black;
-    }
-
-    header nav a:hover {
-        color: #0197BC;
-    }
-
-
-    header nav {
-        display: flex;
-        gap: 50px;
-        align-items: center;
-    }
-
-    header nav a {
-        text-decoration: none !important;
-        color: black;
-        transition: color 0.3s ease;
-    }
-
-    header nav a:hover {
-        color: #0197BC;
-    }
-
-    header nav span {
-        font-weight: bold;
-    }
-
     .profile-icon img {
         width: 40px;
         height: 40px;
     }
+
+    .profile-icon {
+        position: relative;
+        display: inline-block;
+    }
+
 </style>

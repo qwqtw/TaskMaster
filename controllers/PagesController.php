@@ -5,14 +5,16 @@ class PagesController extends Controller
 {
     public function contactUs($f3) 
     {
-        $this->setPageTitle("Contact us");
+        $this->setPageTitle("Contact Us");
+        // Determine which header to use based on login status
+        if ($this->isLoggedIn()) {
+            $headerFile = "includes/header.html"; // Path for logged in users
+        } else {
+            $headerFile = "includes/header-guest.html"; // Path for guests
+        }
+        $this->set("header", $headerFile);
+        $this->set("username", "test");
         echo $this->template->render("contact-us.html");
-    }
-
-    public function contactUsGuest($f3) 
-    {
-        $this->setPageTitle("Contact us");
-        echo $this->template->render("contact-us-guest.html");
     }
 
     public function app()
