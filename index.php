@@ -1,14 +1,17 @@
 <?php
-
 // Load the composer required libraries
 require "vendor/autoload.php";
 
 // Load the framework
 $f3 = Base::instance();
 
-$f3->config("config.ini");
-// Database connection information
-$f3->config("access.ini");
+// Automatically load the controller classes and views
+$f3->set("AUTOLOAD", "controllers/");
+$f3->set("UI", "views/");
+
+// Enable debug
+// TODO: Remove for production
+$f3->set("DEBUG", 3);
 
 // Routes
 // index.html
@@ -24,11 +27,5 @@ $f3->route("GET @contactUsGuest: /contact-us-guest", "PagesController->contactUs
 
 // main.html
 $f3->route("GET @main: /app", "PagesController->app");
-
-// headers and footers
-$f3->route("GET @header: /header", "HeaderFooterController->header");
-$f3->route("GET @headerGuest: /header-guest", "HeaderFooterController->headerGuest");
-$f3->route("GET @footer: /footer", "HeaderFooterController->footer");
-
 // Start
 $f3->run();

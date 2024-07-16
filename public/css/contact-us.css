@@ -1,6 +1,10 @@
 body {
     font-family: 'Exo', sans-serif;
-    background-color: #F3F3F3;
+    background-image: url("../images/contact-us-bg.png"); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+
 }
 
 
@@ -165,24 +169,3 @@ a:hover .mdi {
 }
 
 
-footer {
-    position: relative;
-    text-align: center;
-    background-image: url("../images/contact-us-bg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center bottom;
-    width: 100%;
-    height: 200px;
-    color: #F3F3F3;
-}
-
-footer p {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    margin-bottom: 10px;
-    left: 0;
-    background-color: #394A6D;
-    padding: 5px;
-}
