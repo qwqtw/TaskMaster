@@ -43,74 +43,7 @@ body {
     color: #6B6B6B;
 }
 
-header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 20px;
-    background-color: rgba(217, 217, 217, 0.5); 
-    padding: 50px;
-}
 
-
-header nav {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-.nav-link.active {
-    color: #0197BC; 
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    margin-right: auto;
-}
-
-.navbar-logo {
-    height: 50px;
-}
-
-.navbar-logo-text {
-    height: 30px; 
-}
-
-header nav a {
-    text-decoration: none;
-    color: black;
-}
-
-header nav a:hover {
-    color: #0197BC;
-}
-
-
-header nav {
-    display: flex;
-    gap: 50px;
-    align-items: center;
-}
-
-header nav a {
-    text-decoration: none !important;
-    color: black;
-    transition: color 0.3s ease;  
-}
-
-header nav a:hover {
-    color: #0197BC; 
-}
-
-header nav span {
-    font-weight: bold;
-}
-
-.profile-icon img {
-    width: 40px;
-    height: 40px;
-}
 
 main .main-content {
     display: flex;

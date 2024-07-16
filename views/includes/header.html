@@ -1,16 +1,86 @@
-    <header>
-        <nav class="navbar navbar-expand-sm container-fluid">
-            <div class="logo-container">
-                <img src="images/logo-image.svg" alt="TaskMaster Logo" class="navbar-logo">
-                <img src="images/logo-text.svg" alt="TaskMaster" class="navbar-logo-text">
-            </div>
-            <a href="{{ @BASE }}{{ 'home' | alias }}">Login/Sign up</a>
-            <a href="{{ @BASE }}{{ 'app' | alias }}">TO-DO List</a>
-            <a href="{{ @BASE }}{{ 'contactUs' | alias }}" class="nav-link active">Contact Us</a>
-            <span>Hi, Username</span>
-            <div class="profile-icon">
-                <img src="profile-icon.png" alt="Profile Icon">
-            </div>
-        </nav>
-    </header>
+<header>
+    <nav class="navbar navbar-expand-sm container-fluid">
+        <div class="logo-container">
+            <img src="images/logo-image.svg" alt="TaskMaster Logo" class="navbar-logo">
+            <img src="images/logo-text.svg" alt="TaskMaster" class="navbar-logo-text">
+        </div>
+        <a href="{{ @BASE }}{{ 'home' | alias }}">Login/Sign up</a>
+        <a href="{{ @BASE }}{{ 'app' | alias }}">TO-DO List</a>
+        <a href="{{ @BASE }}{{ 'contactUs' | alias }}" class="nav-link active">Contact Us</a>
+        <span>Hi, Username</span>
+        <div class="profile-icon">
+            <img src="images/avatar.png" alt="Profile Icon">
+        </div>
+    </nav>
+</header>
 
+<style>
+    header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 20px;
+        background-color: rgba(217, 217, 217, 0.5);
+        padding: 50px;
+    }
+
+
+    header nav {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .nav-link.active {
+        color: #0197BC;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+    }
+
+    .navbar-logo {
+        height: 50px;
+    }
+
+    .navbar-logo-text {
+        height: 30px;
+    }
+
+    header nav a {
+        text-decoration: none;
+        color: black;
+    }
+
+    header nav a:hover {
+        color: #0197BC;
+    }
+
+
+    header nav {
+        display: flex;
+        gap: 50px;
+        align-items: center;
+    }
+
+    header nav a {
+        text-decoration: none !important;
+        color: black;
+        transition: color 0.3s ease;
+    }
+
+    header nav a:hover {
+        color: #0197BC;
+    }
+
+    header nav span {
+        font-weight: bold;
+    }
+
+    .profile-icon img {
+        width: 40px;
+        height: 40px;
+    }
+</style>
