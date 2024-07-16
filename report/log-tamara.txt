@@ -12,3 +12,6 @@ Updated the login page, add the sign up page and rework the contact us button an
 
 7/13
 Complete the register page. Implemented the FatFree Framework and added login and register to it. The forms are set for the database.
+
+7/15
+Added logout behavior.
