@@ -18,10 +18,10 @@ class LoginController extends Controller
     public function render()
     {
         // Logged in
-        if ($this->get("COOKIE.auth")) {
-            $this->f3->reroute("@main");
+        if ($this->isLoggedIn()) {
+            $this->f3->reroute("@app");
         }
-        
+
         $this->setPageTitle("Login");
         $this->set("form", "includes/login.html");
         $this->set("container", "login-container");
@@ -52,8 +52,9 @@ class LoginController extends Controller
                 setcookie("user_id", $user["id"], $expiration);
 
                 // redirect user
-                $this->f3->reroute("@main");
+                $this->f3->reroute("@app");
             }
+            // User doesn't exists or password didn't match.
             else {
                 $this->set("errors", ["Invalid credentials. Please try again."]);
             }
