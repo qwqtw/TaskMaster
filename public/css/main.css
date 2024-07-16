@@ -33,6 +33,17 @@ h3 {
     height: 20px;
 }
 
+/*
+    Horizontal logo, 1-image, 2-text
+    need to set the width of the parent div.
+*/
+.horizontal-logo img:nth-of-type(1) {
+    width: 20%;
+}
+.horizontal-logo img:nth-of-type(2) {
+    width: 78%;
+}
+
 
 /*  
 

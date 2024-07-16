@@ -15,9 +15,17 @@ class PagesController extends Controller
         echo $this->template->render("contact-us-guest.html");
     }
 
-    public function app($f3)
+    public function app()
     {
-        echo $this->template->render("main.html");
+        if (!$this->isLoggedIn()) {
+            $this->f3->reroute("@home");
+        }
+
+        $this->set("container", "app-container");
+        $this->set("username", "test");
+        echo $this->template->render("app.html");
+    }
+
     /**
      * Log out the user
      */

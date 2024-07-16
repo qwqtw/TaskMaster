@@ -16,6 +16,10 @@ class RegisterController extends Controller
      */
     public function render()
     {
+        if ($this->isLoggedIn()) {
+            $this->f3->reroute("@app");
+        }
+        
         $this->setPageTitle("Register");
         $this->set("form", "includes/register.html");
         $this->set("container", "register-container");
