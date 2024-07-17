@@ -4,7 +4,7 @@
             <img src="images/logo-image.svg" alt="TaskMaster Logo" class="navbar-logo">
             <img src="images/logo-text.svg" alt="TaskMaster" class="navbar-logo-text">
         </div>
-
+        
         <div class="offcanvas offcanvas-end p-2" tabindex="-1" id="main-nav">
             <div class="offcanvas-header">
                 <span>Hi, <strong>{{ @username }}</strong></span>
@@ -20,7 +20,7 @@
                     </li>
                     <!-- Contact us -->
                     <li class="nav-item me-md-5">
-                        <a class="nav-link" href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact
+                        <a class="nav-link"  href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact
                             us</a>
                     </li>
                     <!-- Welcome user -->
@@ -46,7 +46,7 @@
                         </ul>
                     </li>
                     <li class="nav-item d-md-none me-md-5">
-                        <a data-bs-dismiss="offcanvas" class="update-account dropdown-item">Update account</a>
+                        <a data-bs-dismiss="offcanvas" class="update-account dropdown-item" >Update account</a>
                     </li>
                     <li class="nav-item d-md-none me-md-5">
                         <a data-bs-dismiss="offcanvas" class="logout dropdown-item"
@@ -77,7 +77,7 @@
                             <input type="text" class="form-control" id="username" name="username">
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
+                            <label for="password">New Password</label>
                             <input type="password" class="form-control" id="password" name="password">
                         </div>
                         <!-- Confirm Password Field -->
@@ -98,10 +98,11 @@
 </header>
 <!-- jQuery and Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#triggerProfileModal').on('click', function () {
+
             $('#profileModal').modal('show');
         });
     });
@@ -155,7 +156,7 @@
         font-weight: bold;
     }
 
-    .nav-link {
+    .nav-link{
         color: black;
     }
 
@@ -184,4 +185,5 @@
         position: relative;
         display: inline-block;
     }
+
 </style>
