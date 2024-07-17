@@ -22,7 +22,9 @@ $f3->route("GET @contactUs: /contact-us", "PagesController->contactUs");
 $f3->route("GET @contactUsGuest: /contact-us-guest", "PagesController->contactUsGuest");
  
 // app.html
-$f3->route("GET @app: /app", "PagesController->app");
+$f3->route("GET @app: /app", "AppController->render");
+$f3->route("POST @createList: /create-list", "AppController->createList");
+
 $f3->route("GET @logout: /logout", "PagesController->logout");
  
 
