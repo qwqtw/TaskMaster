@@ -20,7 +20,7 @@ class AppController extends Controller
         }
 
         $this->set("lists", $this->lists->getAll());
-        $this->set("selectedTasks", []);
+        $this->set("tasks", []);
 
         // GET: List by id
         if (array_key_exists("id", $this->get("PARAMS"))) {        
