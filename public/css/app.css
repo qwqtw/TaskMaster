@@ -1,29 +1,289 @@
-body > div {
+body {
     background-image: url("../images/main-bg.webp");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
 
+body > .container-fluid {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: blue;
+}
+
 /*
     Header navigation
 */
-.app-container .navbar {
+.navbar {
     background-color: rgba(243, 243, 243, 0.8);
     /*background-color: rgba(57, 74, 109, 0.8);*/
     height: 80px;
 }
 
+.horizontal-logo {
+    width: 245px;
+}
+
+/*
+    TO DO List container
+*/
+#list-container {
+    min-height: calc(100% - 150px);
+}
+
+#list-container .icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* 
+    Lists section
+*/
+
+/*
+    Create list input
+*/
+fieldset {
+    width: 100%;
+}
+fieldset legend {
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 80px;
+    font-size: 0.9rem;
+}
+/* The rounded rectangle */
+fieldset .input-wrapper {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    background-color: white;
+}
+/* Create list add btn */
+fieldset .input-wrapper input[type=submit] {
+    background-color: #0197BC;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    color: white;
+    font-size: 1.5rem;
+}
+/* The input */
+fieldset .input-wrapper input[type=text] {
+    width: 85%;
+    height: 90%;
+    border: none;
+}
+fieldset .input-wrapper input[type=text]:focus {
+    outline: none;
+}
+
+
+/*
+    List of lists
+*/
+aside {
+    border-radius: 20px 20px 0px 0px;
+    background-color: #E1E2E6;
+}
+
+aside ul {
+    /*height: 50%;*/
+    list-style-type: none;
+    padding-left: 0;
+    /*overflow-y: auto;*/
+}
+
+aside ul li:hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1); /* highlight */
+}
+/* Hide the menu icons by default */
+aside ul li .menu {
+    display: none;
+}
+/* Show the menu icons when list is hover */
+aside ul li:hover .menu {
+    display: block;
+}
+/* Remove the radio button without affecting accessibility */
+aside li input[type=radio] {
+    opacity: 0; 
+    position: fixed; 
+    pointer-events: none;
+}
+/* Highlight the div label when radio is checked */
+aside li input[type=radio]:checked + div {
+    box-shadow: inset 0 0 100px 100px rgba(0, 216, 119, 0.2); /* highlight */
+}
+
+/* 
+    Selected list todo
+*/
+main {
+    position: relative;
+    border-radius: 0px 0px 20px 20px;
+    background-color: #F3F3F3;
+}
+
+
+#form-add-task {
+    display: none;
+    background-color: #0197BC;
+    width: 350px;
+    height: 300px;
+}
+
+#btn-add-task {
+    font-size: 2rem;
+}
+
+.arrow {
+    position: absolute; /* It will position based on parent div with position, in this case, .content */
+    bottom: 20px;
+    /*left: 50%;*/
+    left:50%;
+    background-color: #0197BC;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    color: white;
+    font-size: 1.5rem;
+    border: 0px;
+    transform: translateX(-50%);
+}
+
+
+/*
+    Tasks
+*/
+#tasks-container {
+    height: 70%;
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+#tasks-container ul {
+    list-style-type: none; 
+    padding-left: 0;
+}
+#tasks-container li {
+    min-height: 50px;
+}
+/* Left section, markers */
+#tasks-container li > div:first-of-type {
+    position: relative;
+    width: 80px;
+}
+/* Right section, edit/delete */
+#tasks-container li > div:last-of-type {
+    position: relative;
+    width: 150px;
+    visibility: hidden;
+}
+/* Display Right section when li is hover */
+#tasks-container li:hover > div:last-of-type {
+    visibility: visible;
+}
+
+.task-content {
+    font-size: 1.25rem;
+}
+.task-content.active {
+    text-decoration: line-through;
+}
+/*
+    Left of task: Checkmark and priority
+*/
+.marker {
+    display: none;
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+}
+.checkmark.active {
+    display: block;
+}
+.checkmark {
+    color: #00D878;
+}
+.priority:not(.hide) {
+    display: block;
+}
+.priority-0 {
+    display: none !important; /* only this time, for explicity */
+}
+.priority-1 {
+    color: red;
+}
+/*
+    Right of task: Edit and delete
+*/
+.task-icon {
+    color: black;
+    font-size: 1.3rem;
+}
+.task-edit {
+    position: absolute;
+    left: 0;
+}
+.task-delete {
+    position: absolute;
+    right: 25px;
+}
+
+/*
+    Bottom of task: Due date
+*/
+.task-date {
+    background-color: #394a6d;
+    color: white;
+    width: 115px;
+    height: 30px;
+    font-size: 0.875rem;
+}
+
+
+
+
+#title {
+    border-bottom: 1px solid black;
+}
+
+/*
+    Footer
+*/
 footer {
     background-color: #394a6d;
-}
-
-footer p {
     color: white;
+    font-size: 0.8rem;
 }
 
 
 
-.horizontal-logo {
-    width: 250px;
+
+@media (min-width: 768px) {
+
+    aside {
+        border-radius: 20px 0px 0px 20px;
+    }
+
+    main {
+        border-radius: 0px 20px 20px 0px;
+    }
 }

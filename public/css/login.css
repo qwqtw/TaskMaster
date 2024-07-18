@@ -26,14 +26,6 @@ a[role=button] {
     justify-content: center;
 }
 
-button:hover,
-button:active,
-a[role=button]:hover,
-a[role=button]:active {
-    cursor: pointer;
-    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1); /* highlight */
-}
-
 button,
 input[type=text],
 input[type=password],

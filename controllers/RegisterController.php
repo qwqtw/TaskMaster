@@ -68,7 +68,7 @@ class RegisterController extends Controller
      * Validate the data for the form after a POST method
      * @return boolean true if the form is valid
      */
-    private function isFormValid()
+    public function isFormValid()
     {
         $errors = [];
 
@@ -93,12 +93,6 @@ class RegisterController extends Controller
             array_push($errors, "Password doesn't match.");
         }
 
-
-        if (!empty($errors)) {
-            $this->set("errors", $errors);
-            return false;
-        }
-
-        return true;
+        return $this->validateForm($errors);
     }
 }

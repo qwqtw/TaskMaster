@@ -34,3 +34,7 @@ Tamara is setting up to do the to-do list. Qiutian is looking into profile modif
 Next meeting: 7/16 or 7/17, scrum
 What to do: html, css, js for the project. To-do list page, profile modification dialog.
 
+
+7/16 - 7/18
+Qiutian is working on the profile management, Tamara is working on the todo lists. No issues encountered so far.
+
