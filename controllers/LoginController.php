@@ -68,7 +68,7 @@ class LoginController extends Controller
      * Validate the data for the form after a POST method
      * @return boolean true if the form is valid
      */
-    private function isFormValid()
+    public function isFormValid()
     {
         $errors = [];
 
@@ -81,12 +81,6 @@ class LoginController extends Controller
             array_push($errors, "Password is required.");
         }
 
-
-        if (!empty($errors)) {
-            $this->set("errors", $errors);
-            return false;
-        }
-
-        return true;
+        return $this->validateForm($errors);
     }
 }

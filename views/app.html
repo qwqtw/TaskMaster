@@ -7,14 +7,16 @@
         <base href="{{ @BASE }}/public/">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/app.css">
     </head>
     
     <body>
-        <div class="{{ @container }} container-fluid h-100 p-0">
+        <div class="{{ @container }} container-fluid d-flex flex-column h-100 p-0">
 
-            <header class="sticky-top mb-5">
+            <!-- Navigation -->
+            <header class="sticky-top">
 				<nav class="navbar navbar-expand-md px-2 px-md-4" aria-label="Offcanvas navbar">
 					<div class="container-fluid">
 
@@ -40,11 +42,11 @@
 								<ul class="navbar-nav justify-content-end align-items-center flex-grow-1">
 									
                                     <!-- Taskmaster App -->
-                                    <li class="nav-item me-md-5">
+                                    <li class="nav-item me-md-3 me-lg-5">
                                         <a class="nav-link active" aria-current="page" href="{{ @BASE }}{{ 'app' | alias }}">TO-DO list</a>
                                     </li>
                                     <!-- Contact us -->
-                                    <li class="nav-item me-md-5">
+                                    <li class="nav-item me-md-3 me-lg-5">
                                         <a class="nav-link" aria-current="page" href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact us</a>
                                     </li>
                                     <!-- Welcome user -->
@@ -66,10 +68,10 @@
 											</li>
 										</ul>
 									</li>
-                                    <li class="nav-item d-md-none me-md-5">
+                                    <li class="nav-item d-md-none">
 										<a data-bs-dismiss="offcanvas" class="update-account dropdown-item" href="#">Update account</a>
 									</li>
-                                    <li class="nav-item d-md-none me-md-5">
+                                    <li class="nav-item d-md-none">
 										<a data-bs-dismiss="offcanvas" class="logout dropdown-item" href="{{ @BASE }}{{ 'home' | alias }}">Log out</a>
 									</li>
 								</ul>
@@ -79,12 +81,160 @@
 				</nav>
 			</header>
 
-            <footer>
-                <p>&copy; 2024 TaskMaster. All Rights Reserved.</p>
-            </footer>
+            <!-- Main todo container -->
+            <div id="list-container" class="m-auto col-11 col-lg-9 col-xl-8 py-2">
+                <div class="row h-100">
+
+                    <!-- Lists -->
+                    <aside class="offset-xl-2 col-md-5 col-lg-4 col-xl-3 px-4">
+                        <!--  list creation input field  -->
+                        <form action="{{ @BASE }}{{ 'createList' | alias }}" method="POST" class="input-group my-4 mt-md-5">
+                            <fieldset class="d-flex flex-column mx-auto text-center">
+                                <legend class="ms-2">Create list</legend>
+                                <div class="input-wrapper d-flex align-items-center justify-content-end p-2">
+                                    <input type="text" id="list-name" name="title">
+                                    <input type="submit" value="+">
+                                </div>
+                            </fieldset>
+                        </form>
+
+                        <!--  list items   -->
+                        <ul class="list-item">
+                            <repeat group="{{ @lists }}" value="{{ @list }}">
+                                <li class="d-flex w-100 mx-auto">
+                                    <check if="{{ isset(@selectedId) && @list['id'] == @selectedId}}">
+                                        <true><set chkSelected="checked"></true>
+                                        <false><set chkSelected=""></false>
+                                    </check>
+                                    <input 
+                                        {{ @chkSelected }} 
+                                        id="list{{ @list['id'] }}" 
+                                        type="radio" name="lists" 
+                                        value="{{ @list['id'] }}" 
+                                        data-url="{{ @BASE }}{{ 'appList', ['id'=>@list['id']] | alias }}">
+                                    <div class="d-flex align-items-center w-100">
+                                        <label class="w-75 p-2" for="list{{ @list['id'] }}">{{ @list["title"] }}</a></label>
+                                        <div class="menu w-25 text-end me-2">
+                                            <img src="images/icon/move.png" alt="move icon" class="icon">
+                                            <img src="images/icon/trash-can.png" alt="trash icon" class="icon">
+                                        </div>
+                                    </div>
+                                </li>
+                            </repeat>
+                        </ul>
+                    </aside>
+                    
+                    <!--  main content of the to-do manager -- all tasks are listed here  -->
+                    <main class="content col-md-7 col-lg-8 col-xl-5 py-4">
+ 
+                        <!--  title of the currently selected list  -->
+                        <h2 id="title" class="ms-3" style="width: 80%;">{{ isset(@selectedTitle) ? @selectedTitle : "TODO" }}</h2>
+                        <!--<div id="title" class="ms-3">
+                            <h2>12345612345612345612</h2>
+                        </div>-->
+
+                        <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
+                        <div class="tab-wrapper">
+                            <div class="label-wrapper">
+                                <label>
+                                    <input type="checkbox" active> All
+                                </label>
+                                <label>
+                                    <input type="checkbox"> Active
+                                </label>
+                                <label>
+                                    <input type="checkbox"> Completed
+                                </label>
+                            </div>
+                        
+
+                            <!--  priority tab which uses a slider graphic  -->
+                            <div id="priority">
+                                <p>By Priority</p>
+                                <div class="slider-container">
+                                    <div class="slider" id="slider">
+                                        <div class="bar"></div>
+                                        <div class="circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!--  task items  -->
+                        <div id="tasks-container">
+                            <ul>
+                                <repeat group="{{ @tasks }}" value="{{ @task }}">
+                                    <check if="{{ @task['is_completed'] == 1}}">
+                                        <true><set taskCompleted="active"></set></true>
+                                        <false><set taskCompleted=""></set></false>
+                                    </check>
+                                    <li class="d-flex w-100 mb-4">
+                                        <div>
+                                            <div class="marker priority priority-{{ @task['priority'] }} {{ @taskCompleted == 'active' ? 'hide' : ''}}"><i class="fa-solid fa-circle"></i></div>
+                                            <div class="marker checkmark {{ @taskCompleted }}"><i class="fa-solid fa-circle-check"></i></div>
+                                        </div>
+                                        <div class="d-flex flex-column w-100">
+                                            <p class="task-content {{ @taskCompleted }}">{{ @task["content"] }}</p>
+                                            <div class="d-flex">
+                                                <div class="{{ @task['due_date'] == '' ? 'd-none' : 'd-flex' }} task-date justify-content-center align-items-center rounded-5">{{ @task["due_date"] }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <a class="task-icon task-edit" href="#"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <a class="task-icon task-delete" href="#"><i class="fa-solid fa-trash-can"></i></a>
+                                        </div>
+                                    </li>
+                                </repeat>
+                            </ul>
+                        </div>
+
+                        <!--<repeat group="{{ @selectedTasks }}" value="{{ @task }}">
+                                <li class="d-flex w-100 mx-auto">
+                                    <div class="d-flex align-items-center w-100">
+                                        <img src="images/icon/check-mark.png" alt="checkmark icon" class="icon me-2">
+                                        <label class="w-75 p-2" for="task{{ @task['id'] }}">{{ @task["content"] }}</a></label>
+                                        <div class="menu w-25 text-end me-2">
+                                            <img src="images/icon/edit.png" alt="edit icon" class="icon">
+                                            <img src="images/icon/trash-can.png" alt="trash icon" class="icon">
+                                        </div>
+                                    </div>
+                                </li>
+                            </repeat>-->
+                            <!--<div>
+                                <img src="images/icon/check-mark.png" alt="checkmark icon" class="icon">
+                                <p>Write my to-do list</p>
+                            </div>
+                            <div>
+                                <img src="images/icon/edit.png" alt="edit icon" class="icon">
+                                <img src="images/icon/trash-can.png" alt="trash icon" class="icon">
+                            </div>-->
+
+                        <form id="form-add-task" action="" method="POST">
+                            <fieldset class="d-flex flex-column mx-auto text-center">
+                                <legend class="ms-2">Create task</legend>
+                                <div class="input-wrapper d-flex align-items-center justify-content-end p-2">
+                                    <input type="text" id="task-content" name="content">
+                                    <input type="submit" value="+">
+                                </div>
+                            </fieldset>
+                            <input id="btn-cancel-add-task" type="submit" class="arrow text-center">x</input>
+                        </form>
+                        <button id="btn-add-task" type="button" class="arrow text-center">+</button>
+                        
+                    </main>
+
+                </div>
+
+                
+            </div>
+
+            <footer class="py-1 text-center">&copy; 2024 TaskMaster. All Rights Reserved.</footer>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="js/app.js"></script>
     </body>
 </html>
