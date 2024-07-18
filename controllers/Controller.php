@@ -66,4 +66,18 @@ class Controller
 
         $this->set("pageTitle", $newTitle);
     }
+
+    /**
+     * Checks if there's errors in $formErrors and set up the f3 errors property if there's any.
+     * @param array $formErrors pass your errors array.
+     * @return bool true if $forms has no errors and false if it does, as well as set the f3 errors property.
+     */
+    public function validateForm($formErrors)
+    {
+        if (!empty($formErrors)) {
+            $this->set("errors", $formErrors);
+            return false;
+        }
+        return true;
+    }
 }
