@@ -17,6 +17,8 @@ class PagesController extends Controller
         echo $this->template->render("contact-us.html");
     }
 
+
+
     public function app()
     {
         if (!$this->isLoggedIn()) {
