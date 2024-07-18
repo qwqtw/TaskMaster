@@ -15,3 +15,12 @@ Complete the register page. Implemented the FatFree Framework and added login an
 
 7/15
 Added logout behavior.
+
+7/16
+Add create list and make the basic todo list framework.
+
+7/17
+Add list selection and task display for the selected list.
+
+7/18
+Working on adding the tasks elements.
