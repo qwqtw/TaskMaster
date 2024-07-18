@@ -22,6 +22,16 @@ body > .container-fluid {
     background-color: blue;
 }
 
+.btn-add {
+    background-color: #0197BC;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    color: white;
+    font-size: 1.5rem;
+    border: 0px;
+}
+
 /*
     Header navigation
 */
@@ -59,8 +69,8 @@ fieldset {
 }
 fieldset legend {
     position: absolute;
+    margin-top: -10px;
     z-index: 1;
-    top: -10px;
     background-color: rgba(255, 255, 255, 0.5);
     width: 80px;
     font-size: 0.9rem;
@@ -72,16 +82,13 @@ fieldset .input-wrapper {
     height: 50px;
     border-radius: 25px;
     background-color: white;
+    border: 1px solid darkgray;
 }
 /* Create list add btn */
 fieldset .input-wrapper input[type=submit] {
-    background-color: #0197BC;
-    border-radius: 50%;
     width: 40px;
     height: 40px;
-    border: 0;
-    color: white;
-    font-size: 1.5rem;
+    font-size: 0.9rem;
 }
 /* The input */
 fieldset .input-wrapper input[type=text] {
@@ -140,32 +147,71 @@ main {
     background-color: #F3F3F3;
 }
 
+#task-add-container {
+    position: absolute; 
+    left: 0; 
+    bottom: 0; 
+    height: 275px;
+}
+#task-add-container textarea {
+    resize: none;
+}
 
-#form-add-task {
+#task-add-form {
     display: none;
-    background-color: #0197BC;
-    width: 350px;
-    height: 300px;
+    height: 175px;
+    background-color: #E1E2E6;
+}
+#task-add-form label {
+    background-color: rgba(1, 151, 188, 0.1);
+}
+#task-add-form input[type=submit] {
+    height: 40px;
+    width: 40px;
+    font-size: 0.9rem;
+}
+#task-add-form input[type=reset] {
+    height: 40px;
+    width: 40px;
+    background-color: gray;
+    font-size: 1rem;
+}
+#task-add-priority {
+    width: 40%;
+}
+#task-add-due-date {
+    width: 60%;
 }
 
-#btn-add-task {
-    font-size: 2rem;
-}
 
-.arrow {
+#task-add-btn {
     position: absolute; /* It will position based on parent div with position, in this case, .content */
     bottom: 20px;
-    /*left: 50%;*/
-    left:50%;
-    background-color: #0197BC;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    color: white;
-    font-size: 1.5rem;
-    border: 0px;
+    left: 50%;
+    font-size: 1.2rem;
     transform: translateX(-50%);
 }
+/* 
+    Toggle add form btn
+    between open / close state
+*/
+#task-add-btn.hide {
+    background-color: #394a6d;
+}
+#task-add-btn > .close {
+    display: none;
+}
+#task-add-btn.hide > .open {
+    display: none;
+}
+#task-add-btn.hide > .close {
+    display: block;
+}
+/*
+#task-add.cancel {
+
+}
+*/
 
 
 /*

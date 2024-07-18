@@ -12,11 +12,16 @@ class Lists extends Model
         return $this->findone(["title = ?", $title]);
     }
 
+    public function getFirstList()
+    {
+        return $this->findone();
+    }
+
 /**
      * Create the list entry and.
      * @return int id of the newly created list
      */
-    public function createList()
+    public function create()
     {
         $this->copyfrom("POST");
         $this->list_order = 0;
