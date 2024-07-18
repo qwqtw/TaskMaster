@@ -20,6 +20,7 @@
 <body>
     <div class="container mt-5">
         <h2>Update Profile</h2>
+
         <form method="POST" action="{{ @BASE }}{{ 'profileUpdate' | alias }}" class="mb-4"
             enctype="multipart/form-data">
             <!-- <div class="mb-3">
@@ -57,11 +58,13 @@
             <div class="mb-3">
                 <button type="submit" class="btn btn-danger">Delete Account</button>
             </div>
+
+            <input type="hidden" id="update-success" value="{{ @successMessage }}">
             <input type="hidden" name="referer" value="{{ @SERVER.HTTP_REFERER }}">
         </form>
 
         <div class="mb-3">
-            <button type="button" class="btn btn-secondary" onclick="history.back()">Return</button>
+            <a href="{{ @BASE }}{{ 'home' | alias }}" class="btn btn-secondary">Home</a>
 
         </div>
 
@@ -80,7 +83,12 @@
 
 <style>
     .btn {
-        width: 150px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        border-radius: 60px;
+        height: 48px;
     }
 
     .btn-secondary:hover {
