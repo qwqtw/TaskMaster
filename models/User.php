@@ -34,19 +34,26 @@ class User extends Model
     }
 
     // ---------------------------------------------------------
-    public function updateProfile($userId, $username, $password) {
-        // SQL to update the user profile in the database
-        $sql = "UPDATE users SET username = ?, password = ? WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Hash the password before storing
-        return $stmt->execute([$username, $hashedPassword, $userId]);
+    public function updateProfile($userId, $username, $password)
+    {
+        // Find the user by id
+        $this->load(['id = ?', $userId]);
+
+        // Update user details
+        $this->username = $username;
+        $this->password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
+
+        // Save changes
+        return $this->save();
     }
 
-    public function deleteAccount($userId) {
-        // SQL to delete the user account from the database
-        $sql = "DELETE FROM users WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$userId]);
+    public function deleteAccount($userId)
+    {
+        // Find the user by id
+        $this->load(['id = ?', $userId]);
+
+        // Delete the user
+        return $this->erase();
     }
 
 }
