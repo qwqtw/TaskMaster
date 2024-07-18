@@ -33,52 +33,27 @@ class User extends Model
         return $this->findone(["username = ?", $username]);
     }
 
-     /**
-     * Update the user's profile picture.
-     * @param int $userId User's ID.
-     * @param string $filePath New file path for the profile picture.
-     */
-    public function updateProfilePicture($userId, $filePath)
+    // ---------------------------------------------------------
+    public function updateProfile($userId, $username, $password)
     {
-        $user = $this->load(['id=?', $userId]);
-        $user->profile_picture = $filePath;
-        $user->save();
+        // Find the user by id
+        $this->load(['id = ?', $userId]);
+
+        // Update user details
+        $this->username = $username;
+        $this->password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
+
+        // Save changes
+        return $this->save();
     }
 
-    /**
-     * Update the user's credentials (username and password).
-     * @param int $userId User's ID.
-     * @param string $username New username.
-     * @param string $hashedPassword New hashed password.
-     */
-    public function updateCredentials($userId, $username, $hashedPassword)
+    public function deleteAccount($userId)
     {
-        $user = $this->load(['id=?', $userId]);
-        $user->username = $username;
-        $user->password = $hashedPassword;
-        $user->save();
+        // Find the user by id
+        $this->load(['id = ?', $userId]);
+
+        // Delete the user
+        return $this->erase();
     }
 
-    /**
-     * Delete a user from the database.
-     * @param int $userId User's ID.
-     */
-    public function deleteUser($userId)
-    {
-        $user = $this->load(['id=?', $userId]);
-        if ($user) {
-            $user->erase();
-        }
-    }
-
-    /**
-     * Check if the username is available for registration.
-     * @param string $username Username to check.
-     * @return bool Returns true if the username is available.
-     */
-    public function isUsernameAvailable($username)
-    {
-        $user = $this->findone(['username=?', $username]);
-        return $user === null; // If no user is found, the username is available
-    }
 }
