@@ -25,6 +25,12 @@ $f3->route("GET @contactUsGuest: /contact-us-guest", "PagesController->contactUs
 $f3->route("GET @app: /app", "PagesController->app");
 $f3->route("GET @logout: /logout", "PagesController->logout");
  
+// update profile
+$f3->route('POST /profile/update', 'ManageProfileController->updateProfile');
+$f3->route('POST /account/delete', 'ManageProfileController->deleteAccount');
+
+
+
 
 // Start
 $f3->run();

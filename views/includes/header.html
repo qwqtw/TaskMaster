@@ -35,7 +35,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="update-account dropdown-item" id="triggerProfileModal">Update account</a>
+                                <a class="update-account dropdown-item" id="triggerProfileModal" data-toggle="modal" data-target="#accountModal">Update account</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -56,8 +56,8 @@
             </div>
         </div>
     </nav>
-    <!-- Profile Customization Modal -->
-    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+      <!-- Profile Customization Modal -->
+      <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -65,16 +65,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="profileForm" enctype="multipart/form-data">
-                        <div class="mb-3 text-center">
-                            <img id="currentProfilePicture" src="path/to/current/profile/picture"
-                                alt="Current Profile Picture" class="rounded-circle"
-                                style="width: 100px; height: 100px; object-fit: cover;">
-                        </div>
-                        <div class="mb-3">
-                            <label for="profile_picture" class="form-label">Profile Picture</label>
-                            <input type="file" class="form-control" id="profile_picture" name="profile_picture">
-                        </div>
+                    <form id="profileForm">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username"
@@ -101,8 +92,6 @@
         </div>
     </div>
 
-
-
 </header>
 <!-- jQuery and Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -111,15 +100,6 @@
     $(document).ready(function () {
         $('#triggerProfileModal').on('click', function () {
             $('#profileModal').modal('show');
-        });
-
-        // Update profile picture preview on file selection
-        $('#profile_picture').on('change', function () {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#currentProfilePicture').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
         });
 
         $('#profileForm').on('submit', function (e) {
@@ -133,13 +113,11 @@
                 return; // Stop the form submission
             }
 
-            var formData = new FormData(this);
+            var formData = $(this).serialize();
             $.ajax({
-                url: 'path/to/profile/update', // Adjust URL as needed
+                url: '/profile/update', // Adjust URL as needed
                 type: 'POST',
                 data: formData,
-                contentType: false,
-                processData: false,
                 success: function (response) {
                     alert('Profile updated successfully!');
                     $('#profileModal').modal('hide');
@@ -153,7 +131,7 @@
         $('#deleteAccount').on('click', function () {
             if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
                 $.ajax({
-                    url: 'path/to/delete/account', // Adjust URL as needed
+                    url: '/account/delete', // Adjust URL as needed
                     type: 'POST',
                     success: function (response) {
                         alert('Account deleted successfully.');
@@ -166,16 +144,7 @@
             }
         });
     });
-
-    // Show dropdown on hover
-    $('.dropdown').hover(function () {
-        $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeIn(200);
-    }, function () {
-        $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeOut(200);
-    });
-
 </script>
-
 
 <style>
     header {

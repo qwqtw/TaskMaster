@@ -1,64 +1,39 @@
 <?php
 
-class ManageProfileController extends Controller
-{
-    private $model;
+class ManageProfileController extends Controller {
 
-    public function __construct($f3)
-    {
-        parent::__construct($f3);
-        $this->model = new User();
-    }
+    public function updateProfile() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Get the form data
+            $username = $_POST['username'];
+            $password = $_POST['password'];
 
-    public function changeProfilePicture()
-    {
-        $userId = $this->f3->get('SESSION.user_id');
-        $uploadedFile = $_FILES['profile_picture'];
-    
-        if ($uploadedFile['error'] == UPLOAD_ERR_OK) {
-            $tmp_name = $uploadedFile['tmp_name'];
-            $name = basename($uploadedFile['name']);
-    
-            // Validate file type, size, etc., here
-    
-            $uploadDir = 'path/to/uploads/';
-            if (move_uploaded_file($tmp_name, $uploadDir . $name)) {
-                $this->model->updateProfilePicture($userId, $uploadDir . $name);
-                $this->f3->reroute('@profile');
+            // Validate and sanitize inputs as necessary
+
+            // Call model method to update the user details
+            $userModel = new User();
+            $updateResult = $userModel->updateProfile($_SESSION['user_id'], $username, $password);
+
+            if ($updateResult) {
+                echo json_encode(['success' => true, 'message' => 'Profile updated successfully']);
             } else {
-                $this->f3->set('error', 'File upload failed.');
+                echo json_encode(['success' => false, 'message' => 'Failed to update profile']);
             }
-        } else {
-            $this->f3->set('error', 'Error uploading file.');
         }
     }
-    
-    public function changeCredentials()
-    {
-        $userId = $this->f3->get('SESSION.user_id');
-        $newUsername = trim($this->f3->get('POST.username'));
-        $newPassword = trim($this->f3->get('POST.password'));
-    
-        // Check if the username is not taken, and validate password as needed
-        if ($this->model->isUsernameAvailable($newUsername) && $this->isPasswordValid($newPassword)) {
-            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-            $this->model->updateCredentials($userId, $newUsername, $hashedPassword);
-            $this->f3->reroute('@profile');
-        } else {
-            $this->f3->set('error', 'Username taken or invalid password.');
+
+    public function deleteAccount() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Call model method to delete the user account
+            $userModel = new User();
+            $deleteResult = $userModel->deleteAccount($_SESSION['user_id']);
+
+            if ($deleteResult) {
+                session_destroy(); // Destroy session after account deletion
+                echo json_encode(['success' => true, 'message' => 'Account deleted successfully']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to delete account']);
+            }
         }
     }
-    
-    public function deleteAccount()
-    {
-        $userId = $this->f3->get('SESSION.user_id');
-        
-        if ($this->model->deleteUser($userId)) {
-            $this->f3->clear('SESSION');  // Clear user session
-            $this->f3->reroute('@home');
-        } else {
-            $this->f3->set('error', 'Failed to delete account.');
-        }
-    }
-    
 }
