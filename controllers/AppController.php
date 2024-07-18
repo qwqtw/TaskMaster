@@ -2,12 +2,15 @@
 
 class AppController extends Controller
 {
-    private $model;
+    private $lists;
+    private $task;
+
 
     public function __construct($f3)
     {
         parent::__construct($f3);
-        $this->model = new Lists();
+        $this->lists = new Lists();
+        $this->task = new Task();
     }
 
     public function render()
@@ -16,8 +19,19 @@ class AppController extends Controller
             $this->f3->reroute("@home");
         }
 
-        $lists = $this->model->getAll();
-        $this->set("lists", $lists);
+        $this->set("lists", $this->lists->getAll());
+        $this->set("selectedTasks", []);
+
+        // GET: List by id
+        if (array_key_exists("id", $this->get("PARAMS"))) {        
+            $list = $this->lists->getById($this->get("PARAMS.id"));
+            if ($list) {
+                $this->set("selectedTitle", $list["title"]);
+                $this->set("selectedId", $list["id"]);
+                
+                $this->set("tasks", $this->task->getTasks($list["id"]));
+            }
+        }
 
         $this->set("container", "app-container");
         $this->set("username", "test");
@@ -32,10 +46,23 @@ class AppController extends Controller
             "user_id" => $this->get("COOKIE.user_id"),
         ]);
 
-        // Check if list already exists
+        if ($this->isFormValid()) {
+            // Check if list already exists
 
-        // Save the list
-        $this->model->createList();
-        $this->f3->reroute("@app");
+            // Save the list
+            $this->lists->createList();
+        }
+        $this->f3->reroute("@app");      
+    }
+
+    public function isFormValid()
+    {
+        $errors = [];
+
+        if ($this->get("POST.title") == "") {
+            array_push($errors, "List name is required.");
+        }
+
+        return $this->validateForm($errors);
     }
 }

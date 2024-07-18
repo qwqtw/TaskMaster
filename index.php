@@ -23,10 +23,15 @@ $f3->route("GET @contactUsGuest: /contact-us-guest", "PagesController->contactUs
  
 // app.html
 $f3->route("GET @app: /app", "AppController->render");
+$f3->route("GET @appList: /app/list/@id", "AppController->render");
 $f3->route("POST @createList: /create-list", "AppController->createList");
 
 $f3->route("GET @logout: /logout", "PagesController->logout");
- 
+
+/* Catch invalid url, redirect to home */
+$f3->route("GET /*", "LoginController->render");
+$f3->route("POST /*", "LoginController->render");
+
 
 // Start
 $f3->run();
