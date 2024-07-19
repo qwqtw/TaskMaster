@@ -129,13 +129,10 @@
  
                         <!--  title of the currently selected list  -->
                         <h2 id="title" class="ms-3" style="width: 80%;">{{ isset(@selectedTitle) ? @selectedTitle : "TODO" }}</h2>
-                        <!--<div id="title" class="ms-3">
-                            <h2>12345612345612345612</h2>
-                        </div>-->
 
                         <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
-                        <div class="tab-wrapper">
-                            <div class="label-wrapper">
+                        <div class="tab-wrapper w-100 d-flex">
+                            <div class="label-wrapper w-50 me-5">
                                 <label>
                                     <input type="checkbox" active> All
                                 </label>
@@ -149,13 +146,11 @@
                         
 
                             <!--  priority tab which uses a slider graphic  -->
-                            <div id="priority">
-                                <p>By Priority</p>
-                                <div class="slider-container">
-                                    <div class="slider" id="slider">
-                                        <div class="bar"></div>
-                                        <div class="circle"></div>
-                                    </div>
+                            <div id="priority" class="d-flex w-50 justify-content-center align-items-center">
+                                <p class="me-2 mb-0">By Priority</p>
+                                <div class="slider d-flex align-items-center" id="slider">
+                                    <div class="bar"></div>
+                                    <div class="circle"></div>
                                 </div>
                             </div>
                         </div>
