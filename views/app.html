@@ -56,7 +56,7 @@
                                     <!-- Avatar drop down -->
 									<li class="nav-item dropdown d-none d-md-block text-center me-2">
 										<a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <img src="images/avatar.png" alt="avatar picture" class="rounded-circle" style="width:50px;">
+                                            <img src="images/avatar.png" alt="avatar picture" class="avatar rounded-circle">
 										</a>
 										<ul class="dropdown-menu dropdown-menu-end">
 											<li>
@@ -126,67 +126,70 @@
                     
                     <!--  main content of the to-do manager -- all tasks are listed here  -->
                     <main class="content col-md-7 col-lg-8 col-xl-5 py-4">
- 
-                        <!--  title of the currently selected list  -->
-                        <h2 id="title" class="ms-3" style="width: 80%;">{{ isset(@selectedTitle) ? @selectedTitle : "TODO" }}</h2>
-
-                        <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
-                        <div class="tab-wrapper w-100 d-flex">
-                            <div class="label-wrapper w-50 me-5">
-                                <label>
-                                    <input type="checkbox" active> All
-                                </label>
-                                <label>
-                                    <input type="checkbox"> Active
-                                </label>
-                                <label>
-                                    <input type="checkbox"> Completed
-                                </label>
-                            </div>
                         
+                        <div class="px-3">
+                            <!--  title of the currently selected list  -->
+                            <h2 id="title">{{ isset(@selectedTitle) ? @selectedTitle : "TODO" }}</h2>
 
-                            <!--  priority tab which uses a slider graphic  -->
-                            <div id="priority" class="d-flex w-50 justify-content-center align-items-center">
-                                <p class="me-2 mb-0">By Priority</p>
-                                <div class="slider d-flex align-items-center" id="slider">
-                                    <div class="bar"></div>
-                                    <div class="circle"></div>
+                            <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
+                            <div class="tab-wrapper w-100 d-flex mb-4">
+                                <div class="label-wrapper w-50 me-5">
+                                    <label>
+                                        <input type="checkbox" active> All
+                                    </label>
+                                    <label>
+                                        <input type="checkbox"> Active
+                                    </label>
+                                    <label>
+                                        <input type="checkbox"> Completed
+                                    </label>
+                                </div>
+                            
+
+                                <!--  priority tab which uses a slider graphic  -->
+                                <div id="priority" class="d-flex justify-content-center align-items-center">
+                                    <p class="me-2 mb-0">By Priority</p>
+                                    <div class="slider d-flex align-items-center" id="slider">
+                                        <div class="bar"></div>
+                                        <div class="circle"></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
 
 
-                        <!--  task items  -->
-                        <div id="tasks-container">
-                            <ul>
-                                <repeat group="{{ @tasks }}" value="{{ @task }}">
-                                    <check if="{{ @task['is_completed'] == 1}}">
-                                        <true><set taskCompleted="active"></set></true>
-                                        <false><set taskCompleted=""></set></false>
-                                    </check>
-                                    <li class="d-flex w-100 mb-4">
-                                        <div>
-                                            <div class="marker priority priority-{{ @task['priority'] }} {{ @taskCompleted == 'active' ? 'hide' : ''}}"><i class="fa-solid fa-circle"></i></div>
-                                            <div class="marker checkmark {{ @taskCompleted }}"><i class="fa-solid fa-circle-check"></i></div>
-                                        </div>
-                                        <div class="d-flex flex-column w-100">
-                                            <p data-url="{{ @BASE }}{{ 'toggleTask', ['id'=>@task['id']] | alias }}" class="mb-2 task-content {{ @taskCompleted }}">{{ @task["content"] | nl2br }}</p>
-                                            <div class="d-flex">
-                                                <div class="{{ @task['due_date'] == '' || @taskCompleted ? 'd-none' : 'd-flex' }} task-date justify-content-center align-items-center rounded-5">{{ @task["due_date"] }}</div>
+                            <!--  task items  -->
+                            <div id="tasks-container">
+                                <ul>
+                                    <repeat group="{{ @tasks }}" value="{{ @task }}">
+                                        <check if="{{ @task['is_completed'] == 1}}">
+                                            <true><set taskCompleted="active"></set></true>
+                                            <false><set taskCompleted=""></set></false>
+                                        </check>
+                                        <li class="d-flex w-100 mb-4">
+                                            <div>
+                                                <div class="marker priority priority-{{ @task['priority'] }} {{ @taskCompleted == 'active' ? 'hide' : ''}}"><i class="fa-solid fa-circle"></i></div>
+                                                <div class="marker checkmark {{ @taskCompleted }}"><i class="fa-solid fa-circle-check"></i></div>
                                             </div>
-                                        </div>
-                                        <div class="text-center">
-                                            <a class="task-icon task-edit" href=""><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <a class="task-icon task-delete" href="{{ @BASE }}{{ 'deleteTask', ['id' => @task['id'] ] | alias }}"><i class="fa-solid fa-trash-can"></i></a>
-                                        </div>
-                                    </li>
-                                </repeat>
-                            </ul>
+                                            <div class="d-flex flex-column w-100">
+                                                <p data-url="{{ @BASE }}{{ 'toggleTask', ['id'=>@task['id']] | alias }}" class="mb-2 task-content {{ @taskCompleted }}">{{ @task["content"] | nl2br }}</p>
+                                                <div class="d-flex">
+                                                    <div class="{{ @task['due_date'] == '' || @taskCompleted ? 'd-none' : 'd-flex' }} task-date justify-content-center align-items-center rounded-5">{{ @task["due_date"] }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center">
+                                                <a class="task-icon task-edit" href=""><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a class="task-icon task-delete" href="{{ @BASE }}{{ 'deleteTask', ['id' => @task['id'] ] | alias }}"><i class="fa-solid fa-trash-can"></i></a>
+                                            </div>
+                                        </li>
+                                    </repeat>
+                                </ul>
+                            </div>
                         </div>
 
                         <div id="task-add-container" class="w-100">
                             <form action="{{ @BASE }}{{ 'createTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
+                                <input type="hidden" name="list_id" value="{{ @selectedId }}">
                                 <div class="d-flex mb-2">
                                     <div id="task-add-priority" class="input-group input-group-sm">
                                         <label class="input-group-text" id="add-priority">Priority</label>
@@ -202,7 +205,7 @@
                                     </div>
                                 </div>
                                 <!-- Create task -->
-                                <div class="input-group input-group-sm h-75 mb-3" style="max-height: 50px;">
+                                <div id="task-add-content" class="input-group input-group-sm h-75 mb-3">
                                     <label class="input-group-text" for="add-content">Task</label>
                                     <textarea class="form-control" id="add-content" name="content" required></textarea>
                                 </div>
@@ -212,12 +215,10 @@
                                 </div>
                             </form>
 
-                            <div>
-                                <button id="task-add-btn" type="button" class="btn-add text-center">
-                                    <i class="close fa-solid fa-xmark"></i>
-                                    <i class="open fa-solid fa-plus"></i>
-                                </button>
-                            </div>
+                            <button id="task-add-btn" type="button" class="btn-add text-center">
+                                <i class="close fa-solid fa-xmark"></i>
+                                <i class="open fa-solid fa-plus"></i>
+                            </button>
                         </div>
                         
                     </main>

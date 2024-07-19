@@ -22,11 +22,12 @@ class TaskController extends Controller
         ]);
 
         if ($this->isFormValid()) {
+            $listId = $this->get("POST.list_id");
             // Check if list already exists
 
             // Save the task
             $this->model->create();
-            $this->f3->reroute("@appList(@id={$this->get('selectedId')}},@mode=add)");
+            $this->f3->reroute("@appList(@id={$listId},@mode=add)");
         }
         $this->f3->reroute("@app");
     }

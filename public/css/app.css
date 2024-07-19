@@ -45,6 +45,10 @@ body > .container-fluid {
     width: 245px;
 }
 
+.navbar .avatar {
+    width: 50px;
+}
+
 /*
     TO DO List container
 */
@@ -187,6 +191,9 @@ main {
 }
 #task-add-due-date {
     width: 60%;
+}
+#task-add-content {
+    max-height: 50px;
 }
 
 
