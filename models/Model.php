@@ -42,6 +42,16 @@ class Model extends DB\SQL\Mapper
         return $this->findone(["id = ?", $id]);
     }
 
+    /**
+     * Delete a row from the table using id primary key
+     * @param int id row to delete
+     */
+    public function deleteById($id)
+    {
+        $this->load(["id = ?", $id]); // Load the object
+        $this->erase();
+    }
+
 
     /**
      * Insert a new row into the table using POST data

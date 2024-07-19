@@ -177,8 +177,8 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <a class="task-icon task-edit" href="#"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <a class="task-icon task-delete" href="#"><i class="fa-solid fa-trash-can"></i></a>
+                                            <a class="task-icon task-edit" href=""><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <a class="task-icon task-delete" href="{{ @BASE }}{{ 'deleteTask', ['id' => @task['id'] ] | alias }}"><i class="fa-solid fa-trash-can"></i></a>
                                         </div>
                                     </li>
                                 </repeat>
@@ -187,7 +187,6 @@
 
                         <div id="task-add-container" class="w-100">
                             <form action="{{ @BASE }}{{ 'createTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
-                                <input type="hidden" name="list_id" value="{{ @selectedId }}">
                                 <div class="d-flex mb-2">
                                     <div id="task-add-priority" class="input-group input-group-sm">
                                         <label class="input-group-text" id="add-priority">Priority</label>
