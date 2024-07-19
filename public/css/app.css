@@ -348,6 +348,12 @@ footer {
     color: white;
     font-size: 0.8rem;
 }
+footer > p {
+    color: white;
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 5px;
+}
 
 
 

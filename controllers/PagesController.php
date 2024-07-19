@@ -5,6 +5,8 @@ class PagesController extends Controller
 {
     public function contactUs($f3) 
     {
+        // Setup the css
+        $this->set("css", ["css/contact-us.css"]);
         $this->setPageTitle("Contact Us");
         // Determine which header to use based on login status
         if ($this->isLoggedIn()) {

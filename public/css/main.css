@@ -54,148 +54,68 @@ input[type=reset]:active {
     width: 78%;
 }
 
+header {
+    font-family: 'Exo', sans-serif;
+    margin-bottom: 20px;
+    background-color: rgba(217, 217, 217, 0.5);
 
-/*  
-
-container for main content styles  
-
-*/
-/*
-#container {
-    width: 75%;
-    height: 60%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
 }
-*/
 
-/*  
-
-styling for list section (creating lists)  
-
-*/
-
-#lists {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex-wrap: wrap;
+header nav a {
+    text-decoration: none;
+    color: black;
+    transition: color 0.3s ease;
 }
-/*
-fieldset {
-    border-radius: 25px;
-    width: 80%;
-    height: 100%;
-    margin-top: 10px;
-    background-color: white;
-    display: flex;
-    flex: 1 0 auto;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+
+header nav span {
+    font-weight: bold;
 }
-*/
-/*
-.list-wrapper{
-    position: relative;
-    width: 100%;
+
+.nav-link {
+    color: black;
+}
+
+.nav-link:hover {
+    color: #0197BC;
+}
+
+.nav-link.active {
+    color: #0197BC;
+}
+
+.navbar-logo {
+    height: 50px;
+}
+
+.navbar-logo-text {
+    height: 30px;
+}
+
+.profile-icon img {
+    width: 40px;
     height: 40px;
-    height: 10%;
-    background-color: rgba(0, 0, 0, 0);
+}
+
+.profile-icon {
     position: relative;
-}
-*/
-/*
-.input-wrapper {
-    width: 100%;
-    height: 100%;
-    padding-left: 10px;
-    padding-bottom: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
+    display: inline-block;
 }
 
-.input-wrapper img {
-    height: 25px;
-    width: 25px;
-    margin-right: 5px;
+.dropdown-menu {
+    min-width: 10rem;
+    top: 100%;
+    left: 30%;
+    transform: translateX(-50%);
 }
 
-#list-name {
-    width: 75%;
-    height: 80%;
-    border: none;
-}
-    */
-/*
-.list-item {
-    width: 90%;
-    height: 10%;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px;
-}
-    */
-
-
-
-/*  
-
-styling for main content (task list)  
-
-*/
-/*
-#content {
-    width: 80%;
-    border-left: solid 1px black;
-    display: flex;
-    flex-direction: column;
-}
-*/
-
-/*  styling for title of currently selected list  */
-/*
-#title {
-    width: 100%;
-    height: 10%;
-    display: flex;
-    justify-content: start;
-    align-items: end;
-    padding-left: 10%;
-}
-*/
-/*
-#title h2::after {
-    content: "";
+.dropdown:hover .dropdown-menu {
     display: block;
-    height: 2px;
-    width: 150%;
-    background-color: #000;
-    margin: 8px auto 0;
 }
-*/
 
 
-/*  styling for tabs that organize the task items (all, active, completed, priority)  */
-/*.tab-wrapper {
-    height: 10%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding-left: 8%;
-}*/
+
+
+
 
 .label-wrapper {
     display: flex;
@@ -266,26 +186,3 @@ input[type="checkbox"] {
 }
 
 
-
-/*  styling for task list  */
-/*
-.task-item {
-    display: flex;
-    flex-wrap: nowrap;
-    height: 10%;
-    width: 100%;
-    background-color: lightblue;
-    align-content: center;
-    justify-content: space-between;
-    padding: 5%;
-}
-
-.task-item div {
-    display: flex;
-    align-items: center;
-}
-
-.task-item div img {
-    margin: 20px;
-}
-*/
