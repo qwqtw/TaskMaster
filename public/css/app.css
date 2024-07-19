@@ -45,6 +45,10 @@ body > .container-fluid {
     width: 245px;
 }
 
+.navbar .avatar {
+    width: 50px;
+}
+
 /*
     TO DO List container
 */
@@ -65,6 +69,7 @@ body > .container-fluid {
     Create list input
 */
 fieldset {
+    position: relative;
     width: 100%;
 }
 fieldset legend {
@@ -187,6 +192,9 @@ main {
 #task-add-due-date {
     width: 60%;
 }
+#task-add-content {
+    max-height: 50px;
+}
 
 
 #task-add-btn {
@@ -283,7 +291,10 @@ main {
     display: none !important; /* only this time, for explicity */
 }
 .priority-1 {
-    color: red;
+    color: orange;
+}
+.priority-2 {
+    color: orangered;
 }
 /*
     Right of task: Edit and delete
@@ -315,8 +326,18 @@ main {
 
 
 
-#title {
+#list-title-form {
     border-bottom: 1px solid black;
+}
+#list-title-form input[type=text] {
+    font-size: 2rem;
+    font-weight: 600;
+    border: 0;
+    background-color: rgba(255, 255, 255, 0);
+}
+#list-title-form input[type=text]:focus {
+    color: #394a6d;
+    outline: none;
 }
 
 /*

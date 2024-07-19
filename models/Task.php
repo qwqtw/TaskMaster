@@ -9,7 +9,7 @@ class Task extends Model
 
     public function getTasks($listId)
     {
-        $this->load(["list_id = ?", $listId]);
+        $this->load(["list_id = ? ORDER BY id DESC", $listId]);
         return $this->query;
     }
 

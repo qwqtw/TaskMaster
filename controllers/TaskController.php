@@ -52,4 +52,11 @@ class TaskController extends Controller
 
         return $this->validateForm($errors);
     }
+
+    public function delete()
+    {
+        // Add validation that the id belongs to the list that belongs to the user.
+        $this->model->deleteById($this->get("PARAMS.id"));
+        $this->f3->reroute("@app(@id={$this->get('selectedId')})");
+    }
 }

@@ -23,11 +23,15 @@ $f3->route("GET @contactUsGuest: /contact-us-guest", "PagesController->contactUs
  
 // app.html
 $f3->route("GET @app: /app", "AppController->render");
+
 $f3->route("GET @appList: /app/list/@id", "AppController->render");
 $f3->route("GET @appListMode: /app/list/@id/@mode", "AppController->render");
 $f3->route("POST @createList: /app/list/create", "ListController->create");
+$f3->route("POST @editListTitle: /app/list/editTitle", "ListController->editTitle");
+
 $f3->route("POST @createTask: /app/task/create", "TaskController->create");
-$f3->route("GET @toggleTask: /app/task/toggle/@id", "TaskController->toggleTask");
+$f3->route("GET @toggleTask: /app/task/@id/toggle", "TaskController->toggleTask");
+$f3->route("GET @deleteTask: /app/task/@id/delete", "TaskController->delete");
 
 $f3->route("GET @logout: /logout", "PagesController->logout");
  

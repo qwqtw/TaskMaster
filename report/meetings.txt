@@ -36,5 +36,6 @@ What to do: html, css, js for the project. To-do list page, profile modification
 
 
 7/16 - 7/18
-Qiutian is working on the profile management, Tamara is working on the todo lists. No issues encountered so far.
+Qiutian is working on the profile management, basic update and delete account but there's a few things to fix. Afterwards, Qiutian will try to implement the update profile picture, 
+Tamara is working on the todo lists, creating and completing tasks. No issues encountered so far. If there's time, do more css and add the rename list option.
 
