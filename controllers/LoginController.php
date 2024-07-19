@@ -22,6 +22,8 @@ class LoginController extends Controller
             $this->f3->reroute("@app");
         }
 
+        $this->set("css", ["css/login.css"]);
+
         $this->setPageTitle("Login");
         $this->set("form", "includes/login.html");
         $this->set("container", "login-container");
