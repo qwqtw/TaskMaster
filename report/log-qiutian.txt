@@ -18,3 +18,12 @@ Finalize the html and css for the contact us page.
 
 7/15
 Set up header and footer using Fatfree framework
+
+7/16
+Started working on profile update feature
+
+7/17
+working on profile update feature
+
+7/18
+Implemented the basic update username and delete account feature
