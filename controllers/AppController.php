@@ -19,6 +19,11 @@ class AppController extends Controller
             $this->f3->reroute("@home");
         }
 
+        // setup the css needed
+        $this->set("css", ["css/app.css"]);
+
+        
+
         $this->set("lists", $this->lists->getAll());
         $this->set("tasks", []);
 
