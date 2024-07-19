@@ -1,7 +1,4 @@
 <include href="includes/head.html">
-    <header>
-        <h2>Update Profile</h2>
-    </header>
     <div class="container mt-5">
 
 
@@ -13,17 +10,6 @@
 
         <form method="POST" action="{{ @BASE }}{{ 'profileUpdate' | alias }}" class="mb-4"
             enctype="multipart/form-data">
-            <!-- <div class="mb-3">
-                <label for="current-profile-picture" class="form-label">Current Profile Picture:</label>
-                <div>
-                    <img src="{{ @BASE }}{{ @user.profile_picture }}" alt="Current Profile Picture"
-                        class="img-thumbnail" style="max-width: 150px;">
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="profile_picture" class="form-label">Profile Picture:</label>
-                <input type="file" class="form-control" id="profile_picture" name="profile_picture">
-            </div> -->
 
             <!-- Input: Username -->
             <div class="form-group mb-3">
@@ -49,7 +35,7 @@
                 <button type="submit" class="btn btn-primary">Update Profile</button>
             </div>
             <input type="hidden" id="update-success" value="{{ @successMessage }}">
-            <input type="hidden" name="referer" value="{{ @SERVER.HTTP_REFERER }}">
+
         </form>
         <form method="POST" action="{{ @BASE }}{{ 'profileDelete' | alias }}"
             onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
@@ -58,7 +44,7 @@
             </div>
 
             <input type="hidden" id="update-success" value="{{ @successMessage }}">
-            <input type="hidden" name="referer" value="{{ @SERVER.HTTP_REFERER }}">
+
         </form>
 
         <div class="mb-3">

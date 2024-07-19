@@ -22,6 +22,8 @@ class ProfileController extends Controller
         $userId = $this->get("COOKIE.user_id");
         $user = $this->model->getById($userId);
 
+        // Setup the css
+        $this->set("css", ["css/login.css"]);
         $this->setPageTitle("Update Profile");
         $this->set("form", "includes/profile-update.html");
         $this->set("container", "profile-container");
@@ -71,24 +73,14 @@ if ($existingUser && $existingUser->id != $userId) {
 
         }
 
-        // Handle profile picture upload
-        $profilePicture = $this->get("FILES.profile_picture");
-        if ($profilePicture && $profilePicture["error"] === UPLOAD_ERR_OK) {
-            $uploadDir = './public/images/uploads/';
-            $uploadFile = $uploadDir . basename($profilePicture['name']);
-            if (move_uploaded_file($profilePicture['tmp_name'], $uploadFile)) {
-                $this->set("POST.profile_picture", '/images/uploads/' . basename($profilePicture['name']));
-            } else {
-                $errors[] = "Failed to upload profile picture.";
-            }
-        }
+
 
         if (empty($errors)) {
             $userId = $this->get("COOKIE.user_id");
             $data = [
                 "username" => $this->get("POST.username"),
                 "password" => password_hash($this->get("POST.password"), PASSWORD_DEFAULT),
-                "profile_picture" => $this->get("POST.profile_picture")
+              
             ];
             $this->model->updateUser($userId, $data);
             $this->set("SESSION.successMessage", "Profile updated successfully.");
