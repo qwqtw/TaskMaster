@@ -291,7 +291,10 @@ main {
     display: none !important; /* only this time, for explicity */
 }
 .priority-1 {
-    color: red;
+    color: orange;
+}
+.priority-2 {
+    color: orangered;
 }
 /*
     Right of task: Edit and delete
