@@ -16,8 +16,10 @@ class Controller
     {
         $this->f3 = $f3;
         
-        $f3->set("pageTitle", $this->get("SITENAME"));
-        $f3->set("errors", []);
+        $this->set("pageTitle", $this->get("SITENAME"));
+        $this->set("errors", []);
+        $this->set("css", []);
+        
 
         // Setup template
         $this->template = new Template;
