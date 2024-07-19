@@ -61,12 +61,14 @@ class ProfileController extends Controller
             $errors = $this->get("errors");
         } else {
             // Check if the new username already exists
-            $username = $this->get("POST.username");
-            $existingUser = $this->model->getUserByUsername($username);
+ $username = $this->get("POST.username");
+$userId = $this->get("COOKIE.user_id");
+$existingUser = $this->model->getUserByUsername($username);
 
-            if ($existingUser && $existingUser->id != $this->get("COOKIE.user_id")) {
-                $errors[] = "This username is already taken.";
-            }
+if ($existingUser && $existingUser->id != $userId) {
+    $errors[] = "This username is already taken.";
+}
+
         }
 
         // Handle profile picture upload

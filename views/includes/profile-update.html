@@ -6,7 +6,7 @@
     <base href="{{ @BASE }}/public/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - TaskMaster Pro</title>
+    <title>Update Profile - TaskMaster Pro</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo:wght@400;600&display=swap">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
@@ -16,10 +16,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
+<header>
+    <h2>Update Profile</h2>
+</header>
 
 <body>
     <div class="container mt-5">
-        <h2>Update Profile</h2>
+
+
+        <!-- Display current username -->
+        <div class="alert alert-info" role="alert">
+            Current Username: {{ @user.username }}
+        </div>
+
 
         <form method="POST" action="{{ @BASE }}{{ 'profileUpdate' | alias }}" class="mb-4"
             enctype="multipart/form-data">
@@ -34,17 +43,25 @@
                 <label for="profile_picture" class="form-label">Profile Picture:</label>
                 <input type="file" class="form-control" id="profile_picture" name="profile_picture">
             </div> -->
-            <div class="mb-3">
-                <label for="username" class="form-label">New Username:</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+
+            <!-- Input: Username -->
+            <div class="form-group mb-3">
+                <label for="username" class="form-label m-0">New Username:</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter a username"
+                    value="{{ isset(@username) ? @username : '' }}" required>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">New Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+
+            <!-- Input: Password -->
+            <div class="form-group mb-3">
+                <label for="password" class="form-label m-0">New Password:</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter a password"
+                    required>
             </div>
-            <div class="mb-3">
-                <label for="password-confirm" class="form-label">Confirm New Password:</label>
-                <input type="password" class="form-control" id="password-confirm" name="password-confirm" required>
+            <!-- Input: Password -->
+            <div class="form-group mb-3">
+                <label for="password-confirm" class="form-label m-0">Confirm new Password:</label>
+                <input type="password" id="password-confirm" name="password-confirm" class="form-control"
+                    placeholder="Confirm the password" required>
             </div>
 
             <div class="mb-3">
@@ -89,10 +106,11 @@
         width: 200px;
         border-radius: 60px;
         height: 48px;
+        font-weight: 500;
     }
 
     .btn-secondary:hover {
-        background-color: rgb(126, 126, 126) !important;
+        background-color: rgb(150, 150, 150) !important;
     }
 
     .btn-danger {
