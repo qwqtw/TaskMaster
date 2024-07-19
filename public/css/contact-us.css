@@ -1,3 +1,8 @@
+html,
+body {
+    height: initial;
+}
+
 body {
     font-family: 'Exo', sans-serif;
     background-image: url("../images/contact-us-bg.png"); 
@@ -102,3 +107,24 @@ a:hover .mdi {
 }
 
 
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Exo', sans-serif;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    height: 200px;
+    color: #F3F3F3;
+}
+
+footer p {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 10px;
+    left: 0;
+    background-color: #394A6D;
+    padding: 5px;
+}
