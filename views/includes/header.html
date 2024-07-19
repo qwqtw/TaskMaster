@@ -1,71 +1,126 @@
 <header class="sticky-top mb-5">
+    <nav class="navbar navbar-expand-md px-2 px-md-4">
+        <div class="logo-container">
+            <img src="images/logo-image.svg" alt="TaskMaster Logo" class="navbar-logo">
+            <img src="images/logo-text.svg" alt="TaskMaster" class="navbar-logo-text">
+        </div>
 
-    <head>
-        <link rel="stylesheet" href="css/header.css">
-        <link rel="stylesheet" href="css/main.css">
-    </head>
-    <header class="mb-5">
-        <nav class="navbar navbar-expand-md px-2 px-md-4">
-            <div class="logo-container">
-                <img src="images/logo-image.svg" alt="TaskMaster Logo" class="navbar-logo">
-                <img src="images/logo-text.svg" alt="TaskMaster" class="navbar-logo-text">
+        <div class="offcanvas offcanvas-end p-2" tabindex="-1" id="main-nav">
+            <div class="offcanvas-header">
+                <span>Hi, <strong>{{ @username }}</strong></span>
+                <button type="button" class="btn-close fs-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end align-items-center flex-grow-1">
 
-            <div class="offcanvas offcanvas-end p-2" tabindex="-1" id="main-nav">
-                <div class="offcanvas-header">
-                    <span>Hi, <strong>{{ @username }}</strong></span>
-                    <button type="button" class="btn-close fs-3" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end align-items-center flex-grow-1">
+                    <!-- Taskmaster App -->
+                    <li class="nav-item me-md-5">
+                        <a class="nav-link" href="{{ @BASE }}{{ 'app' | alias }}">TO-DO
+                            list</a>
+                    </li>
+                    <!-- Contact us -->
+                    <li class="nav-item me-md-5">
+                        <a class="nav-link" href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact
+                            us</a>
+                    </li>
 
-                        <!-- Taskmaster App -->
-                        <li class="nav-item me-md-5">
-                            <a class="nav-link" href="{{ @BASE }}{{ 'app' | alias }}">TO-DO
-                                list</a>
-                        </li>
-                        <!-- Contact us -->
-                        <li class="nav-item me-md-5">
-                            <a class="nav-link" href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact
-                                us</a>
-                        </li>
-
-                        <!-- Welcome user -->
-                        <li class="nav-item d-none d-md-block me-md-3 mb-5 mb-md-0 text-center">
-                            <span>Hi, <strong>{{ @username }}</strong></span>
-                        </li>
-                        <!-- Avatar drop down -->
-                        <li class="nav-item dropdown d-none d-md-block text-center me-2">
-                            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="images/avatar.png" alt="avatar picture" class="rounded-circle"
-                                    style="width:50px;">
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <a class="update-account dropdown-item"
-                                        href="{{ @BASE }}{{ 'profile' | alias }}">Update
-                                        account</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="logout dropdown-item" href="{{ @BASE }}{{ 'logout' | alias }}">Log out</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item d-md-none me-md-5">
-                            <a data-bs-dismiss="offcanvas" class="update-account dropdown-item">Update account</a>
-                        </li>
-                        <li class="nav-item d-md-none me-md-5">
-                            <a data-bs-dismiss="offcanvas" class="logout dropdown-item"
-                                href="{{ @BASE }}{{ 'home' | alias }}">Log out</a>
-                        </li>
-                    </ul>
-                </div>
+                    <!-- Welcome user -->
+                    <li class="nav-item d-none d-md-block me-md-3 mb-5 mb-md-0 text-center">
+                        <span>Hi, <strong>{{ @username }}</strong></span>
+                    </li>
+                    <!-- Avatar drop down -->
+                    <li class="nav-item dropdown d-none d-md-block text-center me-2">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="images/avatar.png" alt="avatar picture" class="rounded-circle"
+                                style="width:50px;">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="update-account dropdown-item" href="{{ @BASE }}{{ 'profile' | alias }}">Update
+                                    account</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="logout dropdown-item" href="{{ @BASE }}{{ 'logout' | alias }}">Log out</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item d-md-none me-md-5">
+                        <a data-bs-dismiss="offcanvas" class="update-account dropdown-item">Update account</a>
+                    </li>
+                    <li class="nav-item d-md-none me-md-5">
+                        <a data-bs-dismiss="offcanvas" class="logout dropdown-item"
+                            href="{{ @BASE }}{{ 'home' | alias }}">Log out</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
 
 
-    </header>
+</header>
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    header {
+        font-family: 'Exo', sans-serif;
+        margin-bottom: 20px;
+        background-color: rgba(217, 217, 217, 0.5);
+
+    }
+
+    header nav a {
+        text-decoration: none;
+        color: black;
+        transition: color 0.3s ease;
+    }
+
+    header nav span {
+        font-weight: bold;
+    }
+
+    .nav-link {
+        color: black;
+    }
+
+    .nav-link:hover {
+        color: #0197BC;
+    }
+
+    .nav-link.active {
+        color: #0197BC;
+    }
+
+    .navbar-logo {
+        height: 50px;
+    }
+
+    .navbar-logo-text {
+        height: 30px;
+    }
+
+    .profile-icon img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .profile-icon {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-menu {
+        min-width: 10rem;
+        top: 100%;
+        left: 30%;
+        transform: translateX(-50%);
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+</style>
