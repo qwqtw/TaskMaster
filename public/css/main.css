@@ -36,7 +36,9 @@ button:active,
 a[role=button]:hover,
 a[role=button]:active,
 input[type=submit]:hover,
-input[type=submit]:active {
+input[type=submit]:active,
+input[type=reset]:hover,
+input[type=reset]:active {
     cursor: pointer;
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
 }

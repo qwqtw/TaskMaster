@@ -1,11 +1,15 @@
 $(function() {
     // Show add task form
-    $("#btn-add-task").on("click", function() {
-        $("#form-add-task").show(300);
+    $("#task-add-btn").on("click", function() {
+        $("#task-add-form").toggle(200);
+        $("#task-add-form textarea").focus();
+        $("#task-add-btn").toggleClass("hide");
     })
 
     // Reroute to selected list
     $(".list-item input[type=radio]").on("click", route);
+    $(".task-content").on("click", route);
+
 })
 
 function route(event)

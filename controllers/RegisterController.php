@@ -68,7 +68,7 @@ class RegisterController extends Controller
      * Validate the data for the form after a POST method
      * @return boolean true if the form is valid
      */
-    public function isFormValid()
+    private function isFormValid()
     {
         $errors = [];
 
