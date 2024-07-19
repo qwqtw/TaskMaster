@@ -14,10 +14,16 @@ class Lists extends Model
 
     public function getFirstList()
     {
-        return $this->findone();
+        return $this->findone(["user_id = ?", $_COOKIE["user_id"]]);
     }
 
-/**
+    public function getAll()
+    {
+        $this->load(["user_id = ?", $_COOKIE["user_id"]]);
+        return $this->query;
+    }
+
+    /**
      * Create the list entry and.
      * @return int id of the newly created list
      */

@@ -2,8 +2,11 @@ $(function() {
     // Show add task form
     $("#task-add-btn").on("click", function() {
         $("#task-add-form").toggle(200);
-        $("#task-add-form textarea").focus();
         $("#task-add-btn").toggleClass("hide");
+
+        if ($("#task-add-btn").hasClass("hide")) {
+            $("#task-add-form textarea").focus();
+        }
     })
 
     // Reroute to selected list
