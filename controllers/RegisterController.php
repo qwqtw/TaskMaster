@@ -21,6 +21,8 @@ class RegisterController extends Controller
         if ($this->isLoggedIn()) {
             $this->f3->reroute("@app");
         }
+
+        $this->set("css", ["css/login.css"]);
         
         $this->setPageTitle("Register");
         $this->set("form", "includes/register.html");
