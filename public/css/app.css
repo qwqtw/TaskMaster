@@ -22,6 +22,16 @@ body > .container-fluid {
     background-color: blue;
 }
 
+.btn-add {
+    background-color: #0197BC;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    color: white;
+    font-size: 1.5rem;
+    border: 0px;
+}
+
 /*
     Header navigation
 */
@@ -33,6 +43,10 @@ body > .container-fluid {
 
 .horizontal-logo {
     width: 245px;
+}
+
+.navbar .avatar {
+    width: 50px;
 }
 
 /*
@@ -55,12 +69,13 @@ body > .container-fluid {
     Create list input
 */
 fieldset {
+    position: relative;
     width: 100%;
 }
 fieldset legend {
     position: absolute;
+    margin-top: -10px;
     z-index: 1;
-    top: -10px;
     background-color: rgba(255, 255, 255, 0.5);
     width: 80px;
     font-size: 0.9rem;
@@ -72,16 +87,13 @@ fieldset .input-wrapper {
     height: 50px;
     border-radius: 25px;
     background-color: white;
+    border: 1px solid darkgray;
 }
 /* Create list add btn */
 fieldset .input-wrapper input[type=submit] {
-    background-color: #0197BC;
-    border-radius: 50%;
     width: 40px;
     height: 40px;
-    border: 0;
-    color: white;
-    font-size: 1.5rem;
+    font-size: 0.9rem;
 }
 /* The input */
 fieldset .input-wrapper input[type=text] {
@@ -110,7 +122,7 @@ aside ul {
 }
 
 aside ul li:hover {
-    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1); /* highlight */
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3); /* highlight */
 }
 /* Hide the menu icons by default */
 aside ul li .menu {
@@ -140,39 +152,86 @@ main {
     background-color: #F3F3F3;
 }
 
+#task-add-container {
+    position: absolute; 
+    left: 0; 
+    bottom: 0; 
+    /*height: 275px;*/
+}
+#task-add-container textarea {
+    resize: none;
+}
 
-#form-add-task {
+#task-add-form {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    z-index: 1;
     display: none;
-    background-color: #0197BC;
-    width: 350px;
-    height: 300px;
-}
-
-#btn-add-task {
-    font-size: 2rem;
-}
-
-.arrow {
-    position: absolute; /* It will position based on parent div with position, in this case, .content */
-    bottom: 20px;
-    /*left: 50%;*/
-    left:50%;
-    background-color: #0197BC;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    color: white;
-    font-size: 1.5rem;
-    border: 0px;
+    height: 175px;
+    background-color: #E1E2E6;
     transform: translateX(-50%);
 }
+#task-add-form label {
+    background-color: rgba(1, 151, 188, 0.1);
+}
+#task-add-form input[type=submit] {
+    height: 40px;
+    width: 40px;
+    font-size: 0.9rem;
+}
+#task-add-form input[type=reset] {
+    height: 40px;
+    width: 40px;
+    background-color: gray;
+    font-size: 1rem;
+}
+#task-add-priority {
+    width: 40%;
+}
+#task-add-due-date {
+    width: 60%;
+}
+#task-add-content {
+    max-height: 50px;
+}
+
+
+#task-add-btn {
+    position: absolute; /* It will position based on parent div with position, in this case, .content */
+    bottom: 20px;
+    left: 50%;
+    font-size: 1.2rem;
+    transform: translateX(-50%);
+}
+/* 
+    Toggle add form btn
+    between open / close state
+*/
+#task-add-btn.hide {
+    background-color: #394a6d;
+}
+#task-add-btn > .close {
+    display: none;
+}
+#task-add-btn.hide > .open {
+    display: none;
+}
+#task-add-btn.hide > .close {
+    display: block;
+}
+/*
+#task-add.cancel {
+
+}
+*/
 
 
 /*
     Tasks
 */
 #tasks-container {
-    height: 70%;
+    height: 500px;
     overflow-y: auto; 
     overflow-x: hidden;
 }
@@ -202,6 +261,9 @@ main {
 .task-content {
     font-size: 1.25rem;
 }
+.task-content:hover {
+    cursor: pointer;
+}
 .task-content.active {
     text-decoration: line-through;
 }
@@ -229,7 +291,10 @@ main {
     display: none !important; /* only this time, for explicity */
 }
 .priority-1 {
-    color: red;
+    color: orange;
+}
+.priority-2 {
+    color: orangered;
 }
 /*
     Right of task: Edit and delete
@@ -261,8 +326,18 @@ main {
 
 
 
-#title {
+#list-title-form {
     border-bottom: 1px solid black;
+}
+#list-title-form input[type=text] {
+    font-size: 2rem;
+    font-weight: 600;
+    border: 0;
+    background-color: rgba(255, 255, 255, 0);
+}
+#list-title-form input[type=text]:focus {
+    color: #394a6d;
+    outline: none;
 }
 
 /*

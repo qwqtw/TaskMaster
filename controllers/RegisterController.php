@@ -3,12 +3,14 @@
 class RegisterController extends Controller
 {
     private $model;
+    private $lists;
     
 
     public function __construct($f3)
     {
         parent::__construct($f3);
         $this->model = new User();
+        $this->lists = new Lists();
     }
 
     /**
@@ -46,7 +48,15 @@ class RegisterController extends Controller
 
             // User doesn't exists
             if (!$user) {
-                $this->model->createUser();
+                // Create the user
+                $userId = $this->model->createUser();
+                // Create a default list
+                $this->set("POST", [
+                    "title" => "ToDo",
+                    "user_id" => $userId,
+                ]);
+                $this->lists->create();
+
                 $this->f3->reroute("@home");
             }
             // User already exists
@@ -68,7 +78,7 @@ class RegisterController extends Controller
      * Validate the data for the form after a POST method
      * @return boolean true if the form is valid
      */
-    public function isFormValid()
+    private function isFormValid()
     {
         $errors = [];
 

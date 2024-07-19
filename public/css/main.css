@@ -36,7 +36,9 @@ button:active,
 a[role=button]:hover,
 a[role=button]:active,
 input[type=submit]:hover,
-input[type=submit]:active {
+input[type=submit]:active,
+input[type=reset]:hover,
+input[type=reset]:active {
     cursor: pointer;
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
 }
@@ -187,17 +189,18 @@ styling for main content (task list)
 
 
 /*  styling for tabs that organize the task items (all, active, completed, priority)  */
-.tab-wrapper {
+/*.tab-wrapper {
     height: 10%;
     width: 100%;
     display: flex;
     justify-content: space-between;
     padding-left: 8%;
-}
+}*/
 
 .label-wrapper {
     display: flex;
     justify-content: space-between;
+    font-size: 0.9rem;
 }
 
 input[type="checkbox"] {
@@ -217,10 +220,16 @@ input[type="checkbox"] {
 
 
 /*  Priority slider graphic styling  */
+/*
 #priority {
     display: flex;
     padding: 15px;
     margin-right: 10%;
+}
+    */
+#priority {
+    position: relative;
+    font-size: 0.9rem;
 }
 
 .slider-container {
@@ -230,8 +239,8 @@ input[type="checkbox"] {
 }
 
 .slider {
-    display: flex;
-    align-items: center;
+    /*display: flex;
+    align-items: center;*/
     position: relative;
     cursor: pointer;
 }
