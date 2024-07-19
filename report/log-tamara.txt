@@ -23,4 +23,7 @@ Add create list and make the basic todo list framework.
 Add list selection and task display for the selected list.
 
 7/18
-Working on adding the tasks elements.
+Add create the tasks elements and completing them.
+
+7/19
+Fix some css and add delete task, add edit list title and make small adjustments in the todo list behaviors.
