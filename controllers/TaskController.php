@@ -32,7 +32,14 @@ class TaskController extends Controller
         $this->f3->reroute("@app");
     }
 
-    public function isFormValid()
+    public function toggleTask()
+    {
+        // TODO: Check if the id corresponds to the list that belongs to the user.
+        $this->model->toggleTask($this->get("PARAMS.id"));
+        $this->f3->reroute("@app");
+    }
+    
+    private function isFormValid()
     {
         $errors = [];
 

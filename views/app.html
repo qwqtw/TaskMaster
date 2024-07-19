@@ -101,11 +101,11 @@
                         <!--  list items   -->
                         <ul class="list-item">
                             <repeat group="{{ @lists }}" value="{{ @list }}">
+                                <check if="{{ isset(@selectedId) && @list['id'] == @selectedId }}">
+                                    <true><set chkSelected="checked"></true>
+                                    <false><set chkSelected=""></false>
+                                </check>
                                 <li class="d-flex w-100 mx-auto">
-                                    <check if="{{ isset(@selectedId) && @list['id'] == @selectedId }}">
-                                        <true><set chkSelected="checked"></true>
-                                        <false><set chkSelected=""></false>
-                                    </check>
                                     <input 
                                         {{ @chkSelected }} 
                                         id="list{{ @list['id'] }}" 
@@ -176,7 +176,7 @@
                                             <div class="marker checkmark {{ @taskCompleted }}"><i class="fa-solid fa-circle-check"></i></div>
                                         </div>
                                         <div class="d-flex flex-column w-100">
-                                            <p class="task-content {{ @taskCompleted }}">{{ @task["content"] }}</p>
+                                            <p data-url="{{ @BASE }}{{ 'toggleTask', ['id'=>@task['id']] | alias }}" class="task-content {{ @taskCompleted }}">{{ @task["content"] }}</p>
                                             <div class="d-flex">
                                                 <div class="{{ @task['due_date'] == '' ? 'd-none' : 'd-flex' }} task-date justify-content-center align-items-center rounded-5">{{ @task["due_date"] }}</div>
                                             </div>
@@ -241,9 +241,9 @@
         <script src="js/app.js"></script>
         <script>
             // Run once when the page is loaded to pass certain behaviors.
-            let modeAdd = "{{ @modeAdd }}";
+            let modeAdd = "{{ isset(@modeAdd) }}";
             $(function() {
-                if (moodeAdd) $("#task-add-btn").click();
+                if (modeAdd) $("#task-add-btn").click();
             })
         </script>
     </body>

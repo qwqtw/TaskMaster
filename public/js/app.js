@@ -8,6 +8,8 @@ $(function() {
 
     // Reroute to selected list
     $(".list-item input[type=radio]").on("click", route);
+    $(".task-content").on("click", route);
+
 })
 
 function route(event)

@@ -31,7 +31,7 @@ class ListController extends Controller
         $this->f3->reroute("@app");
     }
 
-    public function isFormValid()
+    private function isFormValid()
     {
         $errors = [];
 

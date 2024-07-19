@@ -16,7 +16,7 @@ class Task extends Model
     public function create()
     {
         $this->copyfrom("POST");
-        
+
         if ($this->due_date == "") {
             $this->due_date = null;
         }
@@ -26,5 +26,14 @@ class Task extends Model
 
         $this->save();
         return $this->id;
+    }
+
+    public function toggleTask($id)
+    {
+        $this->load(["id = ?", $id]);
+
+        $this->is_completed = !$this->is_completed;
+
+        $this->update();
     }
 }
