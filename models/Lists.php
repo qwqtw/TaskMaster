@@ -35,4 +35,12 @@ class Lists extends Model
         $this->save();
         return $this->id;
     }
+
+    public function updateTitle($id)
+    {
+        $this->load(["id = ?", $id]);
+        $this->copyfrom("POST");
+
+        $this->update();
+    }
 }

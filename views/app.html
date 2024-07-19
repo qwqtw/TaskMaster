@@ -129,7 +129,11 @@
                         
                         <div class="px-3">
                             <!--  title of the currently selected list  -->
-                            <h2 id="title">{{ isset(@selectedTitle) ? @selectedTitle : "TODO" }}</h2>
+                            <!--<h2 id="title">{{ isset(@selectedTitle) ? @selectedTitle : "TODO" }}</h2>-->
+                            <form id="list-title-form" action="{{ @BASE }}{{ 'editListTitle' | alias }}" method="POST">
+                                <input type="hidden" name="id" value="{{ @selectedId }}">
+                                <input type="text" name="title" value="{{ isset(@selectedTitle) ? @selectedTitle : 'TODO' }}" class="w-100">
+                            </form>
 
                             <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
                             <div class="tab-wrapper w-100 d-flex mb-4">
@@ -178,7 +182,8 @@
                                                 </div>
                                             </div>
                                             <div class="text-center">
-                                                <a class="task-icon task-edit" href=""><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <!-- TODO: Edit button should open the task-add-container with prefilled information? -->
+                                                <a class="task-icon task-edit" href="#"><i class="fa-solid fa-pen-to-square"></i></a>
                                                 <a class="task-icon task-delete" href="{{ @BASE }}{{ 'deleteTask', ['id' => @task['id'] ] | alias }}"><i class="fa-solid fa-trash-can"></i></a>
                                             </div>
                                         </li>

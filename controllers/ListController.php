@@ -31,6 +31,25 @@ class ListController extends Controller
         $this->f3->reroute("@app");
     }
 
+    public function editTitle()
+    {
+        // Ensure the hidden id is not missing.
+        if (!array_key_exists("id", $this->get("POST")) or $this->get("POST.id") == "") {
+            $this->f3->reroute("@app");
+        }
+
+        $listId = $this->get("POST.id");
+        $this->set("POST", [
+            "title" => trim($this->get("POST.title")),
+        ]);
+
+        if ($this->isFormValid()) {
+            $this->model->updateTitle($listId);
+        }
+
+        $this->f3->reroute("@app(@id={$listId})");
+    }
+
     private function isFormValid()
     {
         $errors = [];
