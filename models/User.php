@@ -33,27 +33,31 @@ class User extends Model
         return $this->findone(["username = ?", $username]);
     }
 
-    // ---------------------------------------------------------
-    public function updateProfile($userId, $username, $password)
+
+    // -------------------------------
+
+        /**
+     * Update user details.
+     * @param int $id user ID
+     * @param array $data array of fields to update
+     * @return void
+     */
+    public function updateUser($id, $data)
     {
-        // Find the user by id
-        $this->load(['id = ?', $userId]);
-
-        // Update user details
-        $this->username = $username;
-        $this->password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
-
-        // Save changes
-        return $this->save();
+        $this->load(["id = ?", $id]);
+        $this->copyfrom($data);
+        $this->save();
     }
 
-    public function deleteAccount($userId)
+    /**
+     * Delete user by ID.
+     * @param int $id user ID
+     * @return void
+     */
+    public function deleteUser($id)
     {
-        // Find the user by id
-        $this->load(['id = ?', $userId]);
-
-        // Delete the user
-        return $this->erase();
+        $this->load(["id = ?", $id]);
+        $this->erase();
     }
 
 }

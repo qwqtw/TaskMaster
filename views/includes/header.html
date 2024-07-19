@@ -23,6 +23,7 @@
                         <a class="nav-link" href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact
                             us</a>
                     </li>
+
                     <!-- Welcome user -->
                     <li class="nav-item d-none d-md-block me-md-3 mb-5 mb-md-0 text-center">
                         <span>Hi, <strong>{{ @username }}</strong></span>
@@ -35,7 +36,8 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="update-account dropdown-item" id="triggerProfileModal" data-toggle="modal" data-target="#accountModal">Update account</a>
+                                <a class="update-account dropdown-item" href="{{ @BASE }}{{ 'profile' | alias }}">Update
+                                    account</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -56,95 +58,12 @@
             </div>
         </div>
     </nav>
-      <!-- Profile Customization Modal -->
-      <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="profileModalLabel">Profile Settings</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="profileForm">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                placeholder="Enter new username">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">New Password</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Enter new password">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password-confirm" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="password-confirm" name="password-confirm"
-                                placeholder="Confirm new password">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
-                    <button id="deleteAccount" class="btn btn-danger mt-3">Delete Account</button>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 </header>
 <!-- jQuery and Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#triggerProfileModal').on('click', function () {
-            $('#profileModal').modal('show');
-        });
-
-        $('#profileForm').on('submit', function (e) {
-            e.preventDefault();
-            var password = $('#password').val();
-            var confirmPassword = $('#password-confirm').val();
-
-            // Check if passwords match if password fields are filled
-            if (password && confirmPassword && password !== confirmPassword) {
-                alert('Passwords do not match.');
-                return; // Stop the form submission
-            }
-
-            var formData = $(this).serialize();
-            $.ajax({
-                url: '/profile/update', // Adjust URL as needed
-                type: 'POST',
-                data: formData,
-                success: function (response) {
-                    alert('Profile updated successfully!');
-                    $('#profileModal').modal('hide');
-                },
-                error: function () {
-                    alert('Error updating profile.');
-                }
-            });
-        });
-
-        $('#deleteAccount').on('click', function () {
-            if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
-                $.ajax({
-                    url: '/account/delete', // Adjust URL as needed
-                    type: 'POST',
-                    success: function (response) {
-                        alert('Account deleted successfully.');
-                        // Optionally redirect to another page
-                    },
-                    error: function () {
-                        alert('Error deleting account.');
-                    }
-                });
-            }
-        });
-    });
-</script>
 
 <style>
     header {

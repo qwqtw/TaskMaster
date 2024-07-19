@@ -30,10 +30,11 @@ $f3->route("POST @createTask: /app/task/create", "TaskController->create");
 $f3->route("GET @toggleTask: /app/task/toggle/@id", "TaskController->toggleTask");
 
 $f3->route("GET @logout: /logout", "PagesController->logout");
-
-// update profile
-$f3->route('POST /profile/update', 'ManageProfileController->updateProfile');
-$f3->route('POST /account/delete', 'ManageProfileController->deleteAccount');
+ 
+// Profile update and delete routes
+$f3->route("GET @profile: /profile", "ProfileController->render");
+$f3->route("POST @profileUpdate: /update", "ProfileController->update");
+$f3->route("POST @profileDelete: /delete", "ProfileController->delete");
 
 // Catch invalid url, redirect to home
 /*$f3->route("GET /*", "LoginController->render");
