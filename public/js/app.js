@@ -1,4 +1,15 @@
-$(function() {
+$(function() 
+{
+    // Submit the title on focus out.
+    $("#list-title-form input").on("focusout", function() {
+        submitForm("list-title-form");
+    });
+
+    // Submit priority on click.
+    $("#priority-btn").on("click", function() {
+        submitForm("priority-form");
+    })
+
     // Show add task form
     $("#task-add-btn").on("click", function() {
         $("#task-add-form").toggle(200);
@@ -17,5 +28,14 @@ $(function() {
 
 function route(event)
 {
-    window.location.href = $(event["target"]).attr('data-url');
+    window.location.href = $(event["target"]).attr("data-url");
+}
+
+/**
+ * Submit form without submit buttons.
+ * @param {string} formId the form id to submit
+ */
+function submitForm(formId)
+{
+    document.getElementById(formId).submit();
 }

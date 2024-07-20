@@ -26,8 +26,8 @@ class TaskController extends Controller
             // Check if list already exists
 
             // Save the task
-            $this->model->create();
-            $this->f3->reroute("@appList(@id={$listId},@mode=add)");
+            $taskId = $this->model->create();
+            $this->f3->reroute("@app#t-{$taskId}");
         }
         $this->f3->reroute("@app");
     }
