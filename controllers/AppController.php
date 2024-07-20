@@ -77,6 +77,7 @@ class AppController extends Controller
     public function setByPriority()
     {
         $_SESSION["byPriority"] = isset($_SESSION["byPriority"]) ? !$_SESSION["byPriority"] : true;
+        $this->f3->reroute("@app");
     }
 
     /**
