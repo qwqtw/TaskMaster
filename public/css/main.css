@@ -45,7 +45,7 @@ input[type=reset]:active {
 
 /*
     Horizontal logo, 1-image, 2-text
-    need to set the width of the parent div.
+    need to set the width of the parent div with class horizontal-logo.
 */
 .horizontal-logo img:nth-of-type(1) {
     width: 20%;

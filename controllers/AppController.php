@@ -36,7 +36,7 @@ class AppController extends Controller
         }
 
         // Setup the css needed
-        $this->set("css", ["css/app.css"]);
+        $this->set("css", ["css/app.css", "css/app-tasks.css"]);
         $this->set("container", "app-container");
         // TODO: Set the username
         $this->set("username", "test");
@@ -77,6 +77,7 @@ class AppController extends Controller
     public function setByPriority()
     {
         $_SESSION["byPriority"] = isset($_SESSION["byPriority"]) ? !$_SESSION["byPriority"] : true;
+        $this->f3->reroute("@app");
     }
 
     /**
