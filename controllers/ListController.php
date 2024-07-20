@@ -18,7 +18,7 @@ class ListController extends Controller
         // Sanitize form inputs
         $this->set("POST", [
             "title" => trim($this->get("POST.title")),
-            "user_id" => $this->get("COOKIE.user_id"),
+            "user_id" => $_SESSION["userId"],
         ]);
 
         if ($this->isFormValid()) {

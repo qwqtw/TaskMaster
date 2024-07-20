@@ -17,7 +17,7 @@ class ProfileController extends Controller
     public function render()
     {
         
-      $userId = $this->get("COOKIE.user_id");
+        $userId = $_SESSION["userId"];
         $user = $this->model->getById($userId);
 
         // Setup the css

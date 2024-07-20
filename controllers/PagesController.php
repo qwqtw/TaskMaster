@@ -29,10 +29,6 @@ class PagesController extends Controller
         // Destroy the session file from the server.
         session_destroy();
 
-        // Expire cookies
-        $expiration = time() - 1;
-        setcookie("auth", "", $expiration);
-        setcookie("user_id", "", $expiration);
         $this->f3->reroute("@home");
     }
 }
