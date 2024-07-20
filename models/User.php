@@ -36,17 +36,25 @@ class User extends Model
 
     // -------------------------------
 
-        /**
-     * Update user details.
-     * @param int $id user ID
-     * @param array $data array of fields to update
-     * @return void
+    /**
+     * Update the user entry with the given username and password.
+     * @param string $username the user's username
+     * @param string $password the user's new password
+     * @return boolean true if the update was successful, false otherwise
      */
-    public function updateUser($id, $data)
+    public function updateUser($username, $password)
     {
-        $this->load(["id = ?", $id]);
-        $this->copyfrom($data);
-        $this->save();
+        // Find the user by username
+        $user = $this->getUserByUsername($username);
+        
+        if ($user) {
+            // Hash the new password
+            $user->password = password_hash($password, PASSWORD_DEFAULT);
+            $user->save();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

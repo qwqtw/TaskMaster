@@ -8,6 +8,10 @@
         </div>
 
 
+        <!-- Error messages -->
+        <div id="error-msg" class="alert alert-warning my-2 py-auto">{{ "<br>", @errors | implode }}</div>
+
+
         <form method="POST" action="{{ @BASE }}{{ 'profileUpdate' | alias }}" class="mb-4"
             enctype="multipart/form-data">
 

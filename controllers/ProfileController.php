@@ -3,6 +3,7 @@
 class ProfileController extends Controller
 {
     private $model;
+    
 
     public function __construct($f3)
     {
@@ -15,11 +16,8 @@ class ProfileController extends Controller
      */
     public function render()
     {
-        if (!$this->isLoggedIn()) {
-            $this->f3->reroute("@home");
-        }
-
-        $userId = $this->get("COOKIE.user_id");
+        
+      $userId = $this->get("COOKIE.user_id");
         $user = $this->model->getById($userId);
 
         // Setup the css
@@ -29,100 +27,49 @@ class ProfileController extends Controller
         $this->set("container", "profile-container");
         $this->set("user", $user); // Pass user data to the view
 
-        // Ensure successMessage, deleteSuccessMessage, and errors are set
+ // Ensure successMessage, deleteSuccessMessage, and errors are set
         $this->set("successMessage", $this->get("SESSION.successMessage") ?? NULL);
         $this->set("deleteSuccessMessage", $this->get("SESSION.deleteSuccessMessage") ?? NULL);
-        $this->set("errors", $this->get("SESSION.errors") ?? NULL);
-
-        // Clear session messages
-        $this->clearSessionMessages();
 
         echo $this->template->render("index.html");
     }
 
     /**
-     * POST: Update user profile
+     * POST: Update the user if the form validates.
      */
-    public function update()
-    {
-        if (!$this->isLoggedIn()) {
-            $this->f3->reroute("@home");
-        }
 
-        // Sanitize form inputs
-        $this->set("POST", [
-            "username" => trim($this->get("POST.username")),
-            "password" => trim($this->get("POST.password")),
-            "password-confirm" => trim($this->get("POST.password-confirm")),
-            "referer" => $this->get("POST.referer")
-        ]);
+public function update()
+{
+    
+    // Sanitize form inputs
+    $this->set("POST", [
+        "username" => trim($this->get("POST.username")),
+        "password" => trim($this->get("POST.password")),
+        "password-confirm" => trim($this->get("POST.password-confirm")),
+    ]);
 
-        $errors = [];
+    if ($this->isFormValid()) {
+        $username = $this->get("POST.username");
+        $password = $this->get("POST.password");
 
-        if (!$this->isFormValid()) {
-            $errors = $this->get("errors");
+        // Attempt to update the user
+        $updateSuccess = $this->model->updateUser($username, $password);
+
+        if ($updateSuccess) {
+            // Update was successful
+            $this->set("success", "User updated successfully.");
         } else {
-            // Check if the new username already exists
- $username = $this->get("POST.username");
-$userId = $this->get("COOKIE.user_id");
-$existingUser = $this->model->getUserByUsername($username);
+            // Update failed
+            $this->set("errors", ["Failed to update user."]);
+        }
+    } else {
+        // Form is invalid, errors are set within isFormValid()
+        $this->set("username", $this->get("POST.username"));
+    }
 
-if ($existingUser && $existingUser->id != $userId) {
-    $errors[] = "This username is already taken.";
+    // Render the response for both success and failure cases
+    $this->render();
 }
-
-        }
-
-
-
-        if (empty($errors)) {
-            $userId = $this->get("COOKIE.user_id");
-            $data = [
-                "username" => $this->get("POST.username"),
-                "password" => password_hash($this->get("POST.password"), PASSWORD_DEFAULT),
-              
-            ];
-            $this->model->updateUser($userId, $data);
-            $this->set("SESSION.successMessage", "Profile updated successfully.");
-        } else {
-            $this->set("SESSION.errors", $errors);
-        }
-
-        $this->f3->reroute("@profile");
-    }
-
-    /**
-     * Clear session messages
-     */
-    private function clearSessionMessages()
-    {
-        $this->set("SESSION.successMessage", NULL);
-        $this->set("SESSION.deleteSuccessMessage", NULL);
-        $this->set("SESSION.errors", NULL);
-    }
-
-    /**
-     * POST: Delete user account
-     */
-    public function delete()
-    {
-        if (!$this->isLoggedIn()) {
-            $this->f3->reroute("@home");
-        }
-
-        $userId = $this->get("COOKIE.user_id");
-        $this->model->deleteUser($userId);
-
-        // Expire cookies
-        $expiration = time() - 1;
-        setcookie("auth", "", $expiration);
-        setcookie("user_id", "", $expiration);
-        
-        // Set delete success message
-        $this->set("SESSION.deleteSuccessMessage", "Account deleted successfully.");
-        
-        $this->f3->reroute("@home");
-    }
 
     /**
      * Validate the data for the form after a POST method
@@ -135,21 +82,21 @@ if ($existingUser && $existingUser->id != $userId) {
         if ($this->get("POST.username") == ""){
             array_push($errors, "Username is required.");
         }
+        // Password validation
         $pass = $this->get("POST.password");
         $passConfirm = $this->get("POST.password-confirm");
+
         if ($pass == ""){
             array_push($errors, "Password is required.");
-        } elseif ($passConfirm == ""){
+        }
+        else if ($passConfirm == "") {
             array_push($errors, "Please confirm the password.");
-        } elseif ($pass !== $passConfirm){
-            array_push($errors, "Passwords do not match.");
+        }
+        // Compare password/confirm to make sure they match.
+        else if (strcmp($passConfirm, $pass) != 0) {
+            array_push($errors, "Password doesn't match.");
         }
 
-        if (!empty($errors)){
-            $this->set("errors", $errors);
-            return false;
-        }
-
-        return true;
+        return $this->validateForm($errors);
     }
 }
