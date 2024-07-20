@@ -22,9 +22,7 @@ class ListController extends Controller
         ]);
 
         if ($this->isFormValid()) {
-            // Check if list already exists
 
-            // Save the list
             $listId = $this->model->create();
             $this->f3->reroute("@appList(@id={$listId})");
         }
@@ -33,12 +31,8 @@ class ListController extends Controller
 
     public function editTitle()
     {
-        // Ensure the hidden id is not missing.
-        if (!array_key_exists("id", $this->get("POST")) or $this->get("POST.id") == "") {
-            $this->f3->reroute("@app");
-        }
+        $listId = $_SESSION["listId"];
 
-        $listId = $this->get("POST.id");
         $this->set("POST", [
             "title" => trim($this->get("POST.title")),
         ]);

@@ -19,24 +19,16 @@ class PagesController extends Controller
         echo $this->template->render("contact-us.html");
     }
 
-
-
-    public function app()
-    {
-        if (!$this->isLoggedIn()) {
-            $this->f3->reroute("@home");
-        }
-
-        $this->set("container", "app-container");
-        $this->set("username", "test");
-        echo $this->template->render("app.html");
-    }
-
     /**
      * Log out the user
      */
     public function logout()
     {
+        // Destroy all session variables.
+        session_unset();
+        // Destroy the session file from the server.
+        session_destroy();
+
         // Expire cookies
         $expiration = time() - 1;
         setcookie("auth", "", $expiration);
