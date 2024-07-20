@@ -15,8 +15,8 @@ class TaskController extends Controller
     {
         // Sanitize form inputs
         $this->set("POST", [
+            "list_id" => $_SESSION["listId"],
             "content" => trim($this->get("POST.content")),
-            "list_id" => $this->get("POST.list_id"),
             "due_date" => $this->get("POST.due_date"),
             "priority" => $this->get("POST.priority"),
         ]);
@@ -36,6 +36,14 @@ class TaskController extends Controller
     {
         // TODO: Check if the id corresponds to the list that belongs to the user.
         $this->model->toggleTask($this->get("PARAMS.id"));
+        // Force to scroll to the toggled task
+        $this->f3->reroute("@app#t-{$this->get('PARAMS.id')}");
+    }
+
+    public function delete()
+    {
+        // Add validation that the id belongs to the list that belongs to the user.
+        $this->model->deleteById($this->get("PARAMS.id"));
         $this->f3->reroute("@app");
     }
     
@@ -51,12 +59,5 @@ class TaskController extends Controller
         }
 
         return $this->validateForm($errors);
-    }
-
-    public function delete()
-    {
-        // Add validation that the id belongs to the list that belongs to the user.
-        $this->model->deleteById($this->get("PARAMS.id"));
-        $this->f3->reroute("@app(@id={$this->get('selectedId')})");
     }
 }

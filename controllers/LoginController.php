@@ -11,7 +11,6 @@ class LoginController extends Controller
         $this->model = new User();
     }
 
-
     /**
      * GET: Display the login page
      */
@@ -22,9 +21,8 @@ class LoginController extends Controller
             $this->f3->reroute("@app");
         }
 
-        $this->set("css", ["css/login.css"]);
-
         $this->setPageTitle("Login");
+        $this->set("css", ["css/login.css"]);
         $this->set("form", "includes/login.html");
         $this->set("container", "login-container");
 

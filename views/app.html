@@ -53,24 +53,25 @@
                         
                         <div class="px-3">
                             <!--  title of the currently selected list  -->
-                            <!--<h2 id="title">{{ isset(@selectedTitle) ? @selectedTitle : "TODO" }}</h2>-->
                             <form id="list-title-form" action="{{ @BASE }}{{ 'editListTitle' | alias }}" method="POST">
-                                <input type="hidden" name="id" value="{{ @selectedId }}">
-                                <input type="text" name="title" value="{{ isset(@selectedTitle) ? @selectedTitle : 'TODO' }}" class="w-100">
+                                <input type="text" name="title" value="{{ @selectedTitle ?? 'TODO' }}" class="w-100">
                             </form>
 
                             <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
                             <div class="tab-wrapper w-100 d-flex mb-4">
-                                <div class="label-wrapper w-50 me-5">
-                                    <label>
-                                        <input type="checkbox" active> All
+                                <div id="modes" class="d-flex justify-content-between w-50 me-5">
+                                    <a href="{{ @BASE }}{{ 'appListMode', ['mode' => 'all'] | alias }}" class="{{ @mode == 'all' ? 'active' : ''}} p-3">All</a>
+                                    <a href="{{ @BASE }}{{ 'appListMode', ['mode' => 'active'] | alias }}" class="{{ @mode == 'active' ? 'active' : ''}} p-3">Active</a>
+                                    <a href="{{ @BASE }}{{ 'appListMode', ['mode' => 'completed'] | alias }}" class="{{ @mode == 'completed' ? 'active' : ''}} p-3">Completed</a>
+                                    <!--<label>
+                                        <input type="checkbox" class="{{ @mode == 'all' ? 'active' : ''}}"> All
                                     </label>
                                     <label>
                                         <input type="checkbox"> Active
                                     </label>
                                     <label>
                                         <input type="checkbox"> Completed
-                                    </label>
+                                    </label>-->
                                 </div>
                             
 
@@ -94,13 +95,13 @@
                                             <true><set taskCompleted="active"></set></true>
                                             <false><set taskCompleted=""></set></false>
                                         </check>
-                                        <li class="d-flex w-100 mb-4">
+                                        <li id="t-{{ @task['id']}}" class="d-flex w-100 mb-4">
                                             <div>
                                                 <div class="marker priority priority-{{ @task['priority'] }} {{ @taskCompleted == 'active' ? 'hide' : ''}}"><i class="fa-solid fa-circle"></i></div>
                                                 <div class="marker checkmark {{ @taskCompleted }}"><i class="fa-solid fa-circle-check"></i></div>
                                             </div>
                                             <div class="d-flex flex-column w-100">
-                                                <p data-url="{{ @BASE }}{{ 'toggleTask', ['id'=>@task['id']] | alias }}" class="mb-2 task-content {{ @taskCompleted }}">{{ @task["content"] | nl2br }}</p>
+                                                <p data-url="{{ @BASE }}{{ 'toggleTask', ['id' => @task['id']] | alias }}" class="mb-2 task-content {{ @taskCompleted }}">{{ @task["content"] | nl2br }}</p>
                                                 <div class="d-flex">
                                                     <div class="{{ @task['due_date'] == '' || @taskCompleted ? 'd-none' : 'd-flex' }} task-date justify-content-center align-items-center rounded-5">{{ @task["due_date"] }}</div>
                                                 </div>
@@ -118,7 +119,6 @@
 
                         <div id="task-add-container" class="w-100">
                             <form action="{{ @BASE }}{{ 'createTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
-                                <input type="hidden" name="list_id" value="{{ @selectedId }}">
                                 <div class="d-flex mb-2">
                                     <div id="task-add-priority" class="input-group input-group-sm">
                                         <label class="input-group-text" id="add-priority">Priority</label>
@@ -153,8 +153,6 @@
                     </main>
 
                 </div>
-
-                
             </div>
             <include href="includes/footer.html">
         </div>
