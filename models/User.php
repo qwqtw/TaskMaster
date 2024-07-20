@@ -35,21 +35,27 @@ class User extends Model
 
 
     // -------------------------------
-
-    /**
-     * Update the user entry with the given username and password.
-     * @param string $username the user's username
-     * @param string $password the user's new password
+   /**
+     * Update the user entry with the given ID.
+     * @param int $userId the user's ID
+     * @param string|null $username the user's new username
+     * @param string|null $password the user's new password
      * @return boolean true if the update was successful, false otherwise
      */
-    public function updateUser($username, $password)
+    public function updateUser($userId, $username = null, $password = null)
     {
-        // Find the user by username
-        $user = $this->getUserByUsername($username);
-        
+        // Load the user by ID
+        $user = $this->load(["id = ?", $userId]);
+
         if ($user) {
-            // Hash the new password
-            $user->password = password_hash($password, PASSWORD_DEFAULT);
+            // Update fields if provided
+            if ($username) {
+                $user->username = $username;
+            }
+            if ($password) {
+                // Hash the new password
+                $user->password = password_hash($password, PASSWORD_DEFAULT);
+            }
             $user->save();
             return true;
         } else {
@@ -64,6 +70,10 @@ class User extends Model
      */
     public function deleteUser($id)
     {
+                // Delete all related tasks and lists before deleting the user
+        $this->db->exec("DELETE FROM task WHERE list_id IN (SELECT id FROM list WHERE user_id = ?)", $id);
+        $this->db->exec("DELETE FROM list WHERE user_id = ?", $id);
+
         $this->load(["id = ?", $id]);
         $this->erase();
     }

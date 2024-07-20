@@ -39,9 +39,8 @@ class ProfileController extends Controller
         $this->set("SESSION.errors", NULL);
     }
 
-    public function update()
+     public function update()
     {
-        // Sanitize form inputs
         $this->set("POST", [
             "username" => trim($this->get("POST.username")),
             "password" => trim($this->get("POST.password")),
@@ -51,41 +50,55 @@ class ProfileController extends Controller
         if ($this->isFormValid()) {
             $username = $this->get("POST.username");
             $password = $this->get("POST.password");
+            $userId = $this->get("COOKIE.user_id");
 
-            // Attempt to update the user
-            $updateSuccess = $this->model->updateUser($username, $password);
+            $updateSuccess = $this->model->updateUser($userId, $username, $password);
 
             if ($updateSuccess) {
-                // Update was successful
                 $this->set("SESSION.successMessage", "User updated successfully.");
             } else {
-                // Update failed
-                $this->set("errors", ["Failed to update user."]);
+                $this->set("SESSION.errors", ["Failed to update user."]);
             }
         } else {
-            // Form is invalid, errors are set within isFormValid()
             $this->set("username", $this->get("POST.username"));
         }
 
-        // Render the response for both success and failure cases
         $this->render();
     }
+
+    /**
+     * POST: Delete user account
+     */
+    public function delete()
+    {
+        if (!$this->isLoggedIn()) {
+            $this->f3->reroute("@home");
+        }
+
+        $userId = $this->get("COOKIE.user_id");
+        $this->model->deleteUser($userId);
+
+        // Expire cookies
+        $expiration = time() - 1;
+        setcookie("auth", "", $expiration);
+        setcookie("user_id", "", $expiration);
+        
+        // Set delete success message
+        $this->set("SESSION.deleteSuccessMessage", "Account deleted successfully.");
+        
+        $this->f3->reroute("@home");
+    }
+
 
     private function isFormValid()
     {
         $errors = [];
-
-        if ($this->get("POST.username") == ""){
-            array_push($errors, "Username is required.");
-        }
+    
         // Password validation
         $pass = $this->get("POST.password");
         $passConfirm = $this->get("POST.password-confirm");
 
-        if ($pass == ""){
-            array_push($errors, "Password is required.");
-        }
-        else if ($passConfirm == "") {
+       if ($pass && $passConfirm == "") {
             array_push($errors, "Please confirm the password.");
         }
         // Compare password/confirm to make sure they match.
