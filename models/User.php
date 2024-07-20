@@ -42,14 +42,19 @@ class User extends Model
      * @param string|null $password the user's new password
      * @return boolean true if the update was successful, false otherwise
      */
-    public function updateUser($userId, $username = null, $password = null)
+  public function updateUser($userId, $username = null, $password = null)
     {
         // Load the user by ID
         $user = $this->load(["id = ?", $userId]);
 
         if ($user) {
-            // Update fields if provided
             if ($username) {
+                // Check if the new username already exists for another user
+                $existingUser = $this->findone(["username = ? AND id != ?", $username, $userId]);
+                if ($existingUser) {
+                    // Username is already taken by another user
+                    return false; // Or return an appropriate error message
+                }
                 $user->username = $username;
             }
             if ($password) {
@@ -62,7 +67,6 @@ class User extends Model
             return false;
         }
     }
-
     /**
      * Delete user by ID.
      * @param int $id user ID

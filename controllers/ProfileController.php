@@ -39,7 +39,7 @@ class ProfileController extends Controller
         $this->set("SESSION.errors", NULL);
     }
 
-     public function update()
+public function update()
     {
         $this->set("POST", [
             "username" => trim($this->get("POST.username")),
@@ -56,8 +56,9 @@ class ProfileController extends Controller
 
             if ($updateSuccess) {
                 $this->set("SESSION.successMessage", "User updated successfully.");
+                $this->f3->reroute("@profile");
             } else {
-                $this->set("SESSION.errors", ["Failed to update user."]);
+                $this->set("SESSION.errors", ["Failed to update user. The username might already be taken."]);
             }
         } else {
             $this->set("username", $this->get("POST.username"));
