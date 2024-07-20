@@ -1,0 +1,170 @@
+
+
+#task-add-container {
+    position: absolute; 
+    left: 0; 
+    bottom: 0; 
+    /*height: 275px;*/
+}
+#task-add-container textarea {
+    resize: none;
+}
+
+#task-add-form {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    z-index: 1;
+    display: none;
+    height: 175px;
+    background-color: #E1E2E6;
+    transform: translateX(-50%);
+}
+#task-add-form label {
+    background-color: rgba(1, 151, 188, 0.1);
+}
+#task-add-form input[type=submit] {
+    height: 40px;
+    width: 40px;
+    font-size: 0.9rem;
+}
+#task-add-form input[type=reset] {
+    height: 40px;
+    width: 40px;
+    background-color: gray;
+    font-size: 1rem;
+}
+#task-add-priority {
+    width: 40%;
+}
+#task-add-due-date {
+    width: 60%;
+}
+#task-add-content {
+    max-height: 50px;
+}
+
+
+#task-add-btn {
+    position: absolute; /* It will position based on parent div with position, in this case, .content */
+    bottom: 20px;
+    left: 50%;
+    font-size: 1.2rem;
+    transform: translateX(-50%);
+}
+/* 
+    Toggle add form btn
+    between open / close state
+*/
+#task-add-btn.hide {
+    background-color: #394a6d;
+}
+#task-add-btn > .close {
+    display: none;
+}
+#task-add-btn.hide > .open {
+    display: none;
+}
+#task-add-btn.hide > .close {
+    display: block;
+}
+
+
+
+/*
+    Tasks
+*/
+#tasks-container {
+    height: 500px;
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+#tasks-container ul {
+    list-style-type: none; 
+    padding-left: 0;
+}
+#tasks-container li {
+    min-height: 50px;
+}
+/* Left section, markers */
+#tasks-container li > div:first-of-type {
+    position: relative;
+    width: 80px;
+}
+/* Right section, edit/delete */
+#tasks-container li > div:last-of-type {
+    position: relative;
+    width: 150px;
+    visibility: hidden;
+}
+/* Display Right section when li is hover */
+#tasks-container li:hover > div:last-of-type {
+    visibility: visible;
+}
+
+
+
+.task-content {
+    font-size: 1.25rem;
+}
+.task-content:hover {
+    cursor: pointer;
+}
+.task-content.active {
+    text-decoration: line-through;
+}
+/*
+    Left of task: Checkmark and priority
+*/
+.marker {
+    display: none;
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+}
+.checkmark.active {
+    display: block;
+}
+.checkmark {
+    color: #00D878;
+}
+.priority:not(.hide) {
+    display: block;
+}
+.priority-0 {
+    display: none !important; /* only this time, for explicity */
+}
+.priority-1 {
+    color: orange;
+}
+.priority-2 {
+    color: orangered;
+}
+/*
+    Right of task: Edit and delete
+*/
+.task-icon {
+    color: black;
+    font-size: 1.3rem;
+}
+.task-edit {
+    position: absolute;
+    left: 0;
+}
+.task-delete {
+    position: absolute;
+    right: 25px;
+}
+
+/*
+    Bottom of task: Due date
+*/
+.task-date {
+    background-color: #394a6d;
+    color: white;
+    width: 115px;
+    height: 30px;
+    font-size: 0.875rem;
+}

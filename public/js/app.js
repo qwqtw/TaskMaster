@@ -17,5 +17,5 @@ $(function() {
 
 function route(event)
 {
-    window.location.href = $(event["target"]).attr('data-url');
+    window.location.href = $(event["target"]).attr("data-url");
 }

@@ -36,7 +36,7 @@ class AppController extends Controller
         }
 
         // Setup the css needed
-        $this->set("css", ["css/app.css"]);
+        $this->set("css", ["css/app.css", "css/app-tasks.css"]);
         $this->set("container", "app-container");
         // TODO: Set the username
         $this->set("username", "test");

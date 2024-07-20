@@ -15,8 +15,8 @@
                         <form action="{{ @BASE }}{{ 'createList' | alias }}" method="POST" class="my-4 mt-md-5">
                             <fieldset class="d-flex flex-column mx-auto text-center">
                                 <legend class="ms-2">Create list</legend>
-                                <div class="input-wrapper d-flex align-items-center justify-content-end p-2">
-                                    <input type="text" id="list-name" name="title">
+                                <div class="input-wrapper d-flex align-items-center justify-content-center p-2">
+                                    <input type="text" id="list-name" name="title" class="px-2" autocomplete="off">
                                     <input type="submit" class="btn-add fa" value="&#x2b">
                                 </div>
                             </fieldset>
@@ -51,27 +51,18 @@
                     <!--  main content of the to-do manager -- all tasks are listed here  -->
                     <main class="content col-md-7 col-lg-8 col-xl-5 py-4">
                         
-                        <div class="px-3">
+                        <div class="mx-md-3">
                             <!--  title of the currently selected list  -->
                             <form id="list-title-form" action="{{ @BASE }}{{ 'editListTitle' | alias }}" method="POST">
-                                <input type="text" name="title" value="{{ @selectedTitle ?? 'TODO' }}" class="w-100">
+                                <input type="text" name="title" value="{{ @selectedTitle ?? 'TODO' }}" class="w-100" autocomplete="off">
                             </form>
 
                             <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
-                            <div class="tab-wrapper w-100 d-flex mb-4">
-                                <div id="modes" class="d-flex justify-content-between w-50 me-5">
+                            <div class="d-flex w-100 mb-4 justify-content-between">
+                                <div id="modes" class="d-flex justify-content-between">
                                     <a href="{{ @BASE }}{{ 'appListMode', ['mode' => 'all'] | alias }}" class="{{ @mode == 'all' ? 'active' : ''}} p-3">All</a>
                                     <a href="{{ @BASE }}{{ 'appListMode', ['mode' => 'active'] | alias }}" class="{{ @mode == 'active' ? 'active' : ''}} p-3">Active</a>
                                     <a href="{{ @BASE }}{{ 'appListMode', ['mode' => 'completed'] | alias }}" class="{{ @mode == 'completed' ? 'active' : ''}} p-3">Completed</a>
-                                    <!--<label>
-                                        <input type="checkbox" class="{{ @mode == 'all' ? 'active' : ''}}"> All
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Active
-                                    </label>
-                                    <label>
-                                        <input type="checkbox"> Completed
-                                    </label>-->
                                 </div>
                             
 
@@ -88,7 +79,7 @@
 
 
                             <!--  task items  -->
-                            <div id="tasks-container">
+                            <div id="tasks-container" class="pb-5">
                                 <ul>
                                     <repeat group="{{ @tasks }}" value="{{ @task }}">
                                         <check if="{{ @task['is_completed'] == 1}}">
@@ -108,7 +99,7 @@
                                             </div>
                                             <div class="text-center">
                                                 <!-- TODO: Edit button should open the task-add-container with prefilled information? -->
-                                                <a class="task-icon task-edit" href="#"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a class="task-icon task-edit ms-2" href="#"><i class="fa-solid fa-pen-to-square"></i></a>
                                                 <a class="task-icon task-delete" href="{{ @BASE }}{{ 'deleteTask', ['id' => @task['id'] ] | alias }}"><i class="fa-solid fa-trash-can"></i></a>
                                             </div>
                                         </li>
