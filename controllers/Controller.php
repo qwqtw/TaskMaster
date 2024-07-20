@@ -23,6 +23,9 @@ class Controller
 
         // Setup template
         $this->template = new Template;
+
+        // STart session so we can remember app selections
+        session_start();
     }
 
     /**
@@ -42,6 +45,19 @@ class Controller
     public function set($key, $value)
     {
         $this->f3->set($key, $value);
+    }
+
+    /**
+     * Check if the user is still logged in
+     * before route happens on every page except a select few.
+     */
+    public function beforeRoute()
+    {
+        $ignoreAlias =["home", "register", "contactUs"];
+
+        if (!in_array($this->get("ALIAS"), $ignoreAlias) and !$this->isLoggedIn()) {
+            $this->f3->reroute("@home");
+        }
     }
 
     /**
