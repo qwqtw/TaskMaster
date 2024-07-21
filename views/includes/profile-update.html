@@ -41,15 +41,6 @@
             <input type="hidden" id="update-success" value="{{ @successMessage }}">
 
         </form>
-        <form method="POST" action="{{ @BASE }}{{ 'profileDelete' | alias }}"
-            onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
-            <div class="mb-3">
-                <button type="submit" class="btn btn-danger">Delete Account</button>
-            </div>
-
-            <input type="hidden" id="update-success" value="{{ @successMessage }}">
-
-        </form>
 
         <div class="mb-3">
             <a href="{{ @BASE }}{{ 'home' | alias }}" class="btn btn-secondary">Home</a>
