@@ -2,6 +2,7 @@
     <div class="container mt-5">
 
 
+
         <!-- Display current username -->
         <div class="alert alert-info" role="alert">
             Current Username: {{ @user.username }}
@@ -14,7 +15,15 @@
 
         <form method="POST" action="{{ @BASE }}{{ 'profileUpdate' | alias }}" class="mb-4"
             enctype="multipart/form-data">
-
+            <!-- Change Avatar -->
+            <div class="form-group mb-3">
+                <label for="avatar">Avatar</label>
+                <input type="file" class="form-control-file" id="avatar" name="avatar" accept="image/*"
+                    onchange="previewAvatar(event)">
+                <img id="avatar-preview"
+                    src="{{ @user.avatar ? 'public/images/avatars/' . @user.avatar : 'default-avatar.png' }}"
+                    alt="Avatar Preview" class="img-thumbnail mt-2" style="max-width: 150px;">
+            </div>
             <!-- Input: Username -->
             <div class="form-group mb-3">
                 <label for="username" class="form-label m-0">New Username:</label>
@@ -57,6 +66,15 @@
                 alert(successMessage);
             }
         });
+
+        function previewAvatar(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('avatar-preview');
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
     </script>
     </body>
 

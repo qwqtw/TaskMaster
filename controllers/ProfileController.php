@@ -28,7 +28,7 @@ class ProfileController extends Controller
         $this->set("deleteSuccessMessage", $this->get("SESSION.deleteSuccessMessage") ?? NULL);
         $this->clear("SESSION.deleteSuccessMessage"); // Clear the delete success message from the session
 
-        echo $this->template->render("index.html");
+        echo $this->template->render("index-profile.html");
     }
        /**
      * Clear session messages
@@ -47,14 +47,22 @@ class ProfileController extends Controller
                 "password-confirm" => trim($this->get("POST.password-confirm")),
             ]);
 
+            $avatar = null;
+        if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+            $avatar = $this->uploadAvatar($_FILES['avatar']);
+        }
+
             if ($this->isFormValid()) {
                 $username = $this->get("POST.username");
                 $password = $this->get("POST.password");
                 $userId = $_SESSION["userId"];
 
-                $updateSuccess = $this->model->updateUser($userId, $username, $password);
+                $updateSuccess = $this->model->updateUser($userId, $username, $password, $avatar);
 
                 if ($updateSuccess) {
+                    if ($avatar) {
+                        $_SESSION['avatar'] = $avatar;
+                    }
                     $this->set("SESSION.successMessage", "User updated successfully.");
                     $this->f3->reroute("@profile");
                 } 
@@ -63,6 +71,40 @@ class ProfileController extends Controller
             }
 
             $this->render();
+    }
+
+    private function uploadAvatar($file)
+    {
+        $targetDir = "public/images/avatars/";
+        $targetFile = $targetDir . basename($file["name"]);
+        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+        // Check if image file is an actual image or fake image
+        $check = getimagesize($file["tmp_name"]);
+        if ($check === false) {
+            return null;
+        }
+
+        // Check file size (limit to 2MB)
+        if ($file["size"] > 2000000) {
+            return null;
+        }
+
+        // Allow certain file formats
+        if (!in_array($imageFileType, ["jpg", "png", "jpeg", "gif"])) {
+            return null;
+        }
+
+        // Check if file already exists
+        if (file_exists($targetFile)) {
+            $targetFile = $targetDir . uniqid() . "." . $imageFileType;
+        }
+
+        if (move_uploaded_file($file["tmp_name"], $targetFile)) {
+            return $targetFile;
+        } else {
+            return null;
+        }
     }
 
     /**

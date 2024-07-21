@@ -42,10 +42,10 @@ class User extends Model
      * @param string|null $password the user's new password
      * @return boolean true if the update was successful, false otherwise
      */
-  public function updateUser($userId, $username = null, $password = null)
+  public function updateUser($userId, $username = null, $password = null, $avatar = null)
     {
         // Load the user by ID
-        $user = $this->load(["id = ?", $userId]);
+        $user = $this->getById($userId);
 
         if ($user) {
             if ($username) {
@@ -56,6 +56,10 @@ class User extends Model
                 // Hash the new password
                 $user->password = password_hash($password, PASSWORD_DEFAULT);
             }
+            if ($avatar) {
+                    // Set the new avatar
+                    $user->avatar = $avatar;
+                }
             $user->save();
             return true;
         } else {
