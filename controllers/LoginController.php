@@ -45,11 +45,10 @@ class LoginController extends Controller
             $user = $this->model->getUserByUsername($this->get("POST.username"));
 
             // Compare password
-            if ($user and password_verify($this->get("POST.password"), $user["password"])) {
+            if ($user && password_verify($this->get("POST.password"), $user["password"])) {
                 // Success! Cookies for everyone.
-                $expiration = time() + (60 * 60 * 24 * 2); // 48hrs
-                setcookie("auth", true, $expiration);
-                setcookie("user_id", $user["id"], $expiration);
+                $_SESSION["auth"] = true;
+                $_SESSION["userId"] = $user["id"];
 
                 // redirect user
                 $this->f3->reroute("@app");

@@ -59,14 +59,14 @@
 
                             <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
                             <div class="d-flex w-100 mb-4 justify-content-between">
+                                <!-- Filter by all, by active, by completed-->
                                 <div id="modes" class="d-flex justify-content-between">
                                     <a href="{{ @BASE }}{{ 'appListMode', ['mode' => 'all'] | alias }}" class="{{ @mode == 'all' ? 'active' : ''}} p-3">All</a>
                                     <a href="{{ @BASE }}{{ 'appListMode', ['mode' => 'active'] | alias }}" class="{{ @mode == 'active' ? 'active' : ''}} p-3">Active</a>
                                     <a href="{{ @BASE }}{{ 'appListMode', ['mode' => 'completed'] | alias }}" class="{{ @mode == 'completed' ? 'active' : ''}} p-3">Completed</a>
                                 </div>
-                            
 
-                                <!--  priority tab which uses a slider graphic  -->
+                                <!-- By Priority button -->
                                 <check if="{{ @byPriority }}">
                                     <true><set priorityCheck="checked"></set></true>
                                     <false><set priorityCheck=""></set></false>
@@ -84,18 +84,18 @@
                                 <ul>
                                     <repeat group="{{ @tasks }}" value="{{ @task }}">
                                         <check if="{{ @task['is_completed'] == 1}}">
-                                            <true><set taskCompleted="active"></set></true>
+                                            <true><set taskCompleted="completed"></set></true>
                                             <false><set taskCompleted=""></set></false>
                                         </check>
                                         <li id="t-{{ @task['id']}}" class="d-flex w-100 mb-4">
                                             <div>
-                                                <div class="marker priority priority-{{ @task['priority'] }} {{ @taskCompleted == 'active' ? 'hide' : ''}}"><i class="fa-solid fa-circle"></i></div>
+                                                <div class="marker priority priority-{{ @task['priority'] }} {{ @taskCompleted == 'completed' ? 'hide' : ''}}"><i class="fa-solid fa-circle"></i></div>
                                                 <div class="marker checkmark {{ @taskCompleted }}"><i class="fa-solid fa-circle-check"></i></div>
                                             </div>
                                             <div class="d-flex flex-column w-100">
-                                                <p data-url="{{ @BASE }}{{ 'toggleTask', ['id' => @task['id']] | alias }}" class="mb-2 task-content {{ @taskCompleted }}">{{ @task["content"] | nl2br }}</p>
+                                                <p data-id="{{ @task['id']}}" data-url="{{ @BASE }}{{ 'toggleTask', ['id' => @task['id']] | alias }}" class="mb-2 task-content {{ @taskCompleted }}">{{ @task["content"] | nl2br }}</p>
                                                 <div class="d-flex">
-                                                    <div class="{{ @task['due_date'] == '' || @taskCompleted ? 'd-none' : 'd-flex' }} task-date justify-content-center align-items-center rounded-5">{{ @task["due_date"] }}</div>
+                                                    <div class="{{ @task['due_date'] != '' ? 'due-date' : '' }} {{ @taskCompleted }} task-date justify-content-center align-items-center rounded-5">{{ @task["due_date"] }}</div>
                                                 </div>
                                             </div>
                                             <div class="text-center">
