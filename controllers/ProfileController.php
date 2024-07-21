@@ -39,32 +39,30 @@ class ProfileController extends Controller
     }
 
 
-public function update()
-    {
-        $this->set("POST", [
-            "username" => trim($this->get("POST.username")),
-            "password" => trim($this->get("POST.password")),
-            "password-confirm" => trim($this->get("POST.password-confirm")),
-        ]);
+    public function update()
+        {
+            $this->set("POST", [
+                "username" => trim($this->get("POST.username")),
+                "password" => trim($this->get("POST.password")),
+                "password-confirm" => trim($this->get("POST.password-confirm")),
+            ]);
 
-        if ($this->isFormValid()) {
-            $username = $this->get("POST.username");
-            $password = $this->get("POST.password");
-            $userId = $_SESSION["userId"];
+            if ($this->isFormValid()) {
+                $username = $this->get("POST.username");
+                $password = $this->get("POST.password");
+                $userId = $_SESSION["userId"];
 
-            $updateSuccess = $this->model->updateUser($userId, $username, $password);
+                $updateSuccess = $this->model->updateUser($userId, $username, $password);
 
-            if ($updateSuccess) {
-                $this->set("SESSION.successMessage", "User updated successfully.");
-                $this->f3->reroute("@profile");
+                if ($updateSuccess) {
+                    $this->set("SESSION.successMessage", "User updated successfully.");
+                    $this->f3->reroute("@profile");
+                } 
             } else {
-                $this->set("SESSION.errors", ["Failed to update user. The username might already be taken."]);
+                $this->set("username", $this->get("POST.username"));
             }
-        } else {
-            $this->set("username", $this->get("POST.username"));
-        }
 
-        $this->render();
+            $this->render();
     }
 
     /**
@@ -78,35 +76,35 @@ public function update()
     }
 
 
-private function isFormValid()
-{
-    $errors = [];
-    
-    // Get the username from POST
-    $username = $this->get("POST.username");
+    private function isFormValid()
+    {
+        $errors = [];
+        
+        // Get the username from POST
+        $username = $this->get("POST.username");
 
-    // Password validation
-    $pass = $this->get("POST.password");
-    $passConfirm = $this->get("POST.password-confirm");
+        // Password validation
+        $pass = $this->get("POST.password");
+        $passConfirm = $this->get("POST.password-confirm");
 
-    // Check if username already exists in the database
-    if ($username) {
-        $existingUser = $this->model->getUserByUsername($username);
-       
-        if (!empty($existingUser)) {
-            array_push($errors, "Username already exists.");
+        // Check if username already exists in the database
+        if ($username) {
+            $existingUser = $this->model->getUserByUsername($username);
+        
+            if (!empty($existingUser)) {
+                array_push($errors, "Username already exists.");
+            }
+        } 
+
+        if ($pass && $passConfirm == "") {
+            array_push($errors, "Please confirm the password.");
+        } 
+        // Compare password/confirm to make sure they match.
+        else if (strcmp($passConfirm, $pass) != 0) {
+            array_push($errors, "Password doesn't match.");
         }
-    } 
 
-    if ($pass && $passConfirm == "") {
-        array_push($errors, "Please confirm the password.");
-    } 
-    // Compare password/confirm to make sure they match.
-    else if (strcmp($passConfirm, $pass) != 0) {
-        array_push($errors, "Password doesn't match.");
+        return $this->validateForm($errors);
     }
-
-    return $this->validateForm($errors);
-}
 
 }
