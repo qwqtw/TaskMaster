@@ -74,12 +74,19 @@ class User extends Model
      */
     public function deleteUser($id)
     {
-                // Delete all related tasks and lists before deleting the user
-        $this->db->exec("DELETE FROM task WHERE list_id IN (SELECT id FROM list WHERE user_id = ?)", $id);
+        // Query all lists that belong to the user
+        $lists = $this->db->exec("SELECT id FROM list WHERE user_id = ?", $id);
+
+        foreach ($lists as $list) {
+            // Query and delete all tasks that belong to each list
+            $this->db->exec("DELETE FROM task WHERE list_id = ?", $list['id']);
+        }
+
+        // Delete all lists that belong to the user
         $this->db->exec("DELETE FROM list WHERE user_id = ?", $id);
 
-        $this->load(["id = ?", $id]);
-        $this->erase();
+        // Use the inherited deleteById method to delete the user
+        $this->deleteById($id);
     }
 
 }

@@ -32,12 +32,11 @@ class ProfileController extends Controller
        /**
      * Clear session messages
      */
-    private function clear()
+  private function clear($key)
     {
-        $this->set("SESSION.successMessage", NULL);
-        $this->set("SESSION.deleteSuccessMessage", NULL);
-        $this->set("SESSION.errors", NULL);
+        $this->set($key, NULL);
     }
+
 
 public function update()
     {
