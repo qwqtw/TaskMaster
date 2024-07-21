@@ -49,12 +49,7 @@ class User extends Model
 
         if ($user) {
             if ($username) {
-                // Check if the new username already exists for another user
-                $existingUser = $this->findone(["username = ? AND id != ?", $username, $userId]);
-                if ($existingUser) {
-                    // Username is already taken by another user
-                    return false; // Or return an appropriate error message
-                }
+                // Set the new username
                 $user->username = $username;
             }
             if ($password) {

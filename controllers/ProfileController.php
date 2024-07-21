@@ -68,7 +68,7 @@ public function update()
     }
 
     /**
-     * POST: Delete user account
+     * GET: Delete user account
      */
     public function delete()
     {
@@ -78,22 +78,37 @@ public function update()
     }
 
 
-    private function isFormValid()
-    {
-        $errors = [];
+private function isFormValid()
+{
+    $errors = [];
     
-        // Password validation
-        $pass = $this->get("POST.password");
-        $passConfirm = $this->get("POST.password-confirm");
+    // Get the username from POST
+    $username = $this->get("POST.username");
 
-       if ($pass && $passConfirm == "") {
-            array_push($errors, "Please confirm the password.");
-        }
-        // Compare password/confirm to make sure they match.
-        else if (strcmp($passConfirm, $pass) != 0) {
-            array_push($errors, "Password doesn't match.");
-        }
+    // Password validation
+    $pass = $this->get("POST.password");
+    $passConfirm = $this->get("POST.password-confirm");
 
-        return $this->validateForm($errors);
+    // Check if username already exists in the database
+    if ($username) {
+        $existingUser = $this->model->getUserByUsername($username);
+       
+        if (!empty($existingUser)) {
+            array_push($errors, "Username already exists.");
+        }
+    } else {
+        array_push($errors, "Username is required.");
     }
+
+    if ($pass && $passConfirm == "") {
+        array_push($errors, "Please confirm the password.");
+    } 
+    // Compare password/confirm to make sure they match.
+    else if (strcmp($passConfirm, $pass) != 0) {
+        array_push($errors, "Password doesn't match.");
+    }
+
+    return $this->validateForm($errors);
+}
+
 }
