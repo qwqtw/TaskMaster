@@ -25,7 +25,9 @@ class Controller
         $this->template = new Template;
 
         // STart session so we can remember app selections
-        session_start();
+        session_start([
+            'cookie_lifetime' => time() + (60 * 60 * 24 * 2) // 48hrs
+        ]);
     }
 
     /**
@@ -55,7 +57,7 @@ class Controller
     {
         $ignoreAlias =["home", "register", "contactUs"];
 
-        if (!in_array($this->get("ALIAS"), $ignoreAlias) and !$this->isLoggedIn()) {
+        if (!in_array($this->get("ALIAS"), $ignoreAlias) && !$this->isLoggedIn()) {
             $this->f3->reroute("@home");
         }
     }
@@ -67,7 +69,7 @@ class Controller
      */
     public function isLoggedIn()
     {
-        return $this->get("COOKIE.auth");
+        return (isset($_SESSION["auth"]) && $_SESSION["auth"]);
     }
 
     /**

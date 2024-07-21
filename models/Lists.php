@@ -14,12 +14,12 @@ class Lists extends Model
 
     public function getFirstList()
     {
-        return $this->findone(["user_id = ?", $_COOKIE["user_id"]]);
+        return $this->findone(["user_id = ?", $_SESSION["userId"]]);
     }
 
     public function getAll()
     {
-        $this->load(["user_id = ?", $_COOKIE["user_id"]]);
+        $this->load(["user_id = ?", $_SESSION["userId"]]);
         return $this->query;
     }
 

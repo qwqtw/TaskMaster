@@ -110,7 +110,7 @@
 .task-content:hover {
     cursor: pointer;
 }
-.task-content.active {
+.task-content.completed {
     text-decoration: line-through;
 }
 /*
@@ -124,7 +124,7 @@
     transform: translateX(-50%);
     font-size: 1.5rem;
 }
-.checkmark.active {
+.checkmark.completed {
     display: block;
 }
 .checkmark {
@@ -161,10 +161,15 @@
 /*
     Bottom of task: Due date
 */
-.task-date {
+.task-date.due-date {
+    display: flex;
     background-color: #394a6d;
     color: white;
     width: 115px;
     height: 30px;
     font-size: 0.875rem;
+}
+.task-date.completed,
+.task-date:not(.due-date) {
+    display: none;
 }

@@ -67,6 +67,8 @@ class Task extends Model
         $this->is_completed = !$this->is_completed;
 
         $this->update();
+        
+        return $this->is_completed;
     }
 
     /**
