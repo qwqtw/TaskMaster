@@ -96,9 +96,7 @@ private function isFormValid()
         if (!empty($existingUser)) {
             array_push($errors, "Username already exists.");
         }
-    } else {
-        array_push($errors, "Username is required.");
-    }
+    } 
 
     if ($pass && $passConfirm == "") {
         array_push($errors, "Please confirm the password.");
