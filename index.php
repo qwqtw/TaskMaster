@@ -39,7 +39,7 @@ $f3->route("GET @deleteTask: /app/task/@id/delete", "TaskController->delete");
 // Profile update and delete routes
 $f3->route("GET @profile: /profile", "ProfileController->render");
 $f3->route("POST @profileUpdate: /update", "ProfileController->update");
-$f3->route("POST @profileDelete: /delete", "ProfileController->delete");
+$f3->route("GET @profileDelete: /delete", "ProfileController->delete");
 
 $f3->route("GET @logout: /logout", "PagesController->logout");
 

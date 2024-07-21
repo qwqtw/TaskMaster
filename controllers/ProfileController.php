@@ -50,7 +50,7 @@ public function update()
         if ($this->isFormValid()) {
             $username = $this->get("POST.username");
             $password = $this->get("POST.password");
-            $userId = $this->get("COOKIE.user_id");
+            $userId = $_SESSION["userId"];
 
             $updateSuccess = $this->model->updateUser($userId, $username, $password);
 
@@ -72,22 +72,9 @@ public function update()
      */
     public function delete()
     {
-        if (!$this->isLoggedIn()) {
-            $this->f3->reroute("@home");
-        }
-
-        $userId = $this->get("COOKIE.user_id");
+        $userId = $_SESSION["userId"];
         $this->model->deleteUser($userId);
-
-        // Expire cookies
-        $expiration = time() - 1;
-        setcookie("auth", "", $expiration);
-        setcookie("user_id", "", $expiration);
-        
-        // Set delete success message
-        $this->set("SESSION.deleteSuccessMessage", "Account deleted successfully.");
-        
-        $this->f3->reroute("@home");
+        $this->f3->reroute("@logout");
     }
 
 

@@ -1,62 +1,80 @@
-<header class="sticky-top">
-    <nav class="navbar navbar-expand-md px-2 px-md-4">
-        <div class="logo-container">
-            <img src="images/logo-image.svg" alt="TaskMaster Logo" class="navbar-logo">
-            <img src="images/logo-text.svg" alt="TaskMaster" class="navbar-logo-text">
-        </div>
-
-        <div class="offcanvas offcanvas-end p-2" tabindex="-1" id="main-nav">
-            <div class="offcanvas-header">
-                <span>Hi, <strong>{{ @username }}</strong></span>
-                <button type="button" class="btn-close fs-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<include href="includes/head.html">
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-md px-2 px-md-4">
+            <div class="logo-container">
+                <img src="images/logo-image.svg" alt="TaskMaster Logo" class="navbar-logo">
+                <img src="images/logo-text.svg" alt="TaskMaster" class="navbar-logo-text">
             </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end align-items-center flex-grow-1">
 
-                    <!-- Taskmaster App -->
-                    <li class="nav-item me-md-5">
-                        <a class="nav-link" href="{{ @BASE }}{{ 'app' | alias }}">TO-DO
-                            list</a>
-                    </li>
-                    <!-- Contact us -->
-                    <li class="nav-item me-md-5">
-                        <a class="nav-link" href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact
-                            us</a>
-                    </li>
+            <div class="offcanvas offcanvas-end p-2" tabindex="-1" id="main-nav">
+                <div class="offcanvas-header">
+                    <span>Hi, <strong>{{ @username }}</strong></span>
+                    <button type="button" class="btn-close fs-3" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end align-items-center flex-grow-1">
 
-                    <!-- Welcome user -->
-                    <li class="nav-item d-none d-md-block me-md-3 mb-5 mb-md-0 text-center">
-                        <span>Hi, <strong>{{ @username }}</strong></span>
-                    </li>
-                    <!-- Avatar drop down -->
-                    <li class="nav-item dropdown d-none d-md-block text-center me-2">
-                        <div class="nav-link" aria-expanded="false">
-                            <img src="images/avatar.png" alt="avatar picture" class="rounded-circle"
-                                style="width:50px;">
+                        <!-- Taskmaster App -->
+                        <li class="nav-item me-md-5">
+                            <a class="nav-link" href="{{ @BASE }}{{ 'app' | alias }}">TO-DO
+                                list</a>
+                        </li>
+                        <!-- Contact us -->
+                        <li class="nav-item me-md-5">
+                            <a class="nav-link" href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact
+                                us</a>
+                        </li>
 
-                        </div>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <a class="update-account dropdown-item" href="{{ @BASE }}{{ 'profile' | alias }}">Update
-                                    account</a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <a class="logout dropdown-item" href="{{ @BASE }}{{ 'logout' | alias }}">Log out</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item d-md-none me-md-5">
-                        <a data-bs-dismiss="offcanvas" class="update-account dropdown-item">Update account</a>
-                    </li>
-                    <li class="nav-item d-md-none me-md-5">
-                        <a data-bs-dismiss="offcanvas" class="logout dropdown-item"
-                            href="{{ @BASE }}{{ 'home' | alias }}">Log out</a>
-                    </li>
-                </ul>
+                        <!-- Welcome user -->
+                        <li class="nav-item d-none d-md-block me-md-3 mb-5 mb-md-0 text-center">
+                            <span>Hi, <strong>{{ @username }}</strong></span>
+                        </li>
+                        <!-- Avatar drop down -->
+                        <li class="nav-item dropdown d-none d-md-block text-center me-2">
+                            <div class="nav-link" aria-expanded="false">
+                                <img src="images/avatar.png" alt="avatar picture" class="rounded-circle"
+                                    style="width:50px;">
+
+                            </div>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="update-account dropdown-item"
+                                        href="{{ @BASE }}{{ 'profile' | alias }}">Update
+                                        account</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="logout dropdown-item" href="{{ @BASE }}{{ 'logout' | alias }}">Log out</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a id="delete-account" class="dropdown-item"
+                                        href="{{ @BASE }}{{ 'profileDelete' | alias }}">Delete
+                                        account</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item d-md-none me-md-5">
+                            <a data-bs-dismiss="offcanvas" class="update-account dropdown-item">Update account</a>
+                        </li>
+                        <li class="nav-item d-md-none me-md-5">
+                            <a data-bs-dismiss="offcanvas" class="logout dropdown-item"
+                                href="{{ @BASE }}{{ 'home' | alias }}">Log out</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
+        </nav>
+    </header>
+    <script>
+        document.getElementById('delete-account').addEventListener('click', function (event) {
+            if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                event.preventDefault();
+            }
+        });
+    </script>
