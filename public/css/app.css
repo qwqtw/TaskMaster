@@ -163,6 +163,7 @@ main {
 }
 #modes a.active {
     text-decoration: underline;
+    color: #0197BC;
 }
 
 #priority-form label {

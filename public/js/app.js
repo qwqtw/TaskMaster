@@ -22,13 +22,16 @@ $(function()
 
     // Reroute to selected list
     $(".list-item input[type=radio]").on("click", route);
-    $(".task-content").on("click", route);
+
+    // Update backend/frontend
+    // Toggle task is_completed
+    $(".task-content").on("click", toggleTask);
 
 })
 
 function route(event)
 {
-    window.location.href = $(event["target"]).attr("data-url");
+    window.location.href = $(event.target).attr("data-url");
 }
 
 /**
@@ -38,4 +41,30 @@ function route(event)
 function submitForm(formId)
 {
     document.getElementById(formId).submit();
+}
+
+
+/**
+ * Toggle the task's completed status
+ * @param {event} event 
+ */
+function toggleTask(event)
+{
+    const task = $(event.target);
+
+    $.get(task.attr("data-url"), function(is_completed) {
+        if (is_completed) {
+
+            const taskId = task.attr("data-id");
+
+            // Priority
+            $("#t-" + taskId + " .priority").toggleClass("hide");
+            // Checkmark
+            $("#t-" + taskId + " .checkmark").toggleClass("completed");
+            // Due date
+            $("#t-" + taskId + " .task-date").toggleClass("completed");
+            // Paragraph
+            task.toggleClass("completed");
+        }
+    });
 }
