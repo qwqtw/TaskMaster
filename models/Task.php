@@ -72,6 +72,16 @@ class Task extends Model
     }
 
     /**
+     * Delete the tasks that belong to a list.
+     * @param int $listId the list id containing the tasks
+     */
+    public function deleteTaskByList($listId)
+    {
+        $this->load(["list_id = ?", $listId]);
+        $this->erase();
+    }
+
+    /**
      * Get tasks based on the sql statement and 
      * ordered by priority if requested.
      * @param int $listId the given list id

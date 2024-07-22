@@ -151,6 +151,14 @@ aside li.active {
     box-shadow: inset 0 0 100px 100px rgba(0, 216, 119, 0.2); /* highlight */
 }
 
+.list-icon {
+    background-color: transparent;
+    color: black;
+    font-size: 1.2rem;
+    border: 0;
+    outline: none;
+}
+
 
 
 /* 

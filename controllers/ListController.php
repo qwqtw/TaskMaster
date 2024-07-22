@@ -44,6 +44,23 @@ class ListController extends Controller
         $this->f3->reroute("@app(@id={$listId})");
     }
 
+    /**
+     * Delete a list and its tasks.
+     */
+    public function delete()
+    {
+        $listId = $this->get("PARAMS.id");
+        $this->task->deleteTaskByList($listId);
+        $this->model->delete($listId);
+
+        // Make sure the selected list is unset if it was deleted
+        if ($_SESSION["listId"] === $listId) {
+            $_SESSION["listId"] = null;
+        }
+
+        echo 1;
+    }
+
     private function isFormValid()
     {
         $errors = [];
