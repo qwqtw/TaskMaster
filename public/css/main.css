@@ -154,3 +154,19 @@ header nav span {
 .scrollbar::-webkit-scrollbar {
     width: 0.5em;
 }
+
+/*
+    Footer
+*/
+footer {
+    background-color: #394a6d;
+    color: white;
+    font-size: 0.8rem;
+}
+
+footer>p {
+    color: white;
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 5px;
+}
