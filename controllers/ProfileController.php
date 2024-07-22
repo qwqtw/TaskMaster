@@ -27,7 +27,7 @@ class ProfileController extends Controller
         $this->set("deleteSuccessMessage", $this->get("SESSION.deleteSuccessMessage") ?? NULL);
         $this->clear("SESSION.deleteSuccessMessage");
 
-        echo $this->template->render("index-profile.html");
+        echo $this->template->render("index.html");
     }
 
     // Clear session messages
