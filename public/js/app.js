@@ -1,5 +1,11 @@
 $(function() 
 {
+    // Add scroll event listener
+    $(".scrollbar").on("scroll", function(event) {
+        $(".scroll-indicator").css("visibility", ($(event.target).scrollTop() == 0) ? "visible" : "hidden");
+    });
+
+
     // Submit the title on focus out.
     $("#list-title-form input").on("focusout", function() {
         submitForm("list-title-form");
@@ -21,11 +27,12 @@ $(function()
     })
 
     // Reroute to selected list
-    $(".list-item input[type=radio]").on("click", route);
+    $(".list-item").on("click", route);
 
     // Update backend/frontend
     // Toggle task is_completed
     $(".task-content").on("click", toggleTask);
+    $(".task-delete").on("click", deleteTask);
 
 })
 
@@ -50,21 +57,38 @@ function submitForm(formId)
  */
 function toggleTask(event)
 {
-    const task = $(event.target);
+    const target = $(event.currentTarget);
+    const li = target.closest("li");
 
-    $.get(task.attr("data-url"), function(is_completed) {
+    $.get(`${li.attr("data-url")}/toggle`, function(is_completed) {
         if (is_completed) {
 
-            const taskId = task.attr("data-id");
+            // Update elements
+            for (let name of ["task-content", "priority", "checkmark", "task-date"]) {
+                li.find('.' + name).toggleClass("completed");
+            }
+        }
+    });
+}
 
-            // Priority
-            $("#t-" + taskId + " .priority").toggleClass("hide");
-            // Checkmark
-            $("#t-" + taskId + " .checkmark").toggleClass("completed");
-            // Due date
-            $("#t-" + taskId + " .task-date").toggleClass("completed");
-            // Paragraph
-            task.toggleClass("completed");
+/**
+ * Delete the task
+ * @param {event} event 
+ */
+function deleteTask(event)
+{
+    const target = $(event.currentTarget);
+    const li = target.closest("li");
+
+    $.ajax({
+        url:`${li.attr("data-url")}/delete`,
+        type: 'DELETE',
+        success: function(is_completed) {
+            if (is_completed) {
+
+                const li = target.closest("li");
+                li.remove();
+            }
         }
     });
 }

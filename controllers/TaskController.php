@@ -44,7 +44,8 @@ class TaskController extends Controller
     {
         // Add validation that the id belongs to the list that belongs to the user.
         $this->model->deleteById($this->get("PARAMS.id"));
-        $this->f3->reroute("@app");
+        // Receive feedback on the front end ajax
+        echo 1;
     }
     
     private function isFormValid()

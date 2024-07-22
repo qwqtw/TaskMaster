@@ -6,7 +6,7 @@ styling reset
 
 */
 * {
-    box-sizing: border-box;
+    /*box-sizing: border-box;*/
     padding: 0;
     margin: 0;
     font-family: "Exo", Arial, Helvetica, sans-serif;
@@ -109,4 +109,16 @@ header nav span {
 
 .dropdown:hover .dropdown-menu {
     display: block;
+}
+
+
+.scrollbar {
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Firefox, chrome, edge */
+    scrollbar-width: thin;
+}
+/* Safari and others */
+.scrollbar::-webkit-scrollbar {
+    width: 0.5em;
 }

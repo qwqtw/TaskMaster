@@ -52,18 +52,17 @@ body > .container-fluid {
 /*
     TO DO List container
 */
-#list-container {
-    min-height: calc(100% - 150px);
-}
-
-#list-container .icon {
-    width: 20px;
-    height: 20px;
+#taskmaster-container {
+    /*height: calc(100%);*/
 }
 
 /* 
     Lists section
 */
+aside {
+    border-radius: 20px 20px 0px 0px;
+    background-color: #E1E2E6;
+}
 
 /*
     Create list input
@@ -109,39 +108,50 @@ fieldset .input-wrapper input[type=text]:focus {
 /*
     List of lists
 */
-aside {
-    border-radius: 20px 20px 0px 0px;
-    background-color: #E1E2E6;
+#lists-container {
+    /*height: 500px;*/
+    height: 60vh;
 }
 
 aside ul {
-    /*height: 50%;*/
     list-style-type: none;
     padding-left: 0;
-    /*overflow-y: auto;*/
+    height: 95%;
 }
 
-aside ul li:hover {
+aside ul.scrollbar {
+    /* Firefox, chrome, edge */
+    scrollbar-color: #ccced6 #E1E2E6;
+}
+/* Safari and others */
+aside ul.scrollbar::-webkit-scrollbar {
+    background-color: #ccced6;
+}
+
+aside li {
+    cursor: pointer;
+}
+aside li .icon {
+    width: 20px;
+    height: 20px;
+}
+aside li:hover {
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3); /* highlight */
 }
 /* Hide the menu icons by default */
-aside ul li .menu {
+aside li .menu {
     display: none;
 }
 /* Show the menu icons when list is hover */
-aside ul li:hover .menu {
+aside li:hover .menu {
     display: block;
 }
-/* Remove the radio button without affecting accessibility */
-aside li input[type=radio] {
-    opacity: 0; 
-    position: fixed; 
-    pointer-events: none;
-}
-/* Highlight the div label when radio is checked */
-aside li input[type=radio]:checked + div {
+/* Highlight the selected list */
+aside li.active {
     box-shadow: inset 0 0 100px 100px rgba(0, 216, 119, 0.2); /* highlight */
 }
+
+
 
 /* 
     Selected list todo
@@ -150,6 +160,7 @@ main {
     position: relative;
     border-radius: 0px 0px 20px 20px;
     background-color: #F3F3F3;
+    overflow: hidden;
 }
 
 /*
@@ -203,10 +214,6 @@ footer > p {
     margin: 0;
     padding: 5px;
 }
-
-
-
-
 
 
 
