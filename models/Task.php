@@ -64,21 +64,24 @@ class Task extends Model
     {
         $this->load(["id = ?", $id]);
 
-        $this->is_completed = !$this->is_completed;
+        $this->isCompleted = !$this->isCompleted;
 
         $this->update();
         
-        return $this->is_completed;
+        return $this->isCompleted;
     }
 
     /**
      * Delete the tasks that belong to a list.
      * @param int $listId the list id containing the tasks
+     * @
      */
     public function deleteTaskByList($listId)
     {
         $this->load(["list_id = ?", $listId]);
-        $this->erase();
+        $isDeleted = $this->db->exec("DELETE FROM task WHERE list_id = ?", $listId);
+
+        return ($this->dry() || $isDeleted > 0);
     }
 
     /**

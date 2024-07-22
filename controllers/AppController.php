@@ -23,6 +23,7 @@ class AppController extends Controller
 
         // If the user has no list, create the default one.
         if (empty($currentLists)) {
+            $_SESSION["listId"] = null;
             $this->lists->createDefault();
             $currentLists = $this->lists->getAll();
         }
@@ -40,6 +41,7 @@ class AppController extends Controller
         // Load the first list
         else {
             $list = $this->lists->getFirstList();
+            $_SESSION["listId"] = $list["id"];
             $this->loadList($list);
         }
 
@@ -47,6 +49,7 @@ class AppController extends Controller
         $this->set("css", ["css/app.css", "css/app-tasks.css"]);
         $this->set("container", "app-container");
         $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
+        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "public/images/avatar.png");
 
         echo $this->template->render("app.html");
     }
