@@ -13,21 +13,23 @@ class TaskController extends Controller
 
     public function create()
     {
-        // Sanitize form inputs
-        $this->set("POST", [
-            "list_id" => $_SESSION["listId"],
-            "content" => trim($this->get("POST.content")),
-            "due_date" => $this->get("POST.due_date"),
-            "priority" => $this->get("POST.priority"),
-        ]);
+        if (isset($_SESSION["listId"])) {
+            // Sanitize form inputs
+            $this->set("POST", [
+                "list_id" => $_SESSION["listId"],
+                "content" => trim($this->get("POST.content")),
+                "due_date" => $this->get("POST.due_date"),
+                "priority" => $this->get("POST.priority"),
+            ]);
 
-        if ($this->isFormValid()) {
-            $listId = $this->get("POST.list_id");
-            // Check if list already exists
+            if ($this->isFormValid()) {
+                $listId = $this->get("POST.list_id");
+                // Check if list already exists
 
-            // Save the task
-            $taskId = $this->model->create();
-            $this->f3->reroute("@app#t-{$taskId}");
+                // Save the task
+                $taskId = $this->model->create();
+                $this->f3->reroute("@app#t-{$taskId}");
+            }
         }
         $this->f3->reroute("@app");
     }

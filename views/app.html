@@ -27,11 +27,11 @@
                             <div id="lists-container" class="my-4">
                                 <ul class="scrollbar">
                                     <repeat group="{{ @lists }}" value="{{ @list }}">
-                                        <li id="l-{{ @list['id'] }}" class="{{ @selectedId == @list['id'] ? 'active' : '' }} list-item d-flex w-100 align-items-center">
+                                        <li id="l-{{ @list['id'] }}" data-url="{{ @BASE }}{{ 'appList', ['id' => @list['id']] | alias }}" class="{{ @selectedId == @list['id'] ? 'active' : '' }} list-item d-flex w-100 align-items-center">
                                             <span data-url="{{ @BASE }}{{ 'appList', ['id'=> @list['id']] | alias }}" class="list-title w-75 ms-4 p-2 text-decoration-none">{{ @list["title"] }}</span>
                                             <div class="menu w-25 text-end me-2">
-                                                <img src="images/icon/move.png" alt="move icon" class="icon">
-                                                <img src="images/icon/trash-can.png" alt="trash icon" class="icon">
+                                                <!--<img src="images/icon/move.png" alt="move icon" class="icon">-->
+                                                <button type="button" class="list-icon list-delete"><i class="fa-solid fa-trash-can"></i></button>
                                             </div>
                                         </li>
                                     </repeat>
@@ -77,7 +77,7 @@
                                             <true><set taskCompleted="completed"></set></true>
                                             <false><set taskCompleted=""></set></false>
                                         </check>
-                                        <li data-url="{{ @BASE }}{{ 'baseTask', ['id' => @task['id']] | alias }}" class="d-flex w-100 mb-4">
+                                        <li id="t-{{ @task['id'] }}" data-url="{{ @BASE }}{{ 'baseTask', ['id' => @task['id']] | alias }}" class="d-flex w-100 mb-4">
                                             <div>
                                                 <div class="marker priority priority-{{ @task['priority'] }} {{ @taskCompleted }}"><i class="fa-solid fa-circle"></i></div>
                                                 <div class="marker checkmark {{ @taskCompleted }}"><i class="fa-solid fa-circle-check"></i></div>

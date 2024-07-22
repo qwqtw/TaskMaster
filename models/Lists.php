@@ -43,4 +43,14 @@ class Lists extends Model
 
         $this->update();
     }
+
+    /**
+     * Delete the list entry. Make sure tasks are deleted first.
+     * @param int $id the list to delete
+     */
+    public function delete($id)
+    {
+        $this->load(["id = ?", $id]);
+        $this->erase();
+    }
 }

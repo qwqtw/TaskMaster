@@ -30,15 +30,18 @@ $(function()
     $(".list-item").on("click", route);
 
     // Update backend/frontend
-    // Toggle task is_completed
+    $(".list-delete").on("click", deleteList);
+
+    // Toggle task
     $(".task-content").on("click", toggleTask);
+    // Delete task
     $(".task-delete").on("click", deleteTask);
 
 })
 
 function route(event)
 {
-    window.location.href = $(event.target).attr("data-url");
+    window.location.href = $(event.currentTarget).attr("data-url");
 }
 
 /**
@@ -82,13 +85,30 @@ function deleteTask(event)
 
     $.ajax({
         url:`${li.attr("data-url")}/delete`,
-        type: 'DELETE',
+        type: "DELETE",
         success: function(is_completed) {
             if (is_completed) {
 
-                const li = target.closest("li");
                 li.remove();
             }
         }
     });
+}
+
+
+function deleteList(event)
+{
+    const target = $(event.currentTarget);
+    const li = target.closest("li");
+
+    $.ajax({
+        'url': `${li.attr("data-url")}/delete`,
+        type: "DELETE",
+        success: function(is_completed) {
+            if (is_completed) {
+
+                li.remove();
+            }
+        }
+    })
 }
