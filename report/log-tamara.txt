@@ -27,3 +27,9 @@ Add create the tasks elements and completing them.
 
 7/19
 Fix some css and add delete task, add edit list title and make small adjustments in the todo list behaviors.
+
+7/20
+Plug in mode and priority filter, add beforeRoute, correct mistake between session/cookie for sensitive data.
+
+7/21
+Convert toggle task and delete task to frontend for smoother behavior. Update scrolls and other bootstrap issues.
