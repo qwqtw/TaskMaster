@@ -46,7 +46,7 @@ class RegisterController extends Controller
 
         if ($this->isFormValid()) {
             // Try to add user to database
-            $user = $this->model->getUserByUsername("username");
+            $user = $this->model->getUserByUsername($this->get("POST.username"));
 
             // User doesn't exists
             if (!$user) {
