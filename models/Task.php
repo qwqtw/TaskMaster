@@ -64,11 +64,11 @@ class Task extends Model
     {
         $this->load(["id = ?", $id]);
 
-        $this->isCompleted = !$this->isCompleted;
+        $this->is_completed = !$this->is_completed;
 
         $this->update();
         
-        return $this->isCompleted;
+        return $this->is_completed;
     }
 
     /**
