@@ -87,7 +87,7 @@ header nav span {
 }
 
 .nav-link.active {
-    color: #0197BC;
+    color: #0197BC !important;
 }
 
 .navbar-logo {
