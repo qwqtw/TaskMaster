@@ -27,3 +27,12 @@ working on profile update feature
 
 7/18
 Implemented the basic update username and delete account feature
+
+7/19
+working on update profile
+
+7/20
+working on update profile
+
+7/21
+finalize update profile, set up the upload avatar

@@ -1,36 +1,32 @@
+<!-- Include head section -->
 <include href="includes/head.html">
     <div class="container mt-5">
 
-
-
         <!-- Display current username -->
-
         <div class="alert alert-info" role="alert">
             Current Username: {{ @user.username }}
         </div>
-
 
         <!-- Error messages -->
         <div class="mb-3 mt-3 text-center">
             <div id="error-msg" class="alert alert-warning my-2 py-auto">{{ "<br>", @errors | implode }}</div>
         </div>
 
-
+        <!-- Profile update form -->
         <form method="POST" action="{{ @BASE }}{{ 'profileUpdate' | alias }}" class="mb-4"
             enctype="multipart/form-data">
+
             <!-- Change Avatar -->
             <div class="mb-3 text-center">
                 <div class="avatar-wrapper">
                     <img id="avatar-preview" src="../{{ @user.avatar ? @user.avatar : 'public/images/avatar.png' }}"
                         alt="Avatar Preview" class="avatar-circle">
-
                     {{ @user.avatar }}
                 </div>
-
                 <input type="file" class="form-control-file input-group mb-3 mt-3" id="avatar" name="avatar"
                     accept="image/*" onchange="previewAvatar(event)">
-
             </div>
+
             <!-- Input: Username -->
             <div class="form-group mb-3">
                 <label for="username" class="form-label m-0">New Username:</label>
@@ -44,25 +40,27 @@
                 <input type="password" id="password" name="password" class="form-control"
                     placeholder="Enter a password">
             </div>
-            <!-- Input: Password -->
+
+            <!-- Input: Password Confirmation -->
             <div class="form-group mb-3">
-                <label for="password-confirm" class="form-label m-0">Confirm new Password:</label>
+                <label for="password-confirm" class="form-label m-0">Confirm New Password:</label>
                 <input type="password" id="password-confirm" name="password-confirm" class="form-control"
                     placeholder="Confirm the password">
             </div>
 
+            <!-- Submit button -->
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Update Profile</button>
             </div>
-            <input type="hidden" id="update-success" value="{{ @successMessage }}">
 
+            <!-- Success message -->
+            <input type="hidden" id="update-success" value="{{ @successMessage }}">
         </form>
 
+        <!-- Home button -->
         <div class="mb-3">
             <a href="{{ @BASE }}{{ 'home' | alias }}" class="btn btn-secondary">Home</a>
-
         </div>
-
 
     </div>
 
@@ -112,7 +110,6 @@
             overflow: hidden;
             display: inline-block;
             border: 5px solid #ccc;
-            /* Optional: Add a border to highlight the circle */
         }
 
         .avatar-circle {
