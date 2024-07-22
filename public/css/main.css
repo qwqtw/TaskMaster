@@ -114,20 +114,13 @@ header nav span {
     display: block;
 }
 
-.dropdown-menu a {
-    text-decoration: none;
-    color: black;
-    transition: color 0.3s ease;
-}
-
 .dropdown-menu a:hover {
-    color: #0197BC;
+    background-color: rgb(235, 235, 235);
 }
 
 #delete-account {
-    color: red;
+    color: rgb(255, 0, 0);
 }
-
 
 .scrollbar {
     overflow-x: hidden;
