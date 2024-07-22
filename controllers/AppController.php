@@ -47,6 +47,7 @@ class AppController extends Controller
         $this->set("css", ["css/app.css", "css/app-tasks.css"]);
         $this->set("container", "app-container");
         $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
+        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "public/images/avatar.png");
 
         echo $this->template->render("app.html");
     }
