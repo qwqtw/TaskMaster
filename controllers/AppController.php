@@ -23,6 +23,7 @@ class AppController extends Controller
 
         // If the user has no list, create the default one.
         if (empty($currentLists)) {
+            $_SESSION["listId"] = null;
             $this->lists->createDefault();
             $currentLists = $this->lists->getAll();
         }
@@ -40,6 +41,7 @@ class AppController extends Controller
         // Load the first list
         else {
             $list = $this->lists->getFirstList();
+            $_SESSION["listId"] = $list["id"];
             $this->loadList($list);
         }
 
