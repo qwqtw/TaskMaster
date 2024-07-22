@@ -21,7 +21,10 @@
             <!-- Change Avatar -->
             <div class="mb-3 text-center">
                 <div class="avatar-wrapper">
-                    <img id="avatar-preview" src="../{{ @user.avatar }}" alt="Avatar Preview" class="avatar-circle">
+                    <img id="avatar-preview" src="../{{ @user.avatar ? @user.avatar : 'public/images/avatar.png' }}"
+                        alt="Avatar Preview" class="avatar-circle">
+
+                    {{ @user.avatar }}
                 </div>
 
                 <input type="file" class="form-control-file input-group mb-3 mt-3" id="avatar" name="avatar"
