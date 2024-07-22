@@ -11,7 +11,8 @@
             </a>
 
             <!-- Toggler on small devices -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#main-nav" aria-controls="main-nav" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#main-nav"
+                aria-controls="main-nav" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -42,8 +43,9 @@
                         <!-- Avatar drop down -->
                         <li class="nav-item dropdown d-none d-md-block text-center me-2">
                             <div class="nav-link">
-                                <img src="images/avatar.png" alt="avatar picture" class="rounded-circle"
-                                    style="width:50px;">
+                                <div class="avatar-wrapper">
+                                    <img src="../{{ @avatar }}" alt="avatar picture" class="avatar-circle">
+                                </div>
 
                             </div>
                             <ul class="dropdown-menu dropdown-menu-end">

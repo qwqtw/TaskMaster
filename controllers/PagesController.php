@@ -15,7 +15,8 @@ class PagesController extends Controller
             $headerFile = "includes/header-guest.html"; // Path for guests
         }
         $this->set("header", $headerFile);
-        $this->set("username", "test");
+        $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
+        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "public/images/avatar.png");        
         echo $this->template->render("contact-us.html");
     }
 
