@@ -38,8 +38,8 @@ class AppController extends Controller
         // Setup the css needed
         $this->set("css", ["css/app.css", "css/app-tasks.css"]);
         $this->set("container", "app-container");
-        // TODO: Set the username
-        $this->set("username", "test");
+        $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
+
         echo $this->template->render("app.html");
     }
 
@@ -65,7 +65,8 @@ class AppController extends Controller
             $list = $this->lists->getById($this->get("PARAMS.id"));
             // Validate the list id exists
             if ($list) {
-                $_SESSION["listId"] = $this->get("PARAMS.id");     
+                $_SESSION["listId"] = $this->get("PARAMS.id");
+                $this->f3->reroute("@app#l-" . $this->get("PARAMS.id"));
             }
         }
         $this->f3->reroute("@app");
@@ -86,20 +87,26 @@ class AppController extends Controller
      */
     private function loadList($list)
     {
+        $listId = $list["id"];
         $this->set("selectedTitle", $list["title"]);
-        $this->set("selectedId", $list["id"]);
+        $this->set("selectedId", $listId);
         
         $mode = $this->get("mode");
         $byPriority = $this->get("byPriority");
 
-        if ($mode == "all") {
-            $this->set("tasks", $this->task->getTasksAll($list["id"], $byPriority));
+        switch($mode) {
+            case "all":
+                $taskList = $this->task->getTasksAll($listId, $byPriority);
+                break;
+            case "active":
+                $taskList = $this->task->getTasksActive($listId, $byPriority);
+                break;
+            case "completed":
+                $taskList = $this->task->getTasksCompleted($listId, $byPriority);
+                break;
+            default:
+                return;
         }
-        else if ($mode == "active") {
-            $this->set("tasks", $this->task->getTasksActive($list["id"], $byPriority));
-        }
-        else if ($mode == "completed") {
-            $this->set("tasks", $this->task->getTasksCompleted($list["id"], $byPriority));
-        }
+        $this->set("tasks", $taskList);
     }
 }

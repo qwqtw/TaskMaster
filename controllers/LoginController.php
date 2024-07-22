@@ -49,6 +49,7 @@ class LoginController extends Controller
                 // Success! Cookies for everyone.
                 $_SESSION["auth"] = true;
                 $_SESSION["userId"] = $user["id"];
+                $_SESSION["username"] = $user["username"];
 
                 // redirect user
                 $this->f3->reroute("@app");
