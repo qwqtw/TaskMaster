@@ -5,10 +5,9 @@ body {
 
 body {
     font-family: 'Exo', sans-serif;
-    background-image: url("../images/contact-us-bg.png"); 
+    background-image: url("../images/contact-us-bg.png");
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center bottom;
 
 }
 
@@ -16,15 +15,16 @@ body {
 .container {
     max-width: 800px;
     margin-top: 3%;
-    margin-bottom: 3%;
+    margin-bottom: 5%;
 }
+
 .screenshots img {
-    width: 100%;  
-    max-width: 400px;  
-    margin-right: 10px;  
-    border-radius: 20px;  
-    border: 1px solid #dadada;  
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+    width: 100%;
+    max-width: 400px;
+    margin-right: 10px;
+    border-radius: 20px;
+    border: 1px solid #dadada;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 40px;
 }
 
@@ -104,27 +104,4 @@ main ul {
 
 a:hover .mdi {
     color: #0197BC;
-}
-
-
-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Exo', sans-serif;
-    position: relative;
-    text-align: center;
-    width: 100%;
-    height: 200px;
-    color: #F3F3F3;
-}
-
-footer p {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    margin-bottom: 10px;
-    left: 0;
-    background-color: #394A6D;
-    padding: 5px;
 }
