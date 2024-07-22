@@ -11,15 +11,13 @@ class ProfileController extends Controller
 
     public function render()
     {
-        $userId = $_SESSION["userId"];
-        $user = $this->model->getById($userId);
-
         // Setup the CSS and pass data to the view
         $this->set("css", ["css/login.css"]);
         $this->setPageTitle("Update Profile");
         $this->set("form", "includes/profile-update.html");
         $this->set("container", "profile-container");
-        $this->set("user", $user);
+        $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
+        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "public/images/avatar.png");        
 
         // Handle session messages
         $this->set("successMessage", $this->get("SESSION.successMessage") ?? NULL);
