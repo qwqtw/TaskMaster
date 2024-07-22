@@ -4,25 +4,29 @@
 
 
         <!-- Display current username -->
+
         <div class="alert alert-info" role="alert">
             Current Username: {{ @user.username }}
         </div>
 
 
         <!-- Error messages -->
-        <div id="error-msg" class="alert alert-warning my-2 py-auto">{{ "<br>", @errors | implode }}</div>
+        <div class="mb-3 mt-3 text-center">
+            <div id="error-msg" class="alert alert-warning my-2 py-auto">{{ "<br>", @errors | implode }}</div>
+        </div>
 
 
         <form method="POST" action="{{ @BASE }}{{ 'profileUpdate' | alias }}" class="mb-4"
             enctype="multipart/form-data">
             <!-- Change Avatar -->
-            <div class="form-group mb-3">
-                <label for="avatar">Avatar</label>
-                <input type="file" class="form-control-file" id="avatar" name="avatar" accept="image/*"
-                    onchange="previewAvatar(event)">
-                <img id="avatar-preview"
-                    src="{{ @user.avatar ? 'public/images/avatars/' . @user.avatar : 'default-avatar.png' }}"
-                    alt="Avatar Preview" class="img-thumbnail mt-2" style="max-width: 150px;">
+            <div class="mb-3 text-center">
+                <div class="avatar-wrapper">
+                    <img id="avatar-preview" src="../{{ @user.avatar }}" alt="Avatar Preview" class="avatar-circle">
+                </div>
+
+                <input type="file" class="form-control-file input-group mb-3 mt-3" id="avatar" name="avatar"
+                    accept="image/*" onchange="previewAvatar(event)">
+
             </div>
             <!-- Input: Username -->
             <div class="form-group mb-3">
@@ -89,16 +93,35 @@
             font-weight: 500;
         }
 
+        .btn-primary:hover {
+            background-color: #00a2ca;
+            color: white;
+        }
+
         .btn-secondary:hover {
-            background-color: rgb(150, 150, 150) !important;
+            background-color: rgb(128, 128, 128);
         }
 
-        .btn-danger {
-            background-color: rgb(175, 0, 0) !important;
+        .avatar-wrapper {
+            width: 150px;
+            height: 150px;
+            border-radius: 100%;
+            overflow: hidden;
+            display: inline-block;
+            border: 5px solid #ccc;
+            /* Optional: Add a border to highlight the circle */
         }
 
-        .btn-danger:hover {
-            background-color: rgb(200, 0, 0) !important;
+        .avatar-circle {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        #avatar {
+            border: 2px solid #ccc;
+            border-radius: 5px;
         }
     </style>
 
