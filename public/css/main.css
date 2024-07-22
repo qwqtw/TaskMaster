@@ -14,18 +14,20 @@ styling reset
 
 html,
 body {
-	height: 100%;
-	margin: 0;
+    height: 100%;
+    margin: 0;
 }
 
 h1 {
     font-weight: 700;
 }
+
 h2 {
     font-weight: 600;
 }
+
 h3 {
-    font-style: italic;    
+    font-style: italic;
 }
 
 /*
@@ -50,6 +52,7 @@ input[type=reset]:active {
 .horizontal-logo img:nth-of-type(1) {
     width: 20%;
 }
+
 .horizontal-logo img:nth-of-type(2) {
     width: 78%;
 }
@@ -111,6 +114,20 @@ header nav span {
     display: block;
 }
 
+.dropdown-menu a {
+    text-decoration: none;
+    color: black;
+    transition: color 0.3s ease;
+}
+
+.dropdown-menu a:hover {
+    color: #0197BC;
+}
+
+#delete-account {
+    color: red;
+}
+
 
 .scrollbar {
     overflow-x: hidden;
@@ -118,6 +135,7 @@ header nav span {
     /* Firefox, chrome, edge */
     scrollbar-width: thin;
 }
+
 /* Safari and others */
 .scrollbar::-webkit-scrollbar {
     width: 0.5em;
