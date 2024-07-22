@@ -41,7 +41,14 @@ $(function()
 
 function route(event)
 {
-    window.location.href = $(event.currentTarget).attr("data-url");
+    const target = $(event.currentTarget);
+    let url = target.attr("data-url");
+
+    if (typeof(url) === "undefined") {
+        url = target.closest("li").attr("data-url");
+    }
+
+    window.location.href = url;
 }
 
 /**
@@ -75,7 +82,7 @@ function toggleTask(event)
 }
 
 /**
- * Delete the task
+ * Delete a task
  * @param {event} event 
  */
 function deleteTask(event)
@@ -95,7 +102,10 @@ function deleteTask(event)
     });
 }
 
-
+/**
+ * Delete a list
+ * @param {event} event 
+ */
 function deleteList(event)
 {
     const target = $(event.currentTarget);

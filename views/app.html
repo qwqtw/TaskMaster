@@ -17,7 +17,7 @@
                                 <fieldset class="d-flex flex-column mx-auto text-center">
                                     <legend class="ms-2">Create list</legend>
                                     <div class="input-wrapper d-flex align-items-center justify-content-center p-2">
-                                        <input type="text" id="list-name" name="title" class="px-2" autocomplete="off">
+                                        <input type="text" id="list-name" name="title" title="Create List" class="px-2" autocomplete="off">
                                         <input type="submit" class="btn-add fa" value="&#x2b">
                                     </div>
                                 </fieldset>
@@ -27,11 +27,11 @@
                             <div id="lists-container" class="my-4">
                                 <ul class="scrollbar">
                                     <repeat group="{{ @lists }}" value="{{ @list }}">
-                                        <li id="l-{{ @list['id'] }}" data-url="{{ @BASE }}{{ 'appList', ['id' => @list['id']] | alias }}" class="{{ @selectedId == @list['id'] ? 'active' : '' }} list-item d-flex w-100 align-items-center">
-                                            <span data-url="{{ @BASE }}{{ 'appList', ['id'=> @list['id']] | alias }}" class="list-title w-75 ms-4 p-2 text-decoration-none">{{ @list["title"] }}</span>
-                                            <div class="menu w-25 text-end me-2">
+                                        <li id="l-{{ @list['id'] }}" data-url="{{ @BASE }}{{ 'appList', ['id' => @list['id']] | alias }}" class="list-item {{ @selectedId == @list['id'] ? 'active' : '' }} d-flex w-100 align-items-center">
+                                            <span class="list-title w-75 ms-4 p-2 text-decoration-none">{{ @list["title"] }}</span>
+                                            <div class="menu w-25 text-end me-3">
                                                 <!--<img src="images/icon/move.png" alt="move icon" class="icon">-->
-                                                <button type="button" class="list-icon list-delete"><i class="fa-solid fa-trash-can"></i></button>
+                                                <button type="button" title="Delete List" class="list-icon list-delete"><i class="fa-solid fa-trash-can"></i></button>
                                             </div>
                                         </li>
                                     </repeat>
@@ -46,7 +46,7 @@
                             
                             <!--  title of the currently selected list  -->
                             <form id="list-title-form" action="{{ @BASE }}{{ 'editListTitle' | alias }}" method="POST" class="px-4">
-                                <input type="text" name="title" value="{{ @selectedTitle ?? 'TODO' }}" class="w-100" autocomplete="off">
+                                <input type="text" name="title" title="Edit Title" value="{{ @selectedTitle ?? 'TODO' }}" class="w-100" autocomplete="off">
                             </form>
 
                             <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
@@ -102,8 +102,8 @@
                                 <form action="{{ @BASE }}{{ 'createTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
                                     <div class="d-flex mb-2">
                                         <div id="task-add-priority" class="input-group input-group-sm">
-                                            <label class="input-group-text" id="add-priority">Priority</label>
-                                            <select class="form-control" id="add-priority" name="priority">
+                                            <label class="input-group-text">Priority</label>
+                                            <select class="form-control" name="priority" title="priority">
                                                 <option value="0">None</option>
                                                 <option value="1">Low</option>
                                                 <option value="2">High</option>
@@ -125,7 +125,7 @@
                                     </div>
                                 </form>
 
-                                <button id="task-add-btn" type="button" class="btn-add text-center">
+                                <button id="task-add-btn" type="button" title="Toggle Add Task" class="btn-add text-center">
                                     <i class="close fa-solid fa-xmark"></i>
                                     <i class="open fa-solid fa-plus"></i>
                                 </button>

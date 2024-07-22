@@ -37,9 +37,9 @@ class TaskController extends Controller
     public function toggleTask()
     {
         // TODO: Check if the id corresponds to the list that belongs to the user.
-        $is_completed = $this->model->toggleTask($this->get("PARAMS.id"));
+        $isCompleted = $this->model->toggleTask($this->get("PARAMS.id"));
         // Receive feedback on the front end ajax
-        echo $is_completed;
+        echo $isCompleted;
     }
 
     public function delete()

@@ -127,22 +127,22 @@ header nav span {
     color: rgb(255, 0, 0);
 }
 
-.avatar-wrapper {
-    width: 80px;
-    height: 80px;
+.avatar {
+    width: 50%;
+    /*height: 80px;
     border-radius: 100%;
     overflow: hidden;
-    display: inline-block;
+    display: inline-block;*/
     border: 2px solid #ccc;
 }
-
+/*
 .avatar-circle {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
-
+*/
 .scrollbar {
     overflow-x: hidden;
     overflow-y: auto;
