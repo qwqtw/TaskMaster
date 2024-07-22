@@ -23,6 +23,7 @@ class AppController extends Controller
 
         // If the user has no list, create the default one.
         if (empty($currentLists)) {
+
             $_SESSION["listId"] = null;
             $this->lists->createDefault();
             $currentLists = $this->lists->getAll();
@@ -35,6 +36,7 @@ class AppController extends Controller
 
         // Load from the session
         if (isset($_SESSION["listId"])) {
+
             $list = $this->lists->getById($_SESSION["listId"]);
             $this->loadList($list);
         }
@@ -76,6 +78,7 @@ class AppController extends Controller
             $list = $this->lists->getById($this->get("PARAMS.id"));
             // Validate the list id exists
             if ($list) {
+                
                 $_SESSION["listId"] = $this->get("PARAMS.id");
                 $this->f3->reroute("@app#l-" . $this->get("PARAMS.id"));
             }

@@ -6,11 +6,6 @@ $(function()
     });
 
 
-    // Submit the title on focus out.
-    $("#list-title-form input").on("focusout", function() {
-        submitForm("list-title-form");
-    });
-
     // Submit priority on click.
     $("#priority-btn").on("click", function() {
         submitForm("priority-form");
@@ -30,6 +25,10 @@ $(function()
     $(".list-item").on("click", route);
 
     // Update backend/frontend
+
+    // Submit the title on focus out.
+    $("#list-title-form input").on("focusout", updateTitle);
+    // Delete list
     $(".list-delete").on("click", deleteList);
 
     // Toggle task
@@ -61,6 +60,26 @@ function submitForm(formId)
 }
 
 
+function updateTitle(event)
+{
+    const form = $("#list-title-form");
+    const listId = $("#list-title-form").data("id");
+
+    const input = $("#list-title-form input[name=title]");
+
+    $.post(
+        `${form.attr("action")}`, 
+        {"title": input.val()})
+        .done(function(newTitle) {
+            if (newTitle !== 0) {
+                // Set up the new title and in the list
+                input.val(newTitle);
+                $("#l-" + listId + " span").text(newTitle);
+            }
+    })
+}
+
+
 /**
  * Toggle the task's completed status
  * @param {event} event 
@@ -70,8 +89,8 @@ function toggleTask(event)
     const target = $(event.currentTarget);
     const li = target.closest("li");
 
-    $.get(`${li.attr("data-url")}/toggle`, function(is_completed) {
-        if (is_completed) {
+    $.get(`${li.attr("data-url")}/toggle`, function(isCompleted) {
+        if (isCompleted) {
 
             // Update elements
             for (let name of ["task-content", "priority", "checkmark", "task-date"]) {

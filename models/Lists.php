@@ -58,6 +58,7 @@ class Lists extends Model
         $this->copyfrom("POST");
 
         $this->update();
+        return $this->title;
     }
 
     /**
