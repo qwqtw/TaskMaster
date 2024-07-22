@@ -19,7 +19,15 @@ class AppController extends Controller
     public function render()
     {
         // Get the lists
-        $this->set("lists", $this->lists->getAll());
+        $currentLists = $this->lists->getAll();
+
+        // If the user has no list, create the default one.
+        if (empty($currentLists)) {
+            $this->lists->createDefault();
+            $currentLists = $this->lists->getAll();
+        }
+
+        $this->set("lists", $currentLists);
         $this->set("mode", (isset($_SESSION["mode"])) ? $_SESSION["mode"] : "all");
         $this->set("byPriority", (isset($_SESSION["byPriority"])) ? $_SESSION["byPriority"] : false);
         $this->set("tasks", []);

@@ -52,13 +52,6 @@ class RegisterController extends Controller
             if (!$user) {
                 // Create the user
                 $userId = $this->model->createUser();
-                // Create a default list
-                $this->set("POST", [
-                    "title" => "ToDo",
-                    "user_id" => $userId,
-                ]);
-                $this->lists->create();
-
                 $this->f3->reroute("@home");
             }
             // User already exists

@@ -24,7 +24,7 @@ class Lists extends Model
     }
 
     /**
-     * Create the list entry and.
+     * Create the list entry.
      * @return int id of the newly created list
      */
     public function create()
@@ -32,6 +32,22 @@ class Lists extends Model
         $this->copyfrom("POST");
         $this->list_order = 0;
         
+        $this->save();
+        return $this->id;
+    }
+    /**
+     * Create the default list.
+     * @return int id of the newly created list.
+     */
+    public function createDefault()
+    {
+        // Create a default list
+        $this->copyfrom([
+            "title" => "To Do",
+            "user_id" => $_SESSION["userId"],
+            "list_order" => 0,
+        ]);
+
         $this->save();
         return $this->id;
     }
