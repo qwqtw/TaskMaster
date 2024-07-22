@@ -67,6 +67,6 @@ class Lists extends Model
     public function delete($id)
     {
         $this->load(["id = ?", $id]);
-        $this->erase();
+        return $this->erase();
     }
 }
