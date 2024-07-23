@@ -50,6 +50,8 @@ class LoginController extends Controller
                 $_SESSION["auth"] = true;
                 $_SESSION["userId"] = $user["id"];
                 $_SESSION["username"] = $user["username"];
+                $_SESSION['avatar'] = $user["avatar"];
+
 
                 // redirect user
                 $this->f3->reroute("@app");

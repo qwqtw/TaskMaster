@@ -54,13 +54,15 @@ class ProfileController extends Controller
 
             $updateSuccess = $this->model->updateUser($userId, $username, $password, $avatar);
 
-            if ($updateSuccess) {
-                if ($avatar) {
-                    $_SESSION['avatar'] = $avatar;
-                }
-                $this->set("SESSION.successMessage", "User updated successfully.");
-                $this->f3->reroute("@profile");
-            } 
+        if ($updateSuccess) {
+            $_SESSION['username'] = $username; 
+            if ($avatar) {
+                $_SESSION['avatar'] = $avatar;
+            }
+            $this->set("SESSION.successMessage", "User updated successfully.");
+            $this->f3->reroute("@profile");
+        }
+
         } else {
             $this->set("username", $this->get("POST.username"));
         }
