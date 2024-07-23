@@ -10,14 +10,7 @@ class Task extends Model
     // TODO: docs
     public function create()
     {
-        $this->copyfrom("POST");
-
-        if ($this->due_date == "") {
-            $this->due_date = null;
-        }
-        if ($this->priority == "") {
-            $this->priority = null;
-        }
+        $this->copyPOST();
 
         $this->save();
         return $this->id;
@@ -98,5 +91,17 @@ class Task extends Model
 
         $this->load([$sql . " " . $sqlPriority, $listId]);
         return $this->query;
+    }
+
+    private function copyPOST()
+    {
+        $this->copyfrom("POST");
+
+        if ($this->due_date == "") {
+            $this->due_date = null;
+        }
+        if ($this->priority == "") {
+            $this->priority = null;
+        }
     }
 }
