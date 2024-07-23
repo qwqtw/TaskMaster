@@ -63,6 +63,15 @@ class Controller
     }
 
     /**
+     * When we need to return a json object to ajax.
+     * @param array $array The array to output through echo
+     */
+    public function echoJSON($array)
+    {
+        echo json_encode($array, JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
      * Verify if there is a user that is logged in
      * through cookies.
      * @return bool true if user is logged in.

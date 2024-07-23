@@ -37,11 +37,8 @@ class ListController extends Controller
             "title" => trim($this->get("POST.title")),
         ]);
 
-        if ($this->isFormValid()) {
-            $this->model->updateTitle($listId);
-        }
-
-        $this->f3->reroute("@app(@id={$listId})");
+        // If the form is valid, try to update, it will return the title or 0
+        echo ($this->isFormValid()) ? $this->model->updateTitle($listId) : 0;
     }
 
     /**

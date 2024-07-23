@@ -25,7 +25,9 @@ class Model extends DB\SQL\Mapper
         parent::__construct($this->db, $table);
     }
 
-
+    /**
+     * Get all entries from the table.
+     */
     public function getAll()
     {
         $this->load();
@@ -45,11 +47,12 @@ class Model extends DB\SQL\Mapper
     /**
      * Delete a row from the table using id primary key
      * @param int id row to delete
+     * @return int success feedback
      */
     public function deleteById($id)
     {
         $this->load(["id = ?", $id]); // Load the object
-        $this->erase();
+        return $this->erase();
     }
 
 
@@ -63,5 +66,10 @@ class Model extends DB\SQL\Mapper
         $this->save();
 
         return $this->id; // last inserted id
+    }
+
+    private function copyPOST()
+    {
+        $this->copyfrom("POST");
     }
 }

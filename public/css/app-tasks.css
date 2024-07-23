@@ -21,11 +21,23 @@
 #task-add-form label {
     background-color: rgba(1, 151, 188, 0.1);
 }
-#task-add-form input[type=submit] {
+#task-add-form button[type=submit] {
     height: 40px;
     width: 40px;
     font-size: 0.9rem;
 }
+/*
+    Toggle add / edit state for
+    the task-add-form
+*/
+#task-add-form button[type=submit] .edit,
+#task-add-form.edit button[type=submit] .add {
+    display: none;
+}
+#task-add-form.edit button[type=submit] .edit {
+    display: block;
+}
+
 #task-add-form input[type=reset] {
     height: 40px;
     width: 40px;
@@ -57,13 +69,11 @@
 #task-add-btn.hide {
     background-color: #394a6d;
 }
-#task-add-btn > .close {
+#task-add-btn .close,
+#task-add-btn.hide .open {
     display: none;
 }
-#task-add-btn.hide > .open {
-    display: none;
-}
-#task-add-btn.hide > .close {
+#task-add-btn.hide .close {
     display: block;
 }
 
@@ -159,6 +169,9 @@
 .task-edit {
     position: absolute;
     left: 0;
+}
+.task-edit.completed {
+    display: none;
 }
 .task-delete {
     position: absolute;
