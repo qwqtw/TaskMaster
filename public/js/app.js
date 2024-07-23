@@ -183,7 +183,7 @@ function editTask(event)
                 // Hidden input id
                 $(`#task-add-form input[name="id"]`).val(taskData.id);
                 // Fill in existing task data
-                $(`#task-add-form option[value=${taskData.priority}]`).attr("selected", "selected");
+                $(`#task-add-form select[name=priority]`).val(taskData.priority);
                 $("#task-add-form textarea[name=content]").val(taskData.content);
                 $("#task-add-form input[type=date]").val(taskData.due_date);
 
