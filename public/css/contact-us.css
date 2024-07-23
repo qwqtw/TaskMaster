@@ -1,25 +1,19 @@
+/* Basic styles for body */
 html,
 body {
     height: initial;
 }
 
 body {
-    font-family: 'Exo', sans-serif;
-    background-image: url("../images/contact-us-bg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    /* Ensures the image is centered */
+    background: url("../images/contact-us-bg.png") no-repeat center center/cover;
 }
 
+/* Global text shadow for contrast */
 * {
-    text-shadow:
-        -1px -1px 0 #F3F3F3,
-        1px -1px 0 #F3F3F3,
-        -1px 1px 0 #F3F3F3,
-        1px 1px 0 #F3F3F3;
+    text-shadow: -1px -1px 0 #F3F3F3, 1px -1px 0 #F3F3F3, -1px 1px 0 #F3F3F3, 1px 1px 0 #F3F3F3;
 }
 
+/* Remove text shadow from header and footer */
 header,
 footer,
 header *,
@@ -27,48 +21,49 @@ footer * {
     text-shadow: none;
 }
 
+/* Container style */
 .container {
     max-width: 800px;
     margin-top: 3%;
     margin-bottom: 15%;
 }
 
+/* Image styles within the screenshots container */
 .screenshots img {
     width: 100%;
     max-width: 400px;
     margin-right: 10px;
+    margin-bottom: 40px;
     border-radius: 20px;
     border: 1px solid #dadada;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 40px;
 }
 
-
+/* Typography */
 .title,
 .subtitle {
     font-weight: 600;
 }
 
 .title {
-    color: #394A6D;
     font-size: 48pt;
+    color: #394A6D;
 }
 
 .subtitle {
-    color: #0197BC;
     font-size: 18pt;
+    color: #0197BC;
 }
 
 .description {
     color: #6B6B6B;
 }
 
-
+/* Main content layout */
 main .main-content {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    position: relative;
 }
 
 main .text-content {
@@ -78,17 +73,15 @@ main .text-content {
     line-height: 2;
 }
 
-main h1 {
-    margin-bottom: 20px;
-}
-
-main p {
+/* Spacing for headings and paragraphs */
+main h1,
+main p,
+main h2 {
     margin-bottom: 20px;
 }
 
 main h2 {
     margin-top: 20px;
-    margin-bottom: 10px;
 }
 
 main ul {
@@ -96,26 +89,39 @@ main ul {
     padding-left: 20px;
 }
 
+/* Fixed position for contact info */
 .contact-info {
-    flex-shrink: 0;
-    text-align: right;
-    align-self: flex-start;
-    margin-right: -10%;
-    margin-top: 100px;
+    position: fixed;
+    top: 250px;
+    right: 300px;
+    width: 200px;
+    padding: 10px;
+    z-index: 1000;
 }
 
+/* Responsive adjustments for contact info */
+@media (max-width: 1280px) {
+    .contact-info {
+        position: static;
+        width: auto;
+        margin: 10px 0;
+    }
+}
+
+/* Margins for elements within contact info */
 .contact-info .email,
 .contact-info .social-media {
     margin-bottom: 20px;
 }
 
+/* Icon styles */
 .mdi {
-    color: black;
     font-size: 24px;
+    color: black;
     transition: color 0.3s ease;
 }
 
-
+/* Icon hover effect */
 a:hover .mdi {
     color: #0197BC;
 }

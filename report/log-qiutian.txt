@@ -36,3 +36,9 @@ working on update profile
 
 7/21
 finalize update profile, set up the upload avatar
+
+7/22
+finalize upload avatar, set up username and avatar in header, improve header UX
+
+7/23
+add a flavicon, improve dropdown animation, improve contact us UX
