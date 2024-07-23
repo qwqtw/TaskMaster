@@ -55,7 +55,12 @@ class ProfileController extends Controller
             $updateSuccess = $this->model->updateUser($userId, $username, $password, $avatar);
 
         if ($updateSuccess) {
-            $_SESSION['username'] = $username; 
+            if ($username) {
+                $_SESSION['username'] = $username; 
+            }
+            if ($password) {
+                $_SESSION['password'] = $password; 
+            }
             if ($avatar) {
                 $_SESSION['avatar'] = $avatar;
             }
