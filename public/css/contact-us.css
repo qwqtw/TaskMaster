@@ -97,11 +97,20 @@ main ul {
 }
 
 .contact-info {
-    flex-shrink: 0;
-    text-align: right;
-    align-self: flex-start;
-    margin-right: -10%;
-    margin-top: 100px;
+    position: fixed;
+    top: 250px;
+    right: 300px;
+    width: 200px;
+    z-index: 1000;
+    padding: 10px;
+}
+
+@media (max-width: 1280px) {
+    .contact-info {
+        position: static;
+        width: auto;
+        margin: 10px 0;
+    }
 }
 
 .contact-info .email,
