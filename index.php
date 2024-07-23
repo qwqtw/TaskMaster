@@ -33,10 +33,12 @@ $f3->route("GET @appListPriority: /app/list/priority/toggle", "AppController->se
 $f3->route("POST @createList: /app/list/create", "ListController->create");
 $f3->route("POST @editListTitle: /app/list/editTitle", "ListController->editTitle");
 
-$f3->route("POST @createTask: /app/task/create", "TaskController->create");
-$f3->route("GET @baseTask: /app/task/@id", null);
+$f3->route("GET @baseTask: /app/task", null);
+$f3->route("POST @createTask: /app/task/create", "TaskController->createTask");
+$f3->route("POST @updateTask: /app/task/@id/update", "TaskController->updateTask");
+$f3->route("GET @getTask: /app/task/@id", "TaskController->getTask");
 $f3->route("GET @toggleTask: /app/task/@id/toggle", "TaskController->toggleTask");
-$f3->route("DELETE @deleteTask: /app/task/@id/delete", "TaskController->delete");
+$f3->route("DELETE @deleteTask: /app/task/@id/delete", "TaskController->deleteTask");
  
 // Profile update and delete routes
 $f3->route("GET @profile: /profile", "ProfileController->render");

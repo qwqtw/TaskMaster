@@ -77,7 +77,7 @@
                                             <true><set taskCompleted="completed"></set></true>
                                             <false><set taskCompleted=""></set></false>
                                         </check>
-                                        <li id="t-{{ @task['id'] }}" data-url="{{ @BASE }}{{ 'baseTask', ['id' => @task['id']] | alias }}" class="d-flex w-100 mb-4">
+                                        <li id="t-{{ @task['id'] }}" data-id="{{ @task['id'] }}" data-url="{{ @BASE }}{{ 'getTask', ['id' => @task['id']] | alias }}" class="d-flex w-100 mb-4">
                                             <div>
                                                 <div class="marker priority priority-{{ @task['priority'] }} {{ @taskCompleted }}"><i class="fa-solid fa-circle"></i></div>
                                                 <div class="marker checkmark {{ @taskCompleted }}"><i class="fa-solid fa-circle-check"></i></div>
@@ -90,7 +90,7 @@
                                             </div>
                                             <div class="text-center">
                                                 <!-- TODO: Edit button should open the task-add-container with prefilled information?-->
-                                                <a class="task-icon task-edit ms-2" href="#"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <button type="button" class="{{ @taskCompleted }} task-icon task-edit"><i class="fa-solid fa-pen-to-square"></i></button>
                                                 <button type="button" class="task-icon task-delete"><i class="fa-solid fa-trash-can"></i></button>
                                             </div>
                                         </li>
@@ -99,7 +99,8 @@
                             </div>
 
                             <div id="task-add-container" class="w-100">
-                                <form action="{{ @BASE }}{{ 'createTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
+                                <form action="{{ @BASE }}{{ 'baseTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
+                                    <input type="hidden" name="id">
                                     <div class="d-flex mb-2">
                                         <div id="task-add-priority" class="input-group input-group-sm">
                                             <label class="input-group-text">Priority</label>
@@ -120,16 +121,16 @@
                                         <textarea class="form-control" id="add-content" name="content" required></textarea>
                                     </div>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <input type="submit" class="btn-add me-3 fa" value="&#x2b">
+                                        <button type="submit" title="submit" class="btn-add me-3 fa"><i class="edit fa-solid fa-check"></i><i class="add fa-solid fa-plus"></i></button>
                                         <input type="reset" class="btn-add fa" value="&#xf12d">
                                     </div>
                                 </form>
-
-                                <button id="task-add-btn" type="button" title="Toggle Add Task" class="btn-add text-center">
-                                    <i class="close fa-solid fa-xmark"></i>
-                                    <i class="open fa-solid fa-plus"></i>
-                                </button>
                             </div>
+
+                            <button id="task-add-btn" type="button" title="Toggle Add Task" class="btn-add text-center">
+                                <i class="close fa-solid fa-xmark"></i>
+                                <i class="open fa-solid fa-plus"></i>
+                            </button>
                             
                         </main>
 

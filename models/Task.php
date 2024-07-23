@@ -16,6 +16,15 @@ class Task extends Model
         return $this->id;
     }
 
+    public function updateTask($id)
+    {
+        $this->load(["id = ?", $id]);
+        $this->copyPOST();
+        
+        $this->update();
+        return $this;
+    }
+
     /**
      * Get all tasks for the given $listId.
      * @param int $listId the given list id
