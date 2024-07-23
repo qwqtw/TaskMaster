@@ -141,7 +141,7 @@ function createTask(jsonData)
             <div class="marker checkmark ${taskCompleted}"><i class="fa-solid fa-circle-check"></i></div>
         </div>
         <div class="d-flex flex-column w-100">
-            <p class="mb-2 task-content ${taskCompleted}">${task["content"]}</p>
+            <p class="mb-2 task-content ${taskCompleted}">${task["content"].replace(/\n/g, "<br>\n")}</p>
             <div class="d-flex">
                 <div class="${taskCompleted} ${task["due_date"] != "" ? "due_date" : ""} task-date justify-content-center align-items-center rounded-5">${task["due_date"]}</div>
             </div>
