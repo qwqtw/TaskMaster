@@ -30,6 +30,7 @@ $(function()
 
     // Submit the title on focus out.
     $("#list-title-form input").on("focusout", updateTitle);
+    $("#list-title-form").on("submit", updateTitle);
     // Delete list
     $(".list-delete").on("click", deleteList);
 
@@ -43,10 +44,10 @@ $(function()
 function route(event)
 {
     const target = $(event.currentTarget);
-    let url = target.attr("data-url");
+    let url = target.data("url");
 
     if (typeof(url) === "undefined") {
-        url = target.closest("li").attr("data-url");
+        url = target.closest("li").data("url");
     }
 
     window.location.href = url;
@@ -62,21 +63,31 @@ function submitForm(formId)
 }
 
 
+/**
+ * Update the selected list title.
+ * @param {event} event 
+ */
 function updateTitle(event)
 {
+    event.preventDefault();
+
     const form = $("#list-title-form");
     const listId = $("#list-title-form").data("id");
-
     const input = $("#list-title-form input[name=title]");
 
-    $.post(
-        `${form.attr("action")}`, 
-        {"title": input.val()})
+    $.post(`${form.attr("action")}`, {"title": input.val()})
         .done(function(newTitle) {
             if (newTitle !== 0) {
                 // Set up the new title and in the list
                 input.val(newTitle);
                 $("#l-" + listId + " span").text(newTitle);
+                // Clear focus
+                if (event.type === "submit") {
+                    input.blur();
+                }
+            }
+        })
+}
 
 /**
  * Create the task through json response 
@@ -162,9 +173,8 @@ function toggleTask(event)
     const target = $(event.currentTarget);
     const li = target.closest("li");
 
-    $.get(`${li.attr("data-url")}/toggle`, function(isCompleted) {
+    $.get(`${li.data("url")}/toggle`, function(isCompleted) {
         if (isCompleted) {
-
             // Update elements
             for (let name of ["task-content", "priority", "checkmark", "task-date"]) {
                 li.find('.' + name).toggleClass("completed");
@@ -183,10 +193,10 @@ function deleteTask(event)
     const li = target.closest("li");
 
     $.ajax({
-        url:`${li.attr("data-url")}/delete`,
+        url:`${li.data("url")}/delete`,
         type: "DELETE",
-        success: function(is_completed) {
-            if (is_completed) {
+        success: function(isCompleted) {
+            if (isCompleted) {
 
                 li.remove();
             }
@@ -200,17 +210,23 @@ function deleteTask(event)
  */
 function deleteList(event)
 {
+    event.stopPropagation(); // action within li click
     const target = $(event.currentTarget);
     const li = target.closest("li");
 
     $.ajax({
-        'url': `${li.attr("data-url")}/delete`,
+        'url': `${li.data("url")}/delete`,
         type: "DELETE",
-        success: function(is_completed) {
-            if (is_completed) {
+        success: function(isCompleted) {
+            if (isCompleted) {
+                /* We need to load a new list*/
+                if (li.hasClass("active")) {
+                    window.location.href = li.data("url");
+                }
 
                 li.remove();
             }
         }
     })
 }
+

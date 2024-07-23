@@ -11,6 +11,9 @@ class TaskController extends Controller
         $this->model = new Task();
     }
 
+    /**
+     * Create a task.
+     */
     public function create()
     {
         if (isset($_SESSION["listId"])) {
@@ -42,6 +45,9 @@ class TaskController extends Controller
         echo "{}";
     }
 
+    /**
+     * Toggle the is_completed status.
+     */
     public function toggleTask()
     {
         // TODO: Check if the id corresponds to the list that belongs to the user.
@@ -50,6 +56,9 @@ class TaskController extends Controller
         echo $isCompleted;
     }
 
+    /**
+     * Delete a task.
+     */
     public function delete()
     {
         // Add validation that the id belongs to the list that belongs to the user.
@@ -58,6 +67,10 @@ class TaskController extends Controller
         echo 1;
     }
     
+    /**
+     * Validate if the POST form is valid.
+     * content and list_id validation.
+     */
     private function isFormValid()
     {
         $errors = [];

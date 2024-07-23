@@ -78,7 +78,7 @@ class AppController extends Controller
             $list = $this->lists->getById($this->get("PARAMS.id"));
             // Validate the list id exists
             if ($list) {
-                
+
                 $_SESSION["listId"] = $this->get("PARAMS.id");
                 $this->f3->reroute("@app#l-" . $this->get("PARAMS.id"));
             }
