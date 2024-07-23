@@ -23,15 +23,23 @@ class TaskController extends Controller
             ]);
 
             if ($this->isFormValid()) {
-                $listId = $this->get("POST.list_id");
                 // Check if list already exists
 
                 // Save the task
                 $taskId = $this->model->create();
-                $this->f3->reroute("@app#t-{$taskId}");
+                $task = $this->model->getById($taskId);
+                $taskArray = $task->cast();
+                // Build the baseTask url for the li.
+                $taskArray["baseTaskUrl"] = $this->get("BASE") . $this->f3->alias("baseTask", "id = " . $task["id"]);
+
+                echo json_encode($taskArray, JSON_UNESCAPED_SLASHES);
+                
+                return;
+                //$this->f3->reroute("@app#t-{$taskId}");
             }
         }
-        $this->f3->reroute("@app");
+        //$this->f3->reroute("@app");
+        echo "{}";
     }
 
     public function toggleTask()
