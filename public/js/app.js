@@ -5,7 +5,9 @@ $(function()
         $(".scroll-indicator").css("visibility", ($(event.target).scrollTop() == 0) ? "visible" : "hidden");
     });
 
-    // Submit priority on click.
+    // Submit priority on click
+    $(".form-btn").on("click", submitOptionForm);
+
     $("#priority-btn").on("click", function() {
         submitForm("priority-form");
     })
@@ -70,6 +72,14 @@ function route(event)
 function submitForm(formId)
 {
     document.getElementById(formId).submit();
+}
+
+function submitOptionForm(event)
+{
+    const button = $(event.currentTarget);
+    const form = button.closest("form");
+
+    form.submit();
 }
 
 

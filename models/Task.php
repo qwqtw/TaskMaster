@@ -2,9 +2,19 @@
 
 class Task extends Model
 {
+    private $byPriority = false;
+    private $byDueDate = false;
+    
+    
     public function __construct()
     {
         parent::__construct("task");
+    }
+
+    public function setOptions($byPriority, $byDueDate)
+    {
+        $this->byPriority = $byPriority;
+        $this->byDueDate = $byDueDate;
     }
 
     // TODO: docs
@@ -28,25 +38,23 @@ class Task extends Model
     /**
      * Get all tasks for the given $listId.
      * @param int $listId the given list id
-     * @param bool $byPriority order by priority
      * @return Object the query results
      */
-    public function getTasksAll($listId, $byPriority = false)
+    public function getTasksAll($listId)
     {
         $sql = "list_id = ?";
-        return $this->getTasks($listId, $sql, $byPriority);
+        return $this->getTasks($listId, $sql);
     }
 
     /**
      * Get active tasks for the given $listId.
      * @param int $listId the given list id
-     * @param bool $byPriority order by priority
      * @return Object the query results
      */
-    public function getTasksActive($listId, $byPriority = false)
+    public function getTasksActive($listId)
     {
         $sql = "list_id = ? AND is_completed = 0";
-        return $this->getTasks($listId, $sql, $byPriority);
+        return $this->getTasks($listId, $sql);
     }
 
     /**
@@ -55,10 +63,10 @@ class Task extends Model
      * @param bool $byPriority order by priority
      * @return Object the query results
      */
-    public function getTasksCompleted($listId, $byPriority = false)
+    public function getTasksCompleted($listId)
     {
         $sql = "list_id = ? AND is_completed = 1";
-        return $this->getTasks($listId, $sql, $byPriority);
+        return $this->getTasks($listId, $sql);
     }
 
     // TODO: docs
@@ -94,11 +102,21 @@ class Task extends Model
      * @param bool $byPriority order by priority
      * @return Object the query results
      */
-    private function getTasks($listId, $sql, $byPriority = false)
+    private function getTasks($listId, $sql)
     {
-        $sqlPriority = ($byPriority) ? "ORDER BY priority DESC" : "";
+        $options = [];
 
-        $this->load([$sql . " " . $sqlPriority, $listId]);
+        if ($this->byPriority) {
+            array_push($options, "priority DESC");
+        }
+        if ($this->byDueDate) {
+            array_push($options, "due_date DESC");
+        }
+
+        $optionsStr = implode(", ", $options);
+        $sqlOptions = (!empty($options)) ? "ORDER BY " . $optionsStr : "";
+
+        $this->load([$sql . " " . $sqlOptions, $listId]);
         return $this->query;
     }
 
