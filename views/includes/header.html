@@ -21,6 +21,7 @@
                 <span>Hi, <strong>{{ @username }}</strong></span>
                 <button type="button" class="btn-close fs-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
+
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end align-items-center flex-grow-1">
                     <!-- Navigation link for the to-do list -->
@@ -32,6 +33,18 @@
                     <li class="nav-item me-md-4 me-lg-5">
                         <a class="nav-link {{ @ALIAS == 'contactUs' ? 'active' : '' }}"
                             href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact us</a>
+                    </li>
+                    <!-- Navigation link for update profile -->
+                    <li class="nav-item d-md-none me-md-5">
+                        <a class="update-account dropdown-item nav-link" href="{{ @BASE }}{{ 'profile' | alias }}"
+                            onclick="closeOffCanvas();">Update
+                            account</a>
+                    </li>
+                    <!-- Navigation link for log out -->
+                    <li class="nav-item d-md-none me-md-5">
+                        <a class="logout dropdown-item nav-link" href="{{ @BASE }}{{ 'logout' | alias }}"
+                            onclick="closeOffCanvas();">Log
+                            out</a>
                     </li>
 
                     <!-- Display username, visible only on medium screens and up -->
@@ -62,22 +75,23 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- Mobile-only menu items -->
-                    <li class="nav-item d-md-none me-md-5">
-                        <a data-bs-dismiss="offcanvas" class="update-account dropdown-item"
-                            href="{{ @BASE }}{{ 'profile' | alias }}">Update account</a>
-                    </li>
-                    <li class="nav-item d-md-none me-md-5">
-                        <a data-bs-dismiss="offcanvas" class="logout dropdown-item"
-                            href="{{ @BASE }}{{ 'home' | alias }}">Log out</a>
-                    </li>
+
+
                 </ul>
             </div>
         </div>
     </nav>
 </header>
-<!-- JavaScript for handling account deletion with confirmation -->
+
 <script>
+    // JavaScript for handling closing the offcanvas menu
+    function closeOffCanvas() {
+        const offcanvasElement = document.getElementById('main-nav');
+        const bsOffcanvas = new bootstrap.Offcanvas(offcanvasElement);
+        bsOffcanvas.hide();
+
+    }
+    // JavaScript for handling account deletion with confirmation
     document.getElementById('delete-account').addEventListener('click', function (event) {
         if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
             event.preventDefault();
