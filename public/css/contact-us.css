@@ -1,3 +1,13 @@
+/* Media Queries for Additional Adjustments */
+@media (max-width: 768px) {
+
+    .container {
+        width: 75%;
+        margin-right: 5%;
+    }
+
+}
+
 /* Basic styles for body */
 html,
 body {
