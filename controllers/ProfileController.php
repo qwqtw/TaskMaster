@@ -36,6 +36,7 @@ class ProfileController extends Controller
 
     public function update()
     {
+        // Trim and sanitize input values
         $this->set("POST", [
             "username" => trim($this->get("POST.username")),
             "password" => trim($this->get("POST.password")),
@@ -43,37 +44,46 @@ class ProfileController extends Controller
         ]);
 
         $avatar = null;
+        // Check if an avatar file is uploaded and handle the upload
         if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
             $avatar = $this->uploadAvatar($_FILES['avatar']);
         }
 
+        // Validate form input
         if ($this->isFormValid()) {
+            // Retrieve sanitized and validated input data
             $username = $this->get("POST.username");
             $password = $this->get("POST.password");
             $userId = $_SESSION["userId"];
 
+            // Update user details in the database
             $updateSuccess = $this->model->updateUser($userId, $username, $password, $avatar);
 
-        if ($updateSuccess) {
-            if ($username) {
-                $_SESSION['username'] = $username; 
+            if ($updateSuccess) {
+                // Update session variables if the database update is successful
+                if ($username) {
+                    $_SESSION['username'] = $username; 
+                }
+                if ($password) {
+                    $_SESSION['password'] = $password; 
+                }
+                if ($avatar) {
+                    $_SESSION['avatar'] = $avatar;
+                }
+                // Set a success message and redirect to the profile page
+                $this->set("SESSION.successMessage", "User updated successfully.");
+                $this->f3->reroute("@profile");
             }
-            if ($password) {
-                $_SESSION['password'] = $password; 
-            }
-            if ($avatar) {
-                $_SESSION['avatar'] = $avatar;
-            }
-            $this->set("SESSION.successMessage", "User updated successfully.");
-            $this->f3->reroute("@profile");
-        }
 
         } else {
+            // Set the username back to the view if validation fails
             $this->set("username", $this->get("POST.username"));
         }
 
+        // Render the view again
         $this->render();
     }
+
 
     // Handle avatar upload
     private function uploadAvatar($file)
@@ -123,7 +133,7 @@ class ProfileController extends Controller
     private function isFormValid()
     {
         $errors = [];
-        
+        // Retrieve sanitized and validated input data
         $username = $this->get("POST.username");
         $pass = $this->get("POST.password");
         $passConfirm = $this->get("POST.password-confirm");

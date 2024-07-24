@@ -1,7 +1,7 @@
 <header class="sticky-top mb-md-3">
     <nav class="navbar navbar-expand-md px-2 px-md-4">
 
-        <!-- Branding -->
+        <!-- Logo and branding area -->
         <a class="navbar-brand" href="{{ @BASE }}{{ 'app' | alias }}">
             <div class="logo-container">
                 <img src="images/logo-image.svg" alt="TaskMaster Logo" class="navbar-logo">
@@ -9,39 +9,36 @@
             </div>
         </a>
 
-        <!-- Toggler on small devices -->
+        <!-- Responsive navbar toggler for smaller screens -->
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#main-nav"
             aria-controls="main-nav" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        <!-- Offcanvas navigation menu for mobile devices -->
         <div class="offcanvas offcanvas-end p-2" tabindex="-1" id="main-nav">
             <div class="offcanvas-header">
                 <span>Hi, <strong>{{ @username }}</strong></span>
-                <button type="button" class="btn-close fs-3" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close fs-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end align-items-center flex-grow-1">
-
-                    <!-- Taskmaster App -->
+                    <!-- Navigation link for the to-do list -->
                     <li class="nav-item me-md-3 me-lg-5">
                         <a class="nav-link {{ @ALIAS == 'app' ? 'active' : '' }}"
-                            href="{{ @BASE }}{{ 'app' | alias }}">TO-DO
-                            list</a>
+                            href="{{ @BASE }}{{ 'app' | alias }}">TO-DO list</a>
                     </li>
-                    <!-- Contact us -->
+                    <!-- Navigation link for the contact page -->
                     <li class="nav-item me-md-4 me-lg-5">
                         <a class="nav-link {{ @ALIAS == 'contactUs' ? 'active' : '' }}"
-                            href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact
-                            us</a>
+                            href="{{ @BASE }}{{ 'contactUs' | alias }}">Contact us</a>
                     </li>
 
-                    <!-- Welcome user -->
+                    <!-- Display username, visible only on medium screens and up -->
                     <li class="nav-item d-none d-md-block me-md-3 mb-5 mb-md-0 text-center">
                         <span>Hi, <strong>{{ @username }}</strong></span>
                     </li>
-                    <!-- Avatar drop down -->
+                    <!-- User avatar and dropdown menu for account management -->
                     <li class="nav-item dropdown d-none d-md-block text-center me-2">
                         <div class="nav-link">
                             <div class="avatar-wrapper">
@@ -50,14 +47,12 @@
                         </div>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="update-account dropdown-item"
-                                    href="{{ @BASE }}{{ 'profile' | alias }}">Update
+                                <a class="update-account dropdown-item" href="{{ @BASE }}{{ 'profile' | alias }}">Update
                                     account</a>
                             </li>
                             <li>
                                 <a id="delete-account" class="dropdown-item"
-                                    href="{{ @BASE }}{{ 'profileDelete' | alias }}">Delete
-                                    account</a>
+                                    href="{{ @BASE }}{{ 'profileDelete' | alias }}">Delete account</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -67,8 +62,10 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- Mobile-only menu items -->
                     <li class="nav-item d-md-none me-md-5">
-                        <a data-bs-dismiss="offcanvas" class="update-account dropdown-item">Update account</a>
+                        <a data-bs-dismiss="offcanvas" class="update-account dropdown-item"
+                            href="{{ @BASE }}{{ 'profile' | alias }}">Update account</a>
                     </li>
                     <li class="nav-item d-md-none me-md-5">
                         <a data-bs-dismiss="offcanvas" class="logout dropdown-item"
@@ -79,6 +76,7 @@
         </div>
     </nav>
 </header>
+<!-- JavaScript for handling account deletion with confirmation -->
 <script>
     document.getElementById('delete-account').addEventListener('click', function (event) {
         if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
