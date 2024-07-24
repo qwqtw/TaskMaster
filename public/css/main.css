@@ -58,7 +58,7 @@ input[type=reset]:active {
 }
 
 header {
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
     background-color: rgba(217, 217, 217, 0.5);
 
 }
@@ -91,6 +91,7 @@ header nav span {
 }
 
 .nav-link.active {
+    font-weight: 700;
     color: #0197BC !important;
 }
 
