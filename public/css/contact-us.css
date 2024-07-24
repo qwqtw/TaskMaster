@@ -2,10 +2,12 @@
 html,
 body {
     height: initial;
-}
-
-body {
-    background: url("../images/contact-us-bg.png") no-repeat center center/cover;
+    background-image: url("../images/contact-us-bg.png");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: 100%;
+    background-color: #F3F3F3;
+    /* Ensure the image covers the set height */
 }
 
 /* Global text shadow for contrast */
@@ -25,7 +27,7 @@ footer * {
 .container {
     max-width: 800px;
     margin-top: 3%;
-    margin-bottom: 15%;
+    margin-bottom: 10%;
 }
 
 /* Image styles within the screenshots container */
