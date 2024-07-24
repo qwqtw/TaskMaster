@@ -142,6 +142,9 @@ function addOrUpdateTask(event)
                 else {
                     const li = createTask(task);
                     $("#tasks-container ul").append(li);
+
+                    updateActiveTaskCount(1);
+
                     window.location.hash = "t-" + task.id;
                 }
 
@@ -169,6 +172,9 @@ function toggleTask(event)
                 for (let name of ["task-content", "priority", "checkmark", "task-date"]) {
                     li.find('.' + name).toggleClass("completed");
                 }
+                // Update the count indicator
+                const countValue = ($(li).find(".checkmark").hasClass("completed")) ? -1 : 1;
+                updateActiveTaskCount(countValue);
             }
     });
 }
@@ -209,6 +215,8 @@ function editTask(event)
  */
 function deleteTask(event)
 {
+    event.stopPropagation();
+
     const target = $(event.currentTarget);
     const li = target.closest("li");
 
@@ -217,6 +225,10 @@ function deleteTask(event)
         type: "DELETE",
         success: function(isCompleted) {
             if (isCompleted) {
+                // If the task is not completed
+                if (!$(li).find(".checkmark").hasClass("completed")) {
+                    updateActiveTaskCount(-1);
+                }
 
                 li.remove();
             }
@@ -230,7 +242,8 @@ function deleteTask(event)
  */
 function deleteList(event)
 {
-    event.stopPropagation(); // action within li click
+    event.stopPropagation();
+
     const target = $(event.currentTarget);
     const li = target.closest("li");
 
@@ -300,4 +313,17 @@ function createTask(jsonData)
 function updateTask(jsonData)
 {
     $(`#t-${jsonData.id}`).replaceWith(createTask(jsonData));
+}
+
+/**
+ * Adjust the count indicator by passing the value to increase or decrease by.
+ * @param {int} value the value to increase or decrease by
+ * @return {int} the updated indicator count
+ */
+function updateActiveTaskCount(value)
+{
+    const newValue = parseInt($("#task-active-count span").text()) + value;
+    $("#task-active-count span").text(newValue);
+
+    return newValue;
 }

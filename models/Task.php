@@ -11,13 +11,19 @@ class Task extends Model
         parent::__construct("task");
     }
 
+    /**
+     * Set the options for filtering getTasks
+     */
     public function setOptions($byPriority, $byDueDate)
     {
         $this->byPriority = $byPriority;
         $this->byDueDate = $byDueDate;
     }
 
-    // TODO: docs
+    /**
+     * Create a task
+     * @return int the new task id
+     */
     public function create()
     {
         $this->copyPOST();
@@ -26,6 +32,10 @@ class Task extends Model
         return $this->id;
     }
 
+    /**
+     * Update the task
+     * @return object the updated task object
+     */
     public function updateTask($id)
     {
         $this->load(["id = ?", $id]);
@@ -42,8 +52,7 @@ class Task extends Model
      */
     public function getTasksAll($listId)
     {
-        $sql = "list_id = ?";
-        return $this->getTasks($listId, $sql);
+        return $this->getTasks($listId, "list_id = ?");
     }
 
     /**
@@ -53,37 +62,47 @@ class Task extends Model
      */
     public function getTasksActive($listId)
     {
-        $sql = "list_id = ? AND is_completed = 0";
-        return $this->getTasks($listId, $sql);
+        return $this->getTasks($listId, "list_id = ? AND is_completed = 0");
     }
 
     /**
      * Get completed tasks for the given $listId.
      * @param int $listId the given list id
      * @param bool $byPriority order by priority
-     * @return Object the query results
+     * @return object the query results
      */
     public function getTasksCompleted($listId)
     {
-        $sql = "list_id = ? AND is_completed = 1";
-        return $this->getTasks($listId, $sql);
+        return $this->getTasks($listId, "list_id = ? AND is_completed = 1");
     }
 
-    // TODO: docs
+    /**
+     * Get the number of active tasks for the list.
+     * @param int $listId the given list id
+     * @return int the active task count for the list
+     */
+    public function countTasksActive($listId)
+    {
+        return $this->count(["list_id = ? AND is_completed = 0", $listId]);
+    }
+
+    /**
+     * Toggle the task's is_completed state.
+     * @return bool the task is_completed value;
+     */
     public function toggleTask($id)
     {
         $this->load(["id = ?", $id]);
-
         $this->is_completed = !$this->is_completed;
 
         $this->update();
-        
         return $this->is_completed;
     }
 
     /**
      * Delete the tasks that belong to a list.
      * @param int $listId the list id containing the tasks
+     * @return bool if the delete was succesful
      * @
      */
     public function deleteTaskByList($listId)
@@ -99,8 +118,7 @@ class Task extends Model
      * ordered by priority if requested.
      * @param int $listId the given list id
      * @param string $sql the filter string
-     * @param bool $byPriority order by priority
-     * @return Object the query results
+     * @return object the query results
      */
     private function getTasks($listId, $sql)
     {
@@ -112,14 +130,16 @@ class Task extends Model
         if ($this->byDueDate) {
             array_push($options, "due_date DESC");
         }
-
-        $optionsStr = implode(", ", $options);
-        $sqlOptions = (!empty($options)) ? "ORDER BY " . $optionsStr : "";
+        // Create the order by string
+        $sqlOptions = (!empty($options)) ? "ORDER BY " . implode(", ", $options) : "";
 
         $this->load([$sql . " " . $sqlOptions, $listId]);
         return $this->query;
     }
 
+    /**
+     * Copy from POST and convert empty optional fields to null.
+     */
     private function copyPOST()
     {
         $this->copyfrom("POST");
