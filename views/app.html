@@ -109,7 +109,8 @@
                                 </ul>
                             </div>
 
-                            <div id="task-add-container" class="w-100">
+                            <!-- Task add dialog -->
+                            <div id="task-add-dialog" class="w-100">
                                 <form action="{{ @BASE }}{{ 'baseTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
                                     <input type="hidden" name="id">
                                     <div class="d-flex mb-2">
@@ -138,10 +139,15 @@
                                 </form>
                             </div>
 
+                            <!-- Add task button -->
                             <button id="task-add-btn" type="button" title="Toggle Add Task" class="btn-add text-center">
                                 <i class="close fa-solid fa-xmark"></i>
                                 <i class="open fa-solid fa-plus"></i>
                             </button>
+
+                            <div id="task-active-count" class="d-flex text-center justify-content-center align-items-center px-3">
+                                <span class="text-truncate">{{ @selectedCount }}</span>
+                            </div>
                             
                         </main>
 

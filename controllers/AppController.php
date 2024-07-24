@@ -128,6 +128,7 @@ class AppController extends Controller
             default:
                 return;
         }
+        $this->set("selectedCount", $this->task->countTasksActive($listId));
         $this->set("tasks", $taskList);
     }
 }

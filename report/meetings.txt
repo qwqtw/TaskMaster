@@ -42,3 +42,12 @@ Tamara is working on the todo lists, creating and completing tasks. No issues en
 7/19 - 7/20
 As a team, we restructured some of Qiutian's includes to remove styling and scripts and made the css links dynamic. Qiutian is working on updating profile. Tamara is workking on reworking
 the routing, adding beforeRoute for repeat login verification and adding more of the todo features such as priority.
+
+7/21
+Meeting with Steph. Everything is moving along well. 
+
+7/22
+Tamara is working on refining existing code.
+
+7/23
+Tamara is working on supporting edit task and maybe list ordering.

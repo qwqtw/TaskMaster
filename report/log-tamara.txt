@@ -33,3 +33,9 @@ Plug in mode and priority filter, add beforeRoute, correct mistake between sessi
 
 7/21
 Convert toggle task and delete task to frontend for smoother behavior. Update scrolls and other bootstrap issues.
+
+7/22
+Focused on refining the frontend and fixing issues.
+
+7/23
+Add order by due date, add task through the frontend, support edit task. Add active task count.
