@@ -44,4 +44,4 @@ finalize upload avatar, set up username and avatar in header, improve header UX
 add a flavicon, improve dropdown animation, improve contact us UX
 
 7/24
-complete contact us page with description and screenshots, improve background display, fix mobile menu interaction, final documentation
+complete contact us page with description and screenshots, improve background display, improve mobile responsiveness, final documentation

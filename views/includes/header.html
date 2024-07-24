@@ -63,10 +63,12 @@
                             </div>
                         </div>
                         <ul class="dropdown-menu dropdown-menu-end">
+                            <!-- Navigation link for update profile -->
                             <li>
                                 <a class="update-account dropdown-item" href="{{ @BASE }}{{ 'profile' | alias }}">Update
                                     account</a>
                             </li>
+                            <!-- Navigation link for delete account -->
                             <li>
                                 <a id="delete-account" class="dropdown-item"
                                     href="{{ @BASE }}{{ 'profileDelete' | alias }}">Delete account</a>
@@ -74,6 +76,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
+                            <!-- Navigation link for log out -->
                             <li>
                                 <a class="logout dropdown-item" href="{{ @BASE }}{{ 'logout' | alias }}">Log out</a>
                             </li>
