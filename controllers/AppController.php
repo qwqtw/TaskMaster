@@ -32,6 +32,7 @@ class AppController extends Controller
         $this->set("lists", $currentLists);
         $this->set("mode", (isset($_SESSION["mode"])) ? $_SESSION["mode"] : "all");
         $this->set("byPriority", (isset($_SESSION["byPriority"])) ? $_SESSION["byPriority"] : false);
+        $this->set("byDueDate", (isset($_SESSION["byDueDate"])) ? $_SESSION["byDueDate"] : false);
         $this->set("tasks", []);
 
         // Load from the session
@@ -95,6 +96,12 @@ class AppController extends Controller
         $this->f3->reroute("@app");
     }
 
+    public function setByDueDate()
+    {
+        $_SESSION["byDueDate"] = isset($_SESSION["byDueDate"]) ? !$_SESSION["byDueDate"] : true;
+        $this->f3->reroute("@app");
+    }
+
     /**
      * Load the selected list and it's tasks
      * @param Object $list the list object from the database
@@ -106,17 +113,17 @@ class AppController extends Controller
         $this->set("selectedId", $listId);
         
         $mode = $this->get("mode");
-        $byPriority = $this->get("byPriority");
+        $this->task->setOptions($this->get("byPriority"), $this->get("byDueDate"));
 
         switch($mode) {
             case "all":
-                $taskList = $this->task->getTasksAll($listId, $byPriority);
+                $taskList = $this->task->getTasksAll($listId);
                 break;
             case "active":
-                $taskList = $this->task->getTasksActive($listId, $byPriority);
+                $taskList = $this->task->getTasksActive($listId);
                 break;
             case "completed":
-                $taskList = $this->task->getTasksCompleted($listId, $byPriority);
+                $taskList = $this->task->getTasksCompleted($listId);
                 break;
             default:
                 return;

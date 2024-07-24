@@ -50,7 +50,7 @@
                             </form>
 
                             <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
-                            <div class="d-flex w-100 mb-4 justify-content-between px-4">
+                            <div class="d-flex flex-column flex-md-row w-100 mb-4 px-4 justify-content-between">
                                 <!-- Filter by all, by active, by completed-->
                                 <div id="modes" class="d-flex justify-content-between">
                                     <a href="{{ @BASE }}{{ 'appListMode', ['mode' => 'all'] | alias }}" class="{{ @mode == 'all' ? 'active' : ''}} p-3">All</a>
@@ -58,15 +58,26 @@
                                     <a href="{{ @BASE }}{{ 'appListMode', ['mode' => 'completed'] | alias }}" class="{{ @mode == 'completed' ? 'active' : ''}} p-3">Completed</a>
                                 </div>
 
-                                <!-- By Priority button -->
-                                <check if="{{ @byPriority }}">
-                                    <true><set priorityCheck="checked"></set></true>
-                                    <false><set priorityCheck=""></set></false>
-                                </check>
-                                <form id="priority-form" action="{{ @BASE }}{{ 'appListPriority' | alias }}" method="GET" class="d-flex justify-content-between align-items-center">
-                                    <input type="checkbox" {{ @priorityCheck }} class="btn-check" id="priority-btn">
-                                    <label class="btn btn-outline-secondary" for="priority-btn">By Priority</label>
-                                </form>
+                                <div id="options" class="d-flex justify-md-content-end">
+                                    <!-- By Priority button -->
+                                    <check if="{{ @byPriority }}">
+                                        <true><set priorityCheck="checked"></set></true>
+                                        <false><set priorityCheck=""></set></false>
+                                    </check>
+                                    <form id="priority-form" action="{{ @BASE }}{{ 'appListPriority' | alias }}" method="GET" class="d-flex form-btn align-items-center me-2">
+                                        <input type="checkbox" {{ @priorityCheck }} class="btn-check" id="priority-btn">
+                                        <label class="btn btn-outline-secondary" for="priority-btn">By Priority</label>
+                                    </form>
+                                    <!-- By Due Date button -->
+                                    <check if="{{ @byDueDate }}">
+                                        <true><set dueDateCheck="checked"></set></true>
+                                        <false><set dueDateCheck=""></set></false>
+                                    </check>
+                                    <form id="due-date-form" action="{{ @BASE }}{{ 'appListDueDate' | alias }}" method="GET" class="d-flex form-btn align-items-center">
+                                        <input type="checkbox" {{ @dueDateCheck }} class="btn-check" id="due-date-btn">
+                                        <label class="btn btn-outline-secondary" for="due-date-btn">By Due Date</label>
+                                    </form>
+                                </div>
                             </div>
 
                             <!--  task items  -->

@@ -5,7 +5,9 @@ $(function()
         $(".scroll-indicator").css("visibility", ($(event.target).scrollTop() == 0) ? "visible" : "hidden");
     });
 
-    // Submit priority on click.
+    // Submit priority on click
+    $(".form-btn").on("click", submitOptionForm);
+
     $("#priority-btn").on("click", function() {
         submitForm("priority-form");
     })
@@ -70,6 +72,14 @@ function route(event)
 function submitForm(formId)
 {
     document.getElementById(formId).submit();
+}
+
+function submitOptionForm(event)
+{
+    const button = $(event.currentTarget);
+    const form = button.closest("form");
+
+    form.submit();
 }
 
 
@@ -183,7 +193,7 @@ function editTask(event)
                 // Hidden input id
                 $(`#task-add-form input[name="id"]`).val(taskData.id);
                 // Fill in existing task data
-                $(`#task-add-form option[value=${taskData.priority}]`).attr("selected", "selected");
+                $(`#task-add-form select[name=priority]`).val(taskData.priority);
                 $("#task-add-form textarea[name=content]").val(taskData.content);
                 $("#task-add-form input[type=date]").val(taskData.due_date);
 

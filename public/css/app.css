@@ -186,7 +186,7 @@ main {
     color: #0197BC;
 }
 
-#priority-form label {
+#options .form-btn label {
     position: relative;
     font-size: 0.8rem;
     font-weight: 500;
