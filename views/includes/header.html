@@ -36,14 +36,18 @@
                     </li>
                     <!-- Navigation link for update profile -->
                     <li class="nav-item d-md-none me-md-5">
-                        <a class="update-account dropdown-item nav-link" href="{{ @BASE }}{{ 'profile' | alias }}"
-                            onclick="closeOffCanvas();">Update
+                        <a class="update-account dropdown-item nav-link"
+                            href="{{ @BASE }}{{ 'profile' | alias }}">Update
                             account</a>
+                    </li>
+                    <!-- Navigation link for delete account -->
+                    <li class="nav-item d-md-none me-md-5">
+                        <a id="delete-account" class="dropdown-item"
+                            href="{{ @BASE }}{{ 'profileDelete' | alias }}">Delete account</a>
                     </li>
                     <!-- Navigation link for log out -->
                     <li class="nav-item d-md-none me-md-5">
-                        <a class="logout dropdown-item nav-link" href="{{ @BASE }}{{ 'logout' | alias }}"
-                            onclick="closeOffCanvas();">Log
+                        <a class="logout dropdown-item nav-link" href="{{ @BASE }}{{ 'logout' | alias }}">Log
                             out</a>
                     </li>
 
@@ -84,13 +88,6 @@
 </header>
 
 <script>
-    // JavaScript for handling closing the offcanvas menu
-    function closeOffCanvas() {
-        const offcanvasElement = document.getElementById('main-nav');
-        const bsOffcanvas = new bootstrap.Offcanvas(offcanvasElement);
-        bsOffcanvas.hide();
-
-    }
     // JavaScript for handling account deletion with confirmation
     document.getElementById('delete-account').addEventListener('click', function (event) {
         if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
