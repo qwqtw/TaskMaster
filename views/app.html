@@ -1,6 +1,6 @@
 <include href="includes/head.html">
 
-        <div class="{{ @container }} container-fluid d-flex flex-column h-100 p-0">
+        <div class="{{ @container }} container-fluid d-flex flex-column vh-100 p-0">
 
             <!-- Navigation -->
             <include href="includes/header.html">
@@ -42,7 +42,7 @@
                         </aside>
                         
                         <!--  main content of the to-do manager -- all tasks are listed here  -->
-                        <main class="content col col-md-7 col-lg-8 col-xl-5 col-xxl-4 py-4 p-0">
+                        <main class="content col col-md-7 col-lg-8 col-xl-5 col-xxl-4 py-md-4 p-0">
                             
                             <!--  title of the currently selected list  -->
                             <form id="list-title-form" action="{{ @BASE }}{{ 'editListTitle' | alias }}" data-id="{{ @selectedId }}" method="POST" class="px-4">
