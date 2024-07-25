@@ -34,7 +34,7 @@ class ListController extends Controller
 
     /**
      * Edit the list title.
-     * @return string the new title or 0 if it failed.
+     * @return string the new title or "" if it failed.
      */
     public function editTitle()
     {
@@ -45,7 +45,7 @@ class ListController extends Controller
         ]);
 
         // If the form is valid, try to update, it will return the title or 0
-        echo ($this->isFormValid()) ? $this->model->updateTitle($listId) : 0;
+        echo ($this->isFormValid()) ? $this->model->updateTitle($listId) : "";
     }
 
     /**
@@ -66,6 +66,7 @@ class ListController extends Controller
         $isListDeleted = false;
 
         if ($isTaskDeleted) {
+
             $isListDeleted = $this->model->delete($listId);
 
             // Make sure the selected list is unset if it was deleted

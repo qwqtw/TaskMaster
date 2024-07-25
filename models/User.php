@@ -26,7 +26,7 @@ class User extends Model
     /**
      * Get user by it's username.
      * @param string $username the user's username
-     * @return Object result
+     * @return object result
      */
     public function getUserByUsername($username)
     {

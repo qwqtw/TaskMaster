@@ -28,7 +28,16 @@ class Model extends DB\SQL\Mapper
     }
 
     /**
-     * Get all entries from the table.
+     * Get user_id = {id} prefilled with logged in user for WHERE clauses.
+     * @return string the filled user_id = {id}
+     */
+    public function getUserQuery()
+    {
+        return "user_id = " . $_SESSION["userId"];
+    }
+
+    /**
+     * Get all entries from the table for the user.
      */
     public function getAll()
     {
@@ -37,7 +46,7 @@ class Model extends DB\SQL\Mapper
     }
 
     /**
-     * Fetch a single value from the table, using id primary key
+     * Fetch a single value from the table, using id primary key.
      * @param int id row to fetch
      * @return Object database result
      */
@@ -47,7 +56,7 @@ class Model extends DB\SQL\Mapper
     }
 
     /**
-     * Delete a row from the table using id primary key
+     * Delete a row from the table using id primary key and user id.
      * @param int id row to delete
      * @return int success feedback
      */
@@ -55,18 +64,5 @@ class Model extends DB\SQL\Mapper
     {
         $this->load(["id = ?", $id]); // Load the object
         return $this->erase();
-    }
-
-
-    /**
-     * Insert a new row into the table using POST data
-     * @return int last inserted id
-     */
-    public function addEntry()
-    {
-        $this->copyfrom("POST");
-        $this->save();
-
-        return $this->id; // last inserted id
     }
 }

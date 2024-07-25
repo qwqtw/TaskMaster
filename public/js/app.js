@@ -97,7 +97,7 @@ function updateTitle(event)
 
     $.post(`${form.attr("action")}`, {"title": input.val()})
         .done(function(newTitle) {
-            if (newTitle !== 0) {
+            if (newTitle !== "") {
                 // Set up the new title and in the list
                 input.val(newTitle);
                 $("#l-" + listId + " span.list-title").text(newTitle);

@@ -8,22 +8,22 @@ class Lists extends Model
     }
 
     /**
-     * Get a list by it's name.
-     * @param string $title the list title
-     * @return object the list if found
+     * Get list filtered by id and user_id.
+     * @param int $id the list id
+     * @return array the list
      */
-    public function getListByName($title)
+    public function getById($id)
     {
-        return $this->findone(["title = ?", $title]);
+        return $this->findone([$this->getUserQuery() . " AND  id = ?", $id]);
     }
 
     /**
      * Get the first list for the user.
-     * @return object the first list found based on list_order
+     * @return array the first list found based on list_order
      */
     public function getFirstList()
     {
-        return $this->findone(["user_id = ? ORDER BY list_order", $_SESSION["userId"]]);
+        return $this->findone([$this->getUserQuery() . " ORDER BY list_order"]);
     }
 
     /**
@@ -32,7 +32,7 @@ class Lists extends Model
      */
     public function getAll()
     {
-        $this->load(["user_id = ? ORDER BY list_order", $_SESSION["userId"]]);
+        $this->load([$this->getUserQuery() . " ORDER BY list_order"]);
         return $this->query;
     }
 
@@ -44,7 +44,7 @@ class Lists extends Model
     {
         $this->copyfrom("POST");
         // Count based on total list the user has
-        $this->list_order = $this->count(["user_id = ?", $_SESSION["userId"]]);
+        $this->list_order = $this->count([$this->getUserQuery()]);
         
         $this->save();
         return $this->id;
@@ -73,7 +73,7 @@ class Lists extends Model
      */
     public function updateTitle($id)
     {
-        $this->load(["id = ?", $id]);
+        $this->load(["id = ? AND " . $this->getUserQuery(), $id]);
         $this->copyfrom("POST");
 
         $this->update();
@@ -87,13 +87,13 @@ class Lists extends Model
      */
     public function updateListOrder($id, $newOrder)
     {
-        $this->load(["id = ?", $id]);
+        $this->load(["id = ? AND " . $this->getUserQuery(), $id]);
         $currentOrder = $this->list_order;
 
         // Solution based on 
         // https://dba.stackexchange.com/questions/36875/arbitrarily-ordering-records-in-a-table
-        $filters = ($newOrder > $currentOrder) ? [-1, $currentOrder, $newOrder] : [1, $newOrder, $currentOrder];
-        $this->db->exec("UPDATE list SET list_order = list_order + ? WHERE list_order >= ? AND list_order <= ?", $filters);
+        $filters = ($currentOrder > $newOrder) ? [1, $newOrder, $currentOrder] : [-1, $currentOrder, $newOrder];
+        $this->db->exec("UPDATE list SET list_order = list_order + ? WHERE list_order >= ? AND list_order <= ? AND " . $this->getUserQuery(), $filters);
 
         $this->load(["id = ?", $id]);
         $this->list_order = $newOrder;
@@ -107,8 +107,14 @@ class Lists extends Model
      */
     public function delete($id)
     {
-        $this->load(["id = ?", $id]);
+        $this->load(["id = ? AND " . $this->getUserQuery(), $id]);
+        $isDeleted = $this->erase();
 
-        return $this->erase();
+        // Update the list_order of every list after the list we are deleting
+        if ($isDeleted) {
+            $this->db->exec("UPDATE list SET list_order = list_order - 1 WHERE list_order > ? AND " . $this->getUserQuery(), $this->list_order);
+        }
+
+        return $isDeleted;
     }
 }
