@@ -19,7 +19,7 @@ class Lists extends Model
 
     public function getAll()
     {
-        $this->load(["user_id = ?", $_SESSION["userId"]]);
+        $this->load(["user_id = ? ORDER BY list_order", $_SESSION["userId"]]);
         return $this->query;
     }
 
@@ -30,7 +30,8 @@ class Lists extends Model
     public function create()
     {
         $this->copyfrom("POST");
-        $this->list_order = 0;
+        // Count based on total list the user has
+        $this->list_order = $this->count(["user_id = ?", $_SESSION["userId"]]);
         
         $this->save();
         return $this->id;
@@ -52,6 +53,11 @@ class Lists extends Model
         return $this->id;
     }
 
+    /**
+     * Update the list title.
+     * @param int $id the list id
+     * @return string the title
+     */
     public function updateTitle($id)
     {
         $this->load(["id = ?", $id]);
@@ -59,6 +65,21 @@ class Lists extends Model
 
         $this->update();
         return $this->title;
+    }
+
+    public function updateListOrder($id, $newOrder)
+    {
+        $this->load(["id = ?", $id]);
+        $currentOrder = $this->list_order;
+
+        // Solution based on 
+        // https://dba.stackexchange.com/questions/36875/arbitrarily-ordering-records-in-a-table
+        $this->db->exec("UPDATE list SET list_order = list_order + 1 WHERE list_order >= ? AND list_order <= ?", [$newOrder, $currentOrder]);
+
+        $this->load(["id = ?", $id]);
+        $this->list_order = $newOrder;
+
+        $this->update();
     }
 
     /**

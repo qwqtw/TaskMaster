@@ -41,6 +41,11 @@ class ListController extends Controller
         echo ($this->isFormValid()) ? $this->model->updateTitle($listId) : 0;
     }
 
+    public function updateListOrder()
+    {
+        $this->model->updateListOrder($this->get("PARAMS.id"), $this->get("PARAMS.order"));
+    }
+
     /**
      * Delete a list and its tasks.
      */

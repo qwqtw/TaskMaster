@@ -39,3 +39,6 @@ Focused on refining the frontend and fixing issues.
 
 7/23
 Add order by due date, add task through the frontend, support edit task. Add active task count.
+
+7/24
+Add list order.

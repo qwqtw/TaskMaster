@@ -16,7 +16,7 @@ $(function()
     $("#task-add-btn").on("click", toggleAddTask);
 
     // Reroute to selected list
-    $(".list-item").on("click", route);
+    $(".list-item .list-title").on("click", route);
 
     // Update backend/frontend
 
