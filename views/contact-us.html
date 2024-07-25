@@ -9,8 +9,10 @@
                     <!-- Page title -->
                     <h1 class="title">Contact Us</h1>
                     <div class="d-md-none me-md-5">
+                        <!-- Toggle button for mobile -->
+                        <button class="btn mobile-toggle"><i class="mdi mdi-phone"></i></button>
                         <!-- Mobile version Contact information section -->
-                        <div class="contact-info">
+                        <div class="contact-info mobile" id="mobileContactInfo">
                             <!-- Email contact -->
                             <div class="email">
                                 <strong><i class="mdi mdi-email"></i> E-mail:</strong><br>
@@ -89,8 +91,21 @@
         <include href="includes/footer.html">
 
             <!-- Linking jQuery and Bootstrap for functionality -->
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $(".mobile-toggle").click(function () {
+                        var contactInfo = $("#mobileContactInfo");
+                        if (contactInfo.css('opacity') == 0) {
+                            contactInfo.css({ 'opacity': 1, 'visibility': 'visible' });
+                        } else {
+                            contactInfo.css({ 'opacity': 0, 'visibility': 'hidden' });
+                        }
+                    });
+                });
+
+            </script>
             </body>
 
             </html>
