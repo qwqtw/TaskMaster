@@ -90,18 +90,18 @@ fieldset .input-wrapper {
     border: 1px solid darkgray;
 }
 /* Create list add btn */
-fieldset .input-wrapper input[type=submit] {
+fieldset input[type=submit] {
     width: 40px;
     height: 40px;
     font-size: 0.9rem;
 }
 /* The input */
-fieldset .input-wrapper input[type=text] {
+fieldset input[type=text] {
     width: 85%;
     height: 90%;
     border: none;
 }
-fieldset .input-wrapper input[type=text]:focus {
+fieldset input[type=text]:focus {
     outline: none;
 }
 
@@ -130,6 +130,7 @@ aside ul.scrollbar::-webkit-scrollbar {
 }
 
 aside li {
+    width: 100%;
     cursor: pointer;
 }
 aside li .icon {
@@ -147,6 +148,9 @@ aside li .menu {
 aside li:hover .menu {
     display: block;
 }
+aside li:hover .list-grip {
+    visibility: visible;
+}
 /* Highlight the selected list */
 aside li.active {
     box-shadow: inset 0 0 100px 100px rgba(0, 216, 119, 0.2); /* highlight */
@@ -158,6 +162,11 @@ aside li.active {
     font-size: 1.2rem;
     border: 0;
     outline: none;
+}
+.list-icon.list-grip {
+    cursor: move;
+    visibility: hidden;
+    color:rgba(57, 74, 109, 0.3);
 }
 
 
@@ -190,6 +199,11 @@ main {
     position: relative;
     font-size: 0.8rem;
     font-weight: 500;
+}
+
+#options input[type=checkbox]:checked + label {
+    color: white;
+    background-color: rgba(57, 74, 109, 0.6);
 }
 
 

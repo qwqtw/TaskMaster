@@ -67,9 +67,4 @@ class Model extends DB\SQL\Mapper
 
         return $this->id; // last inserted id
     }
-
-    private function copyPOST()
-    {
-        $this->copyfrom("POST");
-    }
 }

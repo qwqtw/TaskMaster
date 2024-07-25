@@ -49,7 +49,11 @@ class AppController extends Controller
         }
 
         // Setup the css needed
-        $this->set("css", ["css/app.css", "css/app-tasks.css"]);
+        $this->set("css", [
+            "https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css", 
+            "css/app.css", 
+            "css/app-tasks.css"
+        ]);
         $this->set("container", "app-container");
         $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
         $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "public/images/avatar.png");

@@ -27,6 +27,7 @@ $f3->route("GET @app: /app", "AppController->render");
 
 $f3->route("GET @appList: /app/list/@id", "AppController->setList");
 $f3->route("DELETE @deleteList: /app/list/@id/delete", "ListController->delete");
+$f3->route("GET @updateListOrder: /app/list/@id/@order", "ListController->updateListOrder");
 $f3->route("GET @appListMode: /app/list/mode/@mode", "AppController->setMode");
 $f3->route("GET @appListPriority: /app/list/priority/toggle", "AppController->setByPriority");
 $f3->route("GET @appListDueDate: /app/list/dueDate", "AppController->setByDueDate");
