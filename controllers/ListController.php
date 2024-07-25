@@ -13,6 +13,9 @@ class ListController extends Controller
         $this->task = new Task();
     }
 
+    /**
+     * Create a new list.
+     */
     public function create()
     {
         // Sanitize form inputs
@@ -29,6 +32,10 @@ class ListController extends Controller
         $this->f3->reroute("@app");
     }
 
+    /**
+     * Edit the list title.
+     * @return string the new title or 0 if it failed.
+     */
     public function editTitle()
     {
         $listId = $_SESSION["listId"];
@@ -41,6 +48,9 @@ class ListController extends Controller
         echo ($this->isFormValid()) ? $this->model->updateTitle($listId) : 0;
     }
 
+    /**
+     * Update the order of a list element.
+     */
     public function updateListOrder()
     {
         $this->model->updateListOrder($this->get("PARAMS.id"), $this->get("PARAMS.order"));
@@ -66,6 +76,10 @@ class ListController extends Controller
         echo ($isTaskDeleted && $isListDeleted);
     }
 
+    /**
+     * Validate the POST form information.
+     * @return bool true if the form is valid
+     */
     private function isFormValid()
     {
         $errors = [];

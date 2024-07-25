@@ -8,10 +8,6 @@ $(function()
     // Submit priority on click
     $(".form-btn").on("click", submitOptionForm);
 
-    $("#priority-btn").on("click", function() {
-        submitForm("priority-form");
-    })
-
     // Show add task form
     $("#task-add-btn").on("click", toggleAddTask);
 
@@ -74,6 +70,10 @@ function submitForm(formId)
     document.getElementById(formId).submit();
 }
 
+/**
+ * Submit form without submit button.
+ * @param {event} event 
+ */
 function submitOptionForm(event)
 {
     const button = $(event.currentTarget);
@@ -123,7 +123,7 @@ function addOrUpdateTask(event)
     const isUpdate = $(form).hasClass("edit");
 
     $.ajax({
-        url: `${form.action}${isUpdate ? "/" + formData.get("id") + "/update" : "/create"}`,
+        url: `${form.action}${isUpdate ? "/" + formData.get("id") : ""}`,
         type: "POST",
         data: formData,
         // Make formData work w jquery
@@ -132,23 +132,24 @@ function addOrUpdateTask(event)
         
         success: function(taskData) {
             if (taskData !== "{}") {
-
                 const task = JSON.parse(taskData);
 
+                // Edit the task
                 if (isUpdate) {
                     updateTask(task);
                 }
-                // Create a new task
+                // Create a new task and trigger hash location.
                 else {
                     const li = createTask(task);
                     $("#tasks-container ul").append(li);
 
+                    // Update the count indicator
                     updateActiveTaskCount(1);
-
+                    // Force scroll to the new task;
                     window.location.hash = "t-" + task.id;
                 }
 
-                // Force scroll to the new task;
+                // Hide the create/edit task dialog
                 toggleAddTask();
             }
         }
@@ -169,7 +170,7 @@ function toggleTask(event)
         .done(function(isCompleted) {
             if (isCompleted) {
                 // Update elements
-                for (let name of ["task-content", "priority", "checkmark", "task-date"]) {
+                for (let name of ["task-content", "priority", "checkmark", "task-date", "task-edit"]) {
                     li.find('.' + name).toggleClass("completed");
                 }
                 // Update the count indicator
@@ -179,29 +180,32 @@ function toggleTask(event)
     });
 }
 
-
+/**
+ * Update a task information.
+ * @param {event} event 
+ */
 function editTask(event)
 {
     event.stopPropagation();
+
     // Change the add icon
     $("#task-add-form").addClass("edit");
-    //$("#task-add-form button[type=submit]").toggleClass("hide");
 
     const task = $(event.currentTarget).closest("li");
 
     // Get the entry
     $.get(task.data("url"))
-        .done(function(task) {
+        .done(function(taskData) {
             // Fill the information into the form
-            if (task !== "{}") {
-                const taskData = JSON.parse(task);
+            if (taskData !== "{}") {
+                const task = JSON.parse(taskData);
 
                 // Hidden input id
-                $(`#task-add-form input[name="id"]`).val(taskData.id);
+                $(`#task-add-form input[name="id"]`).val(task.id);
                 // Fill in existing task data
-                $(`#task-add-form select[name=priority]`).val(taskData.priority);
-                $("#task-add-form textarea[name=content]").val(taskData.content);
-                $("#task-add-form input[type=date]").val(taskData.due_date);
+                $(`#task-add-form select[name=priority]`).val(task.priority);
+                $("#task-add-form textarea[name=content]").val(task.content);
+                $("#task-add-form input[type=date]").val(task.due_date);
 
                 toggleAddTask();
             }
@@ -221,7 +225,7 @@ function deleteTask(event)
     const li = target.closest("li");
 
     $.ajax({
-        url:`${li.data("url")}/delete`,
+        url: li.data("url"),
         type: "DELETE",
         success: function(isCompleted) {
             if (isCompleted) {
@@ -237,7 +241,7 @@ function deleteTask(event)
 }
 
 /**
- * Delete a list
+ * Delete a list.
  * @param {event} event 
  */
 function deleteList(event)
@@ -289,7 +293,7 @@ function createTask(jsonData)
                 <div class="${taskCompleted} ${task.due_date !== "" ? "due-date" : ""} task-date justify-content-center align-items-center rounded-5">${task.due_date}</div>
             </div>
         </div>
-    `)
+    `);
 
     // Add interface buttons and events
     const divButtons = $(`<div class="text-center"></div>`);
@@ -318,12 +322,9 @@ function updateTask(jsonData)
 /**
  * Adjust the count indicator by passing the value to increase or decrease by.
  * @param {int} value the value to increase or decrease by
- * @return {int} the updated indicator count
  */
-function updateActiveTaskCount(value)
+function updateActiveTaskCount(addValue)
 {
-    const newValue = parseInt($("#task-active-count span").text()) + value;
+    const newValue = parseInt($("#task-active-count span").text()) + addValue;
     $("#task-active-count span").text(newValue);
-
-    return newValue;
 }

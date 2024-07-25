@@ -11,6 +11,10 @@ class TaskController extends Controller
         $this->model = new Task();
     }
 
+    /**
+     * Get a task data.
+     * @return json response
+     */
     public function getTask()
     {
         if (array_key_exists("id", $this->get("PARAMS"))) {
@@ -20,7 +24,8 @@ class TaskController extends Controller
     }
 
     /**
-     * Create a task.
+     * Create a task and return the new data.
+     * @return json response
      */
     public function createTask()
     {
@@ -44,13 +49,15 @@ class TaskController extends Controller
                 $taskArray["base_task_url"] = $this->get("BASE") . $this->f3->alias("getTask", "id = " . $task["id"]);
 
                 return $this->echoJSON($taskArray);
-                //$this->f3->reroute("@app#t-{$taskId}");
             }
         }
-        //$this->f3->reroute("@app");
         echo "{}";
     }
 
+    /**
+     * Update the task information and return the new data.
+     * @return json response
+     */
     public function updateTask()
     {
         if (isset($_SESSION["listId"]) && array_key_exists("id", $this->get("POST"))) {
@@ -66,7 +73,6 @@ class TaskController extends Controller
             if ($this->isFormValid()) {
 
                 $task = $this->model->updateTask($taskId);
-                //$task = $this->model->getById($taskId);
                 $taskArray = $task->cast();
                 $taskArray["base_task_url"] = $this->get("BASE") . $this->f3->alias("getTask", "id = " . $task["id"]);
 
@@ -101,6 +107,7 @@ class TaskController extends Controller
     /**
      * Validate if the POST form is valid.
      * content and list_id validation.
+     * @return bool true if the form has no errors
      */
     private function isFormValid()
     {

@@ -102,8 +102,8 @@
                                             </div>
                                             <div class="text-center">
                                                 <!-- TODO: Edit button should open the task-add-container with prefilled information?-->
-                                                <button type="button" class="{{ @taskCompleted }} task-icon task-edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                                <button type="button" class="task-icon task-delete"><i class="fa-solid fa-trash-can"></i></button>
+                                                <button type="button" title="Edit Task" class="{{ @taskCompleted }} task-icon task-edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                <button type="button" title="Delete Task" class="task-icon task-delete"><i class="fa-solid fa-trash-can"></i></button>
                                             </div>
                                         </li>
                                     </repeat>
@@ -115,7 +115,7 @@
                                 <form action="{{ @BASE }}{{ 'baseTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
                                     <input type="hidden" name="id">
                                     <div class="d-flex mb-2">
-                                        <div id="task-add-priority" class="input-group input-group-sm">
+                                        <div id="task-add-priority" class="input-group input-group-sm me-md-2">
                                             <label class="input-group-text">Priority</label>
                                             <select class="form-control" name="priority" title="priority">
                                                 <option value="0">None</option>
@@ -164,7 +164,7 @@
         <script src="js/app.js"></script>
         <script>
             $( function() {
-                $( "#sortable" ).sortable({ 
+                $("#sortable").sortable({ 
                     axis: "y",
                     handle: ".sortable-handle",
                     stop: function(event, ui) {

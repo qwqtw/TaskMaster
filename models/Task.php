@@ -26,7 +26,7 @@ class Task extends Model
      */
     public function create()
     {
-        $this->copyPOST();
+        $this->copyFields();
 
         $this->save();
         return $this->id;
@@ -39,7 +39,7 @@ class Task extends Model
     public function updateTask($id)
     {
         $this->load(["id = ?", $id]);
-        $this->copyPOST();
+        $this->copyFields();
         
         $this->update();
         return $this;
@@ -140,9 +140,9 @@ class Task extends Model
     /**
      * Copy from POST and convert empty optional fields to null.
      */
-    private function copyPOST()
+    private function copyFields($key = "POST")
     {
-        $this->copyfrom("POST");
+        $this->copyfrom($key);
 
         if ($this->due_date == "") {
             $this->due_date = null;

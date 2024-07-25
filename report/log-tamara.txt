@@ -41,4 +41,4 @@ Focused on refining the frontend and fixing issues.
 Add order by due date, add task through the frontend, support edit task. Add active task count.
 
 7/24
-Add list order.
+Add list order. Add missing documentation, clean up code.

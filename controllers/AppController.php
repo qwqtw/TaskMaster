@@ -100,6 +100,9 @@ class AppController extends Controller
         $this->f3->reroute("@app");
     }
 
+    /**
+     * Remember the order by due date state.
+     */
     public function setByDueDate()
     {
         $_SESSION["byDueDate"] = isset($_SESSION["byDueDate"]) ? !$_SESSION["byDueDate"] : true;

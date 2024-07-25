@@ -51,7 +51,7 @@ class RegisterController extends Controller
             // User doesn't exists
             if (!$user) {
                 // Create the user
-                $userId = $this->model->createUser();
+                $this->model->createUser();
                 $this->f3->reroute("@home");
             }
             // User already exists
@@ -71,7 +71,7 @@ class RegisterController extends Controller
 
     /**
      * Validate the data for the form after a POST method
-     * @return boolean true if the form is valid
+     * @return bool true if the form is valid
      */
     private function isFormValid()
     {

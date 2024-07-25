@@ -19,8 +19,6 @@ $f3->route("POST @register", "RegisterController->register");
 
 // contact-us.html
 $f3->route("GET @contactUs: /contact-us", "PagesController->contactUs");
-// contact-us-guest.html
-$f3->route("GET @contactUsGuest: /contact-us-guest", "PagesController->contactUsGuest");
  
 // app.html
 $f3->route("GET @app: /app", "AppController->render");
@@ -35,19 +33,21 @@ $f3->route("GET @appListDueDate: /app/list/dueDate", "AppController->setByDueDat
 $f3->route("POST @createList: /app/list/create", "ListController->create");
 $f3->route("POST @editListTitle: /app/list/editTitle", "ListController->editTitle");
 
+// Tasks
 $f3->route("GET @baseTask: /app/task", null);
-$f3->route("POST @createTask: /app/task/create", "TaskController->createTask");
-$f3->route("POST @updateTask: /app/task/@id/update", "TaskController->updateTask");
+$f3->route("POST @baseTask", "TaskController->createTask");
+
 $f3->route("GET @getTask: /app/task/@id", "TaskController->getTask");
+$f3->route("POST @getTask", "TaskController->updateTask");
+$f3->route("DELETE @getTask", "TaskController->deleteTask");
 $f3->route("GET @toggleTask: /app/task/@id/toggle", "TaskController->toggleTask");
-$f3->route("DELETE @deleteTask: /app/task/@id/delete", "TaskController->deleteTask");
  
 // Profile update and delete routes
 $f3->route("GET @profile: /profile", "ProfileController->render");
 $f3->route("POST @profileUpdate: /update", "ProfileController->update");
 $f3->route("GET @profileDelete: /delete", "ProfileController->delete");
 
-$f3->route("GET @logout: /logout", "PagesController->logout");
+$f3->route("GET @logout: /logout", "Controller->logout");
 
 // Catch invalid url, redirect to home
 /*$f3->route("GET /*", "LoginController->render");

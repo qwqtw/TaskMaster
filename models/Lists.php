@@ -7,16 +7,29 @@ class Lists extends Model
         parent::__construct("list");
     }
 
+    /**
+     * Get a list by it's name.
+     * @param string $title the list title
+     * @return object the list if found
+     */
     public function getListByName($title)
     {
         return $this->findone(["title = ?", $title]);
     }
 
+    /**
+     * Get the first list for the user.
+     * @return object the first list found based on list_order
+     */
     public function getFirstList()
     {
-        return $this->findone(["user_id = ?", $_SESSION["userId"]]);
+        return $this->findone(["user_id = ? ORDER BY list_order", $_SESSION["userId"]]);
     }
 
+    /**
+     * Get all lists by list_order for the user.
+     * @return array returned list that matched the criterias
+     */
     public function getAll()
     {
         $this->load(["user_id = ? ORDER BY list_order", $_SESSION["userId"]]);
@@ -67,6 +80,11 @@ class Lists extends Model
         return $this->title;
     }
 
+    /**
+     * Update the order of the lists.
+     * @param int $id the list id that changed
+     * @param int $newOrder the list's new position
+     */
     public function updateListOrder($id, $newOrder)
     {
         $this->load(["id = ?", $id]);
@@ -90,6 +108,7 @@ class Lists extends Model
     public function delete($id)
     {
         $this->load(["id = ?", $id]);
+
         return $this->erase();
     }
 }

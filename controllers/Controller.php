@@ -82,6 +82,19 @@ class Controller
     }
 
     /**
+     * Log out the user
+     */
+    public function logout()
+    {
+        // Destroy all session variables.
+        session_unset();
+        // Destroy the session file from the server.
+        session_destroy();
+
+        $this->f3->reroute("@home");
+    }
+
+    /**
      * Take the default and format it with the new title = "title | default title"
      */
     public function setPageTitle($title)
