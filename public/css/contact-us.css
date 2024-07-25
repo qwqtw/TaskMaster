@@ -18,6 +18,7 @@
     background-color: #00a1c9;
 }
 
+/* Mobile responsive adjustments */
 @media (max-width: 768px) {
     .mobile-toggle {
         display: block;
@@ -66,7 +67,6 @@ body {
     background-position: bottom;
     background-size: 100%;
     background-color: #F3F3F3;
-    /* Ensure the image covers the set height */
 }
 
 /* Global text shadow for contrast */
