@@ -1,54 +1,79 @@
+<!-- Include head section -->
 <include href="includes/head.html">
 
+    <!-- Dynamic inclusion of header content -->
     <include href="{{ @header }}">
         <main class="container">
             <div class="main-content">
                 <div class="text-content">
+                    <!-- Page title -->
                     <h1 class="title">Contact Us</h1>
+                    <div class="d-md-none me-md-5">
+                        <!-- Mobile version Contact information section -->
+                        <div class="contact-info">
+                            <!-- Email contact -->
+                            <div class="email">
+                                <strong><i class="mdi mdi-email"></i> E-mail:</strong><br>
+                                taskmaster@gmail.com
+                            </div>
+                            <!-- Social media links -->
+                            <div class="social-media">
+                                <strong>Social Medias:</strong><br>
+                                <a href="#"><i class="mdi mdi-twitter"></i></a>
+                                <a href="#"><i class="mdi mdi-facebook"></i></a>
+                                <a href="#"><i class="mdi mdi-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Application description -->
                     <p class="description">TaskMaster is a highly intuitive and robust to-do list application designed
-                        to
-                        streamline task management and enhance productivity for individuals and teams. Developed using
-                        the
-                        powerful Fatfree framework, TaskMaster Pro offers a seamless user experience with a clean,
+                        to streamline task management and enhance productivity for individuals and teams. Developed
+                        using
+                        the powerful Fatfree framework, TaskMaster offers a seamless user experience with a clean,
                         responsive design suitable for all devices.</p>
 
+                    <!-- Features section with descriptions and screenshots -->
                     <div class="features-section">
-                        <h3 class="subtitle">Description Customization</h3>
-                        <p>Allows users to tailor task descriptions to their specific needs, enhancing clarity and
-                            personalization of task management.</p>
-                        <!-- Container for screenshots -->
+                        <!-- Due Date feature description -->
+                        <h3 class="subtitle">Due Date</h3>
+                        <p>The "Due Date" feature allows users to assign a specific completion date to each task on
+                            their to-do list. This helps in effectively managing deadlines and ensures that tasks are
+                            completed in a timely manner.</p>
+                        <!-- Screenshots for Due Date feature -->
                         <div class="screenshots">
-                            <img src="images/" alt="Description Customization Screenshot">
-                            <!-- Additional screenshots can be added here if needed -->
+                            <img src="images/dueDate-1.png" alt="Setting Due Date Screenshot">
+                        </div>
+                        <p>By setting a due date, users can organize their tasks more efficiently, prioritizing them
+                            based on the urgency of the deadlines.</p>
+                        <div class="screenshots">
+                            <img src="images/dueDate-2.png" alt="Setting Due Date Screenshot">
                         </div>
 
-                        <h3 class="subtitle">Deadlines</h3>
-                        <p>Set explicit deadlines for tasks, helping users manage their time efficiently and stay on
-                            track
-                            with their objectives.</p>
-                        <!-- Container for screenshots -->
-                        <div class="screenshots">
-                            <img src="images/screenshot-1.png" alt="Setting Deadlines Screenshot">
-                            <!-- Additional screenshots can be added here if needed -->
-                        </div>
-
+                        <!-- Priority Levels feature description -->
                         <h3 class="subtitle">Priority Levels</h3>
-                        <p>Prioritize tasks with customizable levels, enabling users to focus on the most critical tasks
-                            at
-                            any given time.</p>
-                        <!-- Container for screenshots -->
+                        <p>The "Priority Level" feature enables users to categorize tasks by their importance or
+                            urgency. Each task can be labeled as 'None,' 'Low,' or 'High' priority.</p>
+                        <!-- Screenshots for Priority Levels feature -->
                         <div class="screenshots">
-                            <img src="images/" alt="Priority Levels Screenshot">
-                            <!-- Additional screenshots can be added here if needed -->
+                            <img src="images/priority-1.png" alt="Priority Levels Screenshot">
+                        </div>
+                        <p>This classification assists in focusing on critical tasks that require immediate attention,
+                            thereby improving productivity and ensuring that important objectives are not overlooked in
+                            a busy schedule.</p>
+                        <div class="screenshots">
+                            <img src="images/priority-2.png" alt="Priority Levels Screenshot">
                         </div>
                     </div>
 
                 </div>
-                <div class="contact-info">
+                <!-- Contact information section -->
+                <div class="contact-info d-none d-md-block me-md-3 mb-5 mb-md-0">
+                    <!-- Email contact -->
                     <div class="email">
                         <strong><i class="mdi mdi-email"></i> E-mail:</strong><br>
-                        sample@gmail.com
+                        taskmaster@gmail.com
                     </div>
+                    <!-- Social media links -->
                     <div class="social-media">
                         <strong>Social Medias:</strong><br>
                         <a href="#"><i class="mdi mdi-twitter"></i></a>
@@ -60,10 +85,10 @@
             </div>
 
         </main>
-        <aside class="splash-img"></aside>
+        <!-- Include footer -->
         <include href="includes/footer.html">
 
-            <!-- jQuery and Bootstrap JS -->
+            <!-- Linking jQuery and Bootstrap for functionality -->
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
             </body>
