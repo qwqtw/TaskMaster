@@ -74,7 +74,8 @@ class Lists extends Model
 
         // Solution based on 
         // https://dba.stackexchange.com/questions/36875/arbitrarily-ordering-records-in-a-table
-        $this->db->exec("UPDATE list SET list_order = list_order + 1 WHERE list_order >= ? AND list_order <= ?", [$newOrder, $currentOrder]);
+        $filters = ($newOrder > $currentOrder) ? [-1, $currentOrder, $newOrder] : [1, $newOrder, $currentOrder];
+        $this->db->exec("UPDATE list SET list_order = list_order + ? WHERE list_order >= ? AND list_order <= ?", $filters);
 
         $this->load(["id = ?", $id]);
         $this->list_order = $newOrder;
