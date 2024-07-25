@@ -16,8 +16,10 @@ class Model extends DB\SQL\Mapper
     public function __construct($table)
     {
         $f3 = Base::instance();
+        
+        $host = $f3->get("DBHOST") ?? "localhost";
 
-        $this->db = new DB\SQL("mysql:host=localhost;dbname={$f3->get('DBNAME')};port={$f3->get('DBPORT')}", 
+        $this->db = new DB\SQL("mysql:host={$host};dbname={$f3->get('DBNAME')};port={$f3->get('DBPORT')}", 
             $f3->get("DBUSER"), 
             $f3->get("DBPASS"));
 
