@@ -83,6 +83,10 @@ class RegisterController extends Controller
         if ($this->get("POST.email") == ""){
             array_push($errors, "Email is required.");
         }
+        else if (!filter_var($this->get("POST.email"), FILTER_VALIDATE_EMAIL)) {
+            array_push($errors, "Valid email address is required.");
+        }
+
         // Password validation
         $pass = $this->get("POST.password");
         $passConfirm = $this->get("POST.password-confirm");
