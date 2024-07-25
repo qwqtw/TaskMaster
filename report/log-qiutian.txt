@@ -45,3 +45,6 @@ add a flavicon, improve dropdown animation, improve contact us UX
 
 7/24
 complete contact us page with description and screenshots, improve background display, improve mobile responsiveness, final documentation
+
+7/25
+final clean up, final documentation
