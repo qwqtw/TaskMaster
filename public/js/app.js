@@ -100,7 +100,7 @@ function updateTitle(event)
             if (newTitle !== 0) {
                 // Set up the new title and in the list
                 input.val(newTitle);
-                $("#l-" + listId + " span").text(newTitle);
+                $("#l-" + listId + " span.list-title").text(newTitle);
                 // Clear focus
                 if (event.type === "submit") {
                     input.blur();
