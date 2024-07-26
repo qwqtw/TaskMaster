@@ -54,3 +54,6 @@ Tamara is working on supporting edit task and maybe list ordering.
 
 7/24
 Tamara worked on the edit task, order by due date, and added an active task count. Qiutian will be working on the documentation and fix contact us screenshots.
+
+7/25
+Tamara is working on adding database validations. Qiutian is working on project documentation.
