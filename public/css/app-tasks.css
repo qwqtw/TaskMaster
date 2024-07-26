@@ -2,7 +2,7 @@
     Tasks container
 */
 #tasks-container {
-    height: 60vh;
+    height: 50vh;
 }
 #tasks-container ul {
     list-style-type: none; 

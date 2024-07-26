@@ -11,24 +11,41 @@
                     <div class="row h-100">
 
                         <!-- Lists -->
-                        <aside class="d-none d-md-block offset-xl-2 offset-xxl-3 col-md-5 col-lg-4 col-xl-3 col-xxl-2 px-0">
-                            <!--  list creation input field  -->
-                            <form action="{{ @BASE }}{{ 'createList' | alias }}" method="POST" class="my-4 mt-md-5 px-4">
-                                <fieldset class="d-flex flex-column mx-auto text-center">
-                                    <legend class="ms-2">Create list</legend>
-                                    <div class="input-wrapper d-flex align-items-center justify-content-center p-2">
-                                        <input type="text" id="list-name" name="title" title="Create List" class="px-2" autocomplete="off">
-                                        <input type="submit" class="btn-add fa" value="&#x2b">
-                                    </div>
-                                </fieldset>
-                            </form>
+                        <aside class="d-none d-md-block offset-lg-1 offset-xl-2 offset-xxl-3 col-md-5 col-lg-4 col-xl-3 col-xxl-2 px-0">
+                            <div class="bg-color">
+                                <!--  list creation input field  -->
+                                <form action="{{ @BASE }}{{ 'rootList' | alias }}" method="POST" class="p-4 pt-md-5">
+                                    <fieldset class="d-flex flex-column mx-auto text-center">
+                                        <legend class="ms-2">Create list</legend>
+                                        <div class="input-wrapper d-flex align-items-center justify-content-center p-2">
+                                            <input type="text" id="list-name" name="title" title="Create List" class="px-2" autocomplete="off">
+                                            <input type="submit" class="btn-add fa" value="&#x2b">
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            
+                                <!-- List Recent -->
+                                <div id="lists-recent">
+                                    <h5 class="ms-4 px-2">Recent</h5>
+                                    <ul>
+                                        <repeat group="{{ @listsRecent }}" value="{{ @list }}">
+                                            <a href="{{ @BASE }}{{ 'getList', ['id' => @list['id']] | alias }}" class="text-decoration-none">
+                                                <li data-id="{{ @list['id'] }}" class="list- d-flex align-items-center px-4 p-1">
+                                                    <span class="list-title ms-4">{{ @list["title" ]}}</span>
+                                                </li>
+                                            </a>
+                                        </repeat>
+                                    </ul>
+                                </div>
+                                <hr>
+                            </div>
 
                             <!-- List Items -->
-                            <div id="lists-container" class="my-4">
+                            <div id="lists-container" class="my-3">
                                 <ul id="sortable" aria-dropeffect="move" class="scrollbar">
                                     <repeat group="{{ @lists }}" value="{{ @list }}">
-                                        <li id="l-{{ @list['id'] }}" data-id="{{ @list['id'] }}" data-url="{{ @BASE }}{{ 'appList', ['id' => @list['id']] | alias }}" class="list-item {{ @selectedId == @list['id'] ? 'active' : '' }} d-flex align-items-center">
-                                            <span class="sortable-handle ms-3 mx-2"><i class="fas fa-grip-vertical list-icon list-grip"></i></span>
+                                        <li id="l-{{ @list['id'] }}" data-id="{{ @list['id'] }}" data-url="{{ @BASE }}{{ 'getList', ['id' => @list['id']] | alias }}" class="list-item {{ @selectedId == @list['id'] ? 'active' : '' }} d-flex align-items-center">
+                                            <span class="sortable-handle ms-2 p-2"><i class="fas fa-grip-vertical list-icon list-grip"></i></span>
                                             <span class="list-title w-75 p-2 text-decoration-none">{{ @list["title"] }}</span>
                                             <div class="menu text-end me-3">
                                                 <button type="button" title="Delete List" class="list-icon list-delete"><i class="fa-solid fa-trash-can"></i></button>
@@ -43,11 +60,20 @@
                         </aside>
                         
                         <!--  main content of the to-do manager -- all tasks are listed here  -->
-                        <main class="content col col-md-7 col-lg-8 col-xl-5 col-xxl-4 py-md-4 p-0">
+                        <main class="content col col-md-7 col-lg-6 col-xl-5 col-xxl-4 py-md-4 p-0">
                             
                             <!--  title of the currently selected list  -->
                             <form id="list-title-form" action="{{ @BASE }}{{ 'editListTitle' | alias }}" data-id="{{ @selectedId }}" method="POST" class="px-4">
-                                <input type="text" name="title" title="Edit Title" value="{{ @selectedTitle ?? 'TODO' }}" class="w-100" autocomplete="off">
+                                <input 
+                                    maxlength="35"
+                                    type="text" 
+                                    name="title" 
+                                    title="Edit Title" 
+                                    value="{{ @selectedTitle ?? 'TODO' }}" 
+                                    class="w-100 ps-2" 
+                                    autocomplete="off" 
+                                    spellcheck="false"
+                                >
                             </form>
 
                             <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
@@ -102,8 +128,8 @@
                                             </div>
                                             <div class="text-center">
                                                 <!-- TODO: Edit button should open the task-add-container with prefilled information?-->
-                                                <button type="button" class="{{ @taskCompleted }} task-icon task-edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                                <button type="button" class="task-icon task-delete"><i class="fa-solid fa-trash-can"></i></button>
+                                                <button type="button" title="Edit Task" class="{{ @taskCompleted }} task-icon task-edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                <button type="button" title="Delete Task" class="task-icon task-delete"><i class="fa-solid fa-trash-can"></i></button>
                                             </div>
                                         </li>
                                     </repeat>
@@ -112,10 +138,10 @@
 
                             <!-- Task add dialog -->
                             <div id="task-add-dialog" class="w-100">
-                                <form action="{{ @BASE }}{{ 'baseTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
+                                <form action="{{ @BASE }}{{ 'rootTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
                                     <input type="hidden" name="id">
                                     <div class="d-flex mb-2">
-                                        <div id="task-add-priority" class="input-group input-group-sm">
+                                        <div id="task-add-priority" class="input-group input-group-sm me-md-2">
                                             <label class="input-group-text">Priority</label>
                                             <select class="form-control" name="priority" title="priority">
                                                 <option value="0">None</option>
@@ -158,13 +184,10 @@
             <include href="includes/footer.html">
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
-        <script src="js/app.js"></script>
+        <include href="includes/scripts.html">
         <script>
             $( function() {
-                $( "#sortable" ).sortable({ 
+                $("#sortable").sortable({ 
                     axis: "y",
                     handle: ".sortable-handle",
                     stop: function(event, ui) {

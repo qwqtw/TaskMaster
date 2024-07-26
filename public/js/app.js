@@ -8,10 +8,6 @@ $(function()
     // Submit priority on click
     $(".form-btn").on("click", submitOptionForm);
 
-    $("#priority-btn").on("click", function() {
-        submitForm("priority-form");
-    })
-
     // Show add task form
     $("#task-add-btn").on("click", toggleAddTask);
 
@@ -22,7 +18,18 @@ $(function()
 
     // Submit the title on focus out.
     $("#list-title-form input").on("focusout", updateTitle);
-    $("#list-title-form").on("submit", updateTitle);
+    // When the input changes, reset the custom validity.
+    $("#list-title-form input").on("input", function(event) {
+        const inputDOM = $("#list-title-form input").get(0);
+        inputDOM.setCustomValidity("");
+        inputDOM.reportValidity();
+    });
+    // Prevent default submit.
+    $("#list-title-form").on("submit", function(event) {
+        $("#list-title-form input").blur(); // Force submit
+        event.preventDefault();
+    });
+
     // Delete list
     $(".list-delete").on("click", deleteList);
 
@@ -74,6 +81,10 @@ function submitForm(formId)
     document.getElementById(formId).submit();
 }
 
+/**
+ * Submit form without submit button.
+ * @param {event} event 
+ */
 function submitOptionForm(event)
 {
     const button = $(event.currentTarget);
@@ -94,17 +105,23 @@ function updateTitle(event)
     const form = $("#list-title-form");
     const listId = $("#list-title-form").data("id");
     const input = $("#list-title-form input[name=title]");
+    const inputDOM = input.get(0);
 
     $.post(`${form.attr("action")}`, {"title": input.val()})
-        .done(function(newTitle) {
-            if (newTitle !== 0) {
-                // Set up the new title and in the list
+        .done(function(data) {
+            dataTitle = JSON.parse(data);
+
+            if ("error" in dataTitle) {
+                // Solution here
+                // https://stackoverflow.com/questions/30958536/custom-validity-jquery
+                inputDOM.setCustomValidity(dataTitle.error);
+                inputDOM.reportValidity();
+            }
+            // Set up the new title and in the list
+            else  {
+                const newTitle = dataTitle.title;
                 input.val(newTitle);
-                $("#l-" + listId + " span").text(newTitle);
-                // Clear focus
-                if (event.type === "submit") {
-                    input.blur();
-                }
+                $(`li[data-id="${listId}"] .list-title`).text(newTitle);
             }
         })
 }
@@ -123,7 +140,7 @@ function addOrUpdateTask(event)
     const isUpdate = $(form).hasClass("edit");
 
     $.ajax({
-        url: `${form.action}${isUpdate ? "/" + formData.get("id") + "/update" : "/create"}`,
+        url: `${form.action}${isUpdate ? "/" + formData.get("id") : ""}`,
         type: "POST",
         data: formData,
         // Make formData work w jquery
@@ -132,23 +149,24 @@ function addOrUpdateTask(event)
         
         success: function(taskData) {
             if (taskData !== "{}") {
-
                 const task = JSON.parse(taskData);
 
+                // Edit the task
                 if (isUpdate) {
                     updateTask(task);
                 }
-                // Create a new task
+                // Create a new task and trigger hash location.
                 else {
                     const li = createTask(task);
                     $("#tasks-container ul").append(li);
 
+                    // Update the count indicator
                     updateActiveTaskCount(1);
-
+                    // Force scroll to the new task;
                     window.location.hash = "t-" + task.id;
                 }
 
-                // Force scroll to the new task;
+                // Hide the create/edit task dialog
                 toggleAddTask();
             }
         }
@@ -169,7 +187,7 @@ function toggleTask(event)
         .done(function(isCompleted) {
             if (isCompleted) {
                 // Update elements
-                for (let name of ["task-content", "priority", "checkmark", "task-date"]) {
+                for (let name of ["task-content", "priority", "checkmark", "task-date", "task-edit"]) {
                     li.find('.' + name).toggleClass("completed");
                 }
                 // Update the count indicator
@@ -179,29 +197,32 @@ function toggleTask(event)
     });
 }
 
-
+/**
+ * Update a task information.
+ * @param {event} event 
+ */
 function editTask(event)
 {
     event.stopPropagation();
+
     // Change the add icon
     $("#task-add-form").addClass("edit");
-    //$("#task-add-form button[type=submit]").toggleClass("hide");
 
     const task = $(event.currentTarget).closest("li");
 
     // Get the entry
     $.get(task.data("url"))
-        .done(function(task) {
+        .done(function(taskData) {
             // Fill the information into the form
-            if (task !== "{}") {
-                const taskData = JSON.parse(task);
+            if (taskData !== "{}") {
+                const task = JSON.parse(taskData);
 
                 // Hidden input id
-                $(`#task-add-form input[name="id"]`).val(taskData.id);
+                $(`#task-add-form input[name="id"]`).val(task.id);
                 // Fill in existing task data
-                $(`#task-add-form select[name=priority]`).val(taskData.priority);
-                $("#task-add-form textarea[name=content]").val(taskData.content);
-                $("#task-add-form input[type=date]").val(taskData.due_date);
+                $(`#task-add-form select[name=priority]`).val(task.priority);
+                $("#task-add-form textarea[name=content]").val(task.content);
+                $("#task-add-form input[type=date]").val(task.due_date);
 
                 toggleAddTask();
             }
@@ -221,7 +242,7 @@ function deleteTask(event)
     const li = target.closest("li");
 
     $.ajax({
-        url:`${li.data("url")}/delete`,
+        url: li.data("url"),
         type: "DELETE",
         success: function(isCompleted) {
             if (isCompleted) {
@@ -237,7 +258,7 @@ function deleteTask(event)
 }
 
 /**
- * Delete a list
+ * Delete a list.
  * @param {event} event 
  */
 function deleteList(event)
@@ -246,21 +267,27 @@ function deleteList(event)
 
     const target = $(event.currentTarget);
     const li = target.closest("li");
+    const title = $(`li[data-id="${li.data("id")}"] .list-title`).text();
 
-    $.ajax({
-        'url': `${li.data("url")}/delete`,
-        type: "DELETE",
-        success: function(isCompleted) {
-            if (isCompleted) {
-                /* We need to load a new list*/
-                if (li.hasClass("active")) {
-                    window.location.href = li.data("url");
+    isConfirm = confirm("Are you sure you want to delete " + title + "?\nThis action cannot be undone.")
+
+    if (isConfirm) {
+        $.ajax({
+            url: li.data("url"),
+            type: "DELETE",
+            success: function(isCompleted) {
+                if (isCompleted) {
+                    /* We need to load a new list*/
+                    if (li.hasClass("active")) {
+                        window.location.href = li.data("url");
+                    }
+    
+                    $(`li[data-id="${li.data("id")}"]`).remove();
+                    //li.remove();
                 }
-
-                li.remove();
             }
-        }
-    })
+        })
+    }
 }
 
 
@@ -277,7 +304,7 @@ function createTask(jsonData)
     task.due_date = task.due_date || ""; 
 
     // Task li
-    const li = $(`<li id="t-${task.id}" data-id="${task.id}" data-url="${task.base_task_url}" class="d-flex w-100 mb-4"></li>`);
+    const li = $(`<li id="t-${task.id}" data-id="${task.id}" data-url="${task.task_url}" class="d-flex w-100 mb-4"></li>`);
     li.html(`
         <div>
             <div class="marker priority priority-${task.priority} ${taskCompleted}"><i class="fa-solid fa-circle"></i></div>
@@ -289,7 +316,7 @@ function createTask(jsonData)
                 <div class="${taskCompleted} ${task.due_date !== "" ? "due-date" : ""} task-date justify-content-center align-items-center rounded-5">${task.due_date}</div>
             </div>
         </div>
-    `)
+    `);
 
     // Add interface buttons and events
     const divButtons = $(`<div class="text-center"></div>`);
@@ -318,12 +345,9 @@ function updateTask(jsonData)
 /**
  * Adjust the count indicator by passing the value to increase or decrease by.
  * @param {int} value the value to increase or decrease by
- * @return {int} the updated indicator count
  */
-function updateActiveTaskCount(value)
+function updateActiveTaskCount(addValue)
 {
-    const newValue = parseInt($("#task-active-count span").text()) + value;
+    const newValue = parseInt($("#task-active-count span").text()) + addValue;
     $("#task-active-count span").text(newValue);
-
-    return newValue;
 }

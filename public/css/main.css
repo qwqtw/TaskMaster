@@ -60,8 +60,7 @@ input[type=reset]:active {
 /* header */
 header {
     /*margin-bottom: 20px;*/
-    background-color: rgba(217, 217, 217, 0.5);
-
+    /*background-color: rgba(217, 217, 217, 0.5);*/
 }
 
 header nav a {
@@ -76,6 +75,7 @@ header nav span {
 
 .navbar {
     height: 80px;
+    background-color: rgba(217, 217, 217, 0.8);
 
 }
 
@@ -186,7 +186,7 @@ footer {
     font-size: 0.8rem;
 }
 
-footer>p {
+footer > p {
     color: white;
     font-size: 0.8rem;
     margin: 0;

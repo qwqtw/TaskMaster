@@ -3,16 +3,17 @@
 class ListController extends Controller
 {
     private $model;
-    private $task;
 
 
     public function __construct($f3)
     {
         parent::__construct($f3);
         $this->model = new Lists();
-        $this->task = new Task();
     }
 
+    /**
+     * Create a new list.
+     */
     public function create()
     {
         // Sanitize form inputs
@@ -24,11 +25,15 @@ class ListController extends Controller
         if ($this->isFormValid()) {
 
             $listId = $this->model->create();
-            $this->f3->reroute("@appList(@id={$listId})");
+            $this->f3->reroute("@getList(@id={$listId})");
         }
         $this->f3->reroute("@app");
     }
 
+    /**
+     * Edit the list title.
+     * @return string the new title or "" if it failed.
+     */
     public function editTitle()
     {
         $listId = $_SESSION["listId"];
@@ -37,10 +42,18 @@ class ListController extends Controller
             "title" => trim($this->get("POST.title")),
         ]);
 
-        // If the form is valid, try to update, it will return the title or 0
-        echo ($this->isFormValid()) ? $this->model->updateTitle($listId) : 0;
+        if (!$this->isFormValid()) {
+            $this->echoJSON(["error" => $this->get("errors")[0]]);
+            return;
+        }
+
+        // If the form is valid, try to update, it will return the title or error
+        $this->echoJSON(["title" => $this->model->updateTitle($listId)]);
     }
 
+    /**
+     * Update the order of a list element.
+     */
     public function updateListOrder()
     {
         $this->model->updateListOrder($this->get("PARAMS.id"), $this->get("PARAMS.order"));
@@ -52,26 +65,34 @@ class ListController extends Controller
     public function delete()
     {
         $listId = $this->get("PARAMS.id");
-        $isTaskDeleted = $this->task->deleteTaskByList($listId);
-        $isListDeleted = false;
-
-        if ($isTaskDeleted) {
+        try {
             $isListDeleted = $this->model->delete($listId);
-
-            // Make sure the selected list is unset if it was deleted
-            if ($isListDeleted && ($_SESSION["listId"] === $listId)) {
-                $_SESSION["listId"] = null;
-            }
         }
-        echo ($isTaskDeleted && $isListDeleted);
+        // Invalid list id
+        catch (Exception $e) {
+            $isListDeleted = false;
+        }
+
+        // Make sure the selected list is unset if it was deleted
+        if ($isListDeleted && ($_SESSION["listId"] === $listId)) {
+            $_SESSION["listId"] = null;
+        }
+        echo $isListDeleted;
     }
 
+    /**
+     * Validate the POST form information.
+     * @return bool true if the form is valid
+     */
     private function isFormValid()
     {
         $errors = [];
 
         if ($this->get("POST.title") == "") {
             array_push($errors, "List name is required.");
+        }
+        else if (!$this->validateMaxLength($this->get("POST.title"), 30)) {
+            array_push($errors, "Title should be 30 characters max.");
         }
 
         return $this->validateForm($errors);

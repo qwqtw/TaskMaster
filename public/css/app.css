@@ -37,32 +37,20 @@ body > .container-fluid {
 */
 .navbar {
     background-color: rgba(243, 243, 243, 0.8);
-    /*background-color: rgba(57, 74, 109, 0.8);*/
-    height: 80px;
 }
 
-.horizontal-logo {
-    width: 245px;
-}
-
-.navbar .avatar-wrapper {
-    width: 50px;
-    height: 50px;
-}
 
 /*
-    TO DO List container
-*/
-#taskmaster-container {
-    /*height: calc(100%);*/
-}
-
-/* 
+    TO DO
     Lists section
 */
 aside {
     border-radius: 20px 20px 0px 0px;
     background-color: #E1E2E6;
+}
+
+aside .bg-color {
+    background-color: rgba(1, 151, 188, 0.05);
 }
 
 /*
@@ -109,15 +97,23 @@ fieldset input[type=text]:focus {
 /*
     List of lists
 */
+#lists-recent a {
+    color: rgba(57, 74, 109, 0.8);
+    font-weight: 500;
+}
+
 #lists-container {
     /*height: 500px;*/
-    height: 60vh;
+    height: 50vh;
 }
 
 aside ul {
     list-style-type: none;
     padding-left: 0;
-    height: 95%;
+}
+/* Scrollabe sortable list of lists */
+aside ul#sortable {
+    height: 90%;
 }
 
 aside ul.scrollbar {
@@ -221,21 +217,6 @@ main {
     color: #394a6d;
     outline: none;
     border-bottom: 1px dotted #394a6d;
-}
-
-/*
-    Footer
-*/
-footer {
-    background-color: #394a6d;
-    color: white;
-    font-size: 0.8rem;
-}
-footer > p {
-    color: white;
-    font-size: 0.8rem;
-    margin: 0;
-    padding: 5px;
 }
 
 

@@ -10,7 +10,24 @@ class AppController extends Controller
     {
         parent::__construct($f3);
         $this->lists = new Lists();
-        $this->task = new Task();
+        $this->task = new ViewUserTask();
+    }
+
+    public function renderSetup()
+    {
+        // Setup the css needed
+        $this->set("css", [
+            "https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css", 
+            "css/app.css", 
+            "css/app-tasks.css",
+        ]);
+        $this->set("scripts", [
+            "https://code.jquery.com/ui/1.13.3/jquery-ui.js",
+            "js/app.js",
+        ]);
+        $this->set("container", "app-container");
+        $this->set("username", $_SESSION["username"]);
+        $this->set("avatar", $_SESSION["avatar"] ?? "public/images/avatar.png");
     }
 
     /**
@@ -30,6 +47,7 @@ class AppController extends Controller
         }
 
         $this->set("lists", $currentLists);
+        $this->set("listsRecent", $this->lists->getRecent());
         $this->set("mode", (isset($_SESSION["mode"])) ? $_SESSION["mode"] : "all");
         $this->set("byPriority", (isset($_SESSION["byPriority"])) ? $_SESSION["byPriority"] : false);
         $this->set("byDueDate", (isset($_SESSION["byDueDate"])) ? $_SESSION["byDueDate"] : false);
@@ -37,27 +55,23 @@ class AppController extends Controller
 
         // Load from the session
         if (isset($_SESSION["listId"])) {
-
+            // Validate the list exists
             $list = $this->lists->getById($_SESSION["listId"]);
-            $this->loadList($list);
+            // Load the last list
+            if ($list) {
+                $this->loadList($list);
+            }
+            // Cached session list is invalid, load the first list.
+            else {
+                $this->loadFirstList();
+            }
         }
         // Load the first list
         else {
-            $list = $this->lists->getFirstList();
-            $_SESSION["listId"] = $list["id"];
-            $this->loadList($list);
+            $this->loadFirstList();
         }
 
-        // Setup the css needed
-        $this->set("css", [
-            "https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css", 
-            "css/app.css", 
-            "css/app-tasks.css"
-        ]);
-        $this->set("container", "app-container");
-        $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
-        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "public/images/avatar.png");
-
+        $this->renderSetup();
         echo $this->template->render("app.html");
     }
 
@@ -66,9 +80,13 @@ class AppController extends Controller
      */
     public function setMode()
     {
-        if (array_key_exists("mode", $this->get("PARAMS"))) {
-            // TODO: Ensure mode is a proper value.
-            $_SESSION["mode"] = $this->get("PARAMS.mode");
+        $mode = $this->get("PARAMS.mode");
+        switch($mode) {
+            case "all":
+            case "active":
+            case "completed":
+                $_SESSION["mode"] = $mode;
+                break;
         }
         $this->f3->reroute("@app");
     }
@@ -78,16 +96,14 @@ class AppController extends Controller
      */
     public function setList()
     {
-        if (array_key_exists("id", $this->get("PARAMS"))) {
-            
-            $list = $this->lists->getById($this->get("PARAMS.id"));
-            // Validate the list id exists
-            if ($list) {
+        // Validate the list id exists
+        $list = $this->lists->getById($this->get("PARAMS.id"));
+        if ($list) {
 
-                $_SESSION["listId"] = $this->get("PARAMS.id");
-                $this->f3->reroute("@app#l-" . $this->get("PARAMS.id"));
-            }
+            $_SESSION["listId"] = $this->get("PARAMS.id");
+            $this->f3->reroute("@app#l-" . $this->get("PARAMS.id"));
         }
+
         $this->f3->reroute("@app");
     }
 
@@ -100,6 +116,9 @@ class AppController extends Controller
         $this->f3->reroute("@app");
     }
 
+    /**
+     * Remember the order by due date state.
+     */
     public function setByDueDate()
     {
         $_SESSION["byDueDate"] = isset($_SESSION["byDueDate"]) ? !$_SESSION["byDueDate"] : true;
@@ -107,8 +126,19 @@ class AppController extends Controller
     }
 
     /**
+     * Set the list to the first list found by list_order
+     * and load it.
+     */
+    private function loadFirstList()
+    {
+        $list = $this->lists->getFirstList();
+        $_SESSION["listId"] = $list["id"];
+        $this->loadList($list);
+    }
+
+    /**
      * Load the selected list and it's tasks
-     * @param Object $list the list object from the database
+     * @param object $list the list object from the database
      */
     private function loadList($list)
     {

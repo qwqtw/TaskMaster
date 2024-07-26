@@ -1,7 +1,7 @@
 <?php
 
 // Handle non-database pages
-class PagesController extends Controller 
+class ContactUsController extends Controller 
 {
     public function contactUs($f3) 
     {
@@ -18,18 +18,5 @@ class PagesController extends Controller
         $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
         $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "public/images/avatar.png");        
         echo $this->template->render("contact-us.html");
-    }
-
-    /**
-     * Log out the user
-     */
-    public function logout()
-    {
-        // Destroy all session variables.
-        session_unset();
-        // Destroy the session file from the server.
-        session_destroy();
-
-        $this->f3->reroute("@home");
     }
 }

@@ -19,6 +19,7 @@ class Controller
         $this->set("pageTitle", $this->get("SITENAME"));
         $this->set("errors", []);
         $this->set("css", []);
+        $this->set("scripts", []);
         
 
         // Setup template
@@ -82,6 +83,19 @@ class Controller
     }
 
     /**
+     * Log out the user
+     */
+    public function logout()
+    {
+        // Destroy all session variables.
+        session_unset();
+        // Destroy the session file from the server.
+        session_destroy();
+
+        $this->f3->reroute("@home");
+    }
+
+    /**
      * Take the default and format it with the new title = "title | default title"
      */
     public function setPageTitle($title)
@@ -108,5 +122,26 @@ class Controller
             return false;
         }
         return true;
+    }
+
+    /**
+     * Validate the min length of a given string.
+     * @param string $str the string to evaluate
+     * @param int $minLength the minimum length
+     * @return bool true if string is within length
+     */
+    function validateMinLength($value, $minLength)
+    {
+        return (strlen($value) >= $minLength);
+    }
+    /**
+     * Validate the max length of a given string.
+     * @param string $str the string to evaluate
+     * @param int $maxLength the maximum length
+     * @return bool true if string is within length
+     */
+    function validateMaxLength($str, $maxLength)
+    {
+        return (strlen($str) <= $maxLength);
     }
 }

@@ -2,22 +2,26 @@
 
 class Task extends Model
 {
-    private $byPriority = false;
-    private $byDueDate = false;
-    
-    
+    private $view;
+    private $lists;
+
+
     public function __construct()
     {
         parent::__construct("task");
+
+        $this->view = new ViewUserTask();
+        $this->lists = new Lists();
     }
 
     /**
-     * Set the options for filtering getTasks
+     * Get task by id and user_id, through the view
+     * @param int $id the task id
+     * @return object the task or false
      */
-    public function setOptions($byPriority, $byDueDate)
+    public function getById($id)
     {
-        $this->byPriority = $byPriority;
-        $this->byDueDate = $byDueDate;
+        return $this->view->getById($id);
     }
 
     /**
@@ -26,121 +30,78 @@ class Task extends Model
      */
     public function create()
     {
-        $this->copyPOST();
-
+        $this->copyFields();
         $this->save();
+
+        // Update list timestamp
+        $this->lists->updateTimeStamp($this->list_id);
+
         return $this->id;
     }
 
     /**
      * Update the task
-     * @return object the updated task object
+     * @throws Exception if id is invalid or not found
+     * @return object the updated task object or false if failed to update
      */
     public function updateTask($id)
     {
+        // Validate or throw exception
+        $this->isValidId($id);
+
         $this->load(["id = ?", $id]);
-        $this->copyPOST();
-        
+        $this->copyFields();
         $this->update();
+
+        // Update list timestamp
+        $this->lists->updateTimeStamp($this->list_id);
+
         return $this;
     }
 
     /**
-     * Get all tasks for the given $listId.
-     * @param int $listId the given list id
-     * @return Object the query results
-     */
-    public function getTasksAll($listId)
-    {
-        return $this->getTasks($listId, "list_id = ?");
-    }
-
-    /**
-     * Get active tasks for the given $listId.
-     * @param int $listId the given list id
-     * @return Object the query results
-     */
-    public function getTasksActive($listId)
-    {
-        return $this->getTasks($listId, "list_id = ? AND is_completed = 0");
-    }
-
-    /**
-     * Get completed tasks for the given $listId.
-     * @param int $listId the given list id
-     * @param bool $byPriority order by priority
-     * @return object the query results
-     */
-    public function getTasksCompleted($listId)
-    {
-        return $this->getTasks($listId, "list_id = ? AND is_completed = 1");
-    }
-
-    /**
-     * Get the number of active tasks for the list.
-     * @param int $listId the given list id
-     * @return int the active task count for the list
-     */
-    public function countTasksActive($listId)
-    {
-        return $this->count(["list_id = ? AND is_completed = 0", $listId]);
-    }
-
-    /**
      * Toggle the task's is_completed state.
+     * @throws Exception if id is invalid or not found
      * @return bool the task is_completed value;
      */
     public function toggleTask($id)
     {
+        // Validate or throw exception
+        $this->isValidId($id);
+
         $this->load(["id = ?", $id]);
         $this->is_completed = !$this->is_completed;
-
         $this->update();
+
+        // Update list timestamp
+        $this->lists->updateTimeStamp($this->list_id);
+
         return $this->is_completed;
     }
 
     /**
-     * Delete the tasks that belong to a list.
-     * @param int $listId the list id containing the tasks
-     * @return bool if the delete was succesful
-     * @
+     * Delete a row from the table using id primary key and user id.
+     * @param int id row to delete
+     * @throws Exception if id is invalid or not found
+     * @return bool success feedback
      */
-    public function deleteTaskByList($listId)
+    public function deleteById($id)
     {
-        $this->load(["list_id = ?", $listId]);
-        $isDeleted = $this->db->exec("DELETE FROM task WHERE list_id = ?", $listId);
+        // Validate or throw exception
+        $this->isValidId($id);
 
-        return ($this->dry() || $isDeleted > 0);
-    }
+        $this->load(["id = ?", $id]);
 
-    /**
-     * Get tasks based on the sql statement and 
-     * ordered by priority if requested.
-     * @param int $listId the given list id
-     * @param string $sql the filter string
-     * @return object the query results
-     */
-    private function getTasks($listId, $sql)
-    {
-        $options = [];
+        // Update list timestamp
+        $this->lists->updateTimeStamp($this->list_id);
 
-        if ($this->byPriority) {
-            array_push($options, "priority DESC");
-        }
-        if ($this->byDueDate) {
-            array_push($options, "due_date DESC");
-        }
-        // Create the order by string
-        $sqlOptions = (!empty($options)) ? "ORDER BY " . implode(", ", $options) : "";
-
-        $this->load([$sql . " " . $sqlOptions, $listId]);
-        return $this->query;
+        return $this->erase();
     }
 
     /**
      * Copy from POST and convert empty optional fields to null.
      */
-    private function copyPOST()
+    private function copyFields()
     {
         $this->copyfrom("POST");
 
@@ -149,6 +110,19 @@ class Task extends Model
         }
         if ($this->priority == "") {
             $this->priority = null;
+        }
+    }
+
+    /**
+     * Validate if the task id is found with the id and user id
+     * @param $id the task id
+     * @throws Exception if the id is not found
+     */
+    private function isValidId($id)
+    {
+        // Will throw an exception if not found or it doesn't belong.
+        if (!$this->getById($id)) {
+            throw new Exception("Invalid id");
         }
     }
 }
