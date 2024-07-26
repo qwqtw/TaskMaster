@@ -62,19 +62,20 @@ class ListController extends Controller
     public function delete()
     {
         $listId = $this->get("PARAMS.id");
-        $isTaskDeleted = $this->task->deleteTaskByList($listId);
-        $isListDeleted = false;
-
-        if ($isTaskDeleted) {
-
+        try {
             $isListDeleted = $this->model->delete($listId);
-
-            // Make sure the selected list is unset if it was deleted
-            if ($isListDeleted && ($_SESSION["listId"] === $listId)) {
-                $_SESSION["listId"] = null;
-            }
         }
-        echo ($isTaskDeleted && $isListDeleted);
+        // Invalid list id
+        catch (Exception $e) {
+            $isListDeleted = false;
+        }
+
+        // Make sure the selected list is unset if it was deleted
+        if ($isListDeleted && ($_SESSION["listId"] === $listId)) {
+            $_SESSION["listId"] = null;
+        }
+
+        echo $isListDeleted;
     }
 
     /**

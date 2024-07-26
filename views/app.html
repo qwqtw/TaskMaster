@@ -11,7 +11,7 @@
                     <div class="row h-100">
 
                         <!-- Lists -->
-                        <aside class="d-none d-md-block offset-xl-2 offset-xxl-3 col-md-5 col-lg-4 col-xl-3 col-xxl-2 px-0">
+                        <aside class="d-none d-md-block offset-lg-1 offset-xl-2 offset-xxl-3 col-md-5 col-lg-4 col-xl-3 col-xxl-2 px-0">
                             <!--  list creation input field  -->
                             <form action="{{ @BASE }}{{ 'createList' | alias }}" method="POST" class="my-4 mt-md-5 px-4">
                                 <fieldset class="d-flex flex-column mx-auto text-center">
@@ -43,7 +43,7 @@
                         </aside>
                         
                         <!--  main content of the to-do manager -- all tasks are listed here  -->
-                        <main class="content col col-md-7 col-lg-8 col-xl-5 col-xxl-4 py-md-4 p-0">
+                        <main class="content col col-md-7 col-lg-6 col-xl-5 col-xxl-4 py-md-4 p-0">
                             
                             <!--  title of the currently selected list  -->
                             <form id="list-title-form" action="{{ @BASE }}{{ 'editListTitle' | alias }}" data-id="{{ @selectedId }}" method="POST" class="px-4">

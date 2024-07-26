@@ -56,7 +56,7 @@ class Model extends DB\SQL\Mapper
     }
 
     /**
-     * Delete a row from the table using id primary key and user id.
+     * Delete a row from the table using id primary key.
      * @param int id row to delete
      * @return int success feedback
      */

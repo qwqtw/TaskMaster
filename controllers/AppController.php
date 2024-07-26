@@ -10,7 +10,7 @@ class AppController extends Controller
     {
         parent::__construct($f3);
         $this->lists = new Lists();
-        $this->task = new Task();
+        $this->task = new ViewUserTask();
     }
 
     /**
@@ -129,7 +129,7 @@ class AppController extends Controller
 
     /**
      * Load the selected list and it's tasks
-     * @param Object $list the list object from the database
+     * @param object $list the list object from the database
      */
     private function loadList($list)
     {

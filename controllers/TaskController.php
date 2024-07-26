@@ -17,10 +17,8 @@ class TaskController extends Controller
      */
     public function getTask()
     {
-        if (array_key_exists("id", $this->get("PARAMS"))) {
-            $task = $this->model->getById($this->get("PARAMS.id"));
-            $this->echoJSON($task->cast());
-        }
+        $task = $this->model->getById($this->get("PARAMS.id"));
+        $this->echoJSON(($task) ? $task->cast() : "{}");
     }
 
     /**
@@ -39,14 +37,14 @@ class TaskController extends Controller
             ]);
 
             if ($this->isFormValid()) {
-                // Check if list already exists
 
                 // Save the task
                 $taskId = $this->model->create();
                 $task = $this->model->getById($taskId);
                 $taskArray = $task->cast();
+
                 // Build the baseTask url for the li.
-                $taskArray["base_task_url"] = $this->get("BASE") . $this->f3->alias("getTask", "id = " . $task["id"]);
+                $taskArray["base_task_url"] = $this->getTaskUrl($taskArray["id"]);
 
                 return $this->echoJSON($taskArray);
             }
@@ -71,10 +69,16 @@ class TaskController extends Controller
             ]);
 
             if ($this->isFormValid()) {
-
-                $task = $this->model->updateTask($taskId);
+                try {
+                    $task = $this->model->updateTask($taskId);
+                }
+                catch (Exception $e) {
+                    echo $e;
+                    return;
+                }
+                // Send back json response of the task object
                 $taskArray = $task->cast();
-                $taskArray["base_task_url"] = $this->get("BASE") . $this->f3->alias("getTask", "id = " . $task["id"]);
+                $taskArray["base_task_url"] = $this->getTaskUrl($taskArray["id"]);
 
                 return $this->echoJSON($taskArray);
             }
@@ -84,24 +88,31 @@ class TaskController extends Controller
 
     /**
      * Toggle the is_completed status.
+     * @return echo if succesful or error
      */
     public function toggleTask()
     {
-        // TODO: Check if the id corresponds to the list that belongs to the user.
-        $isCompleted = $this->model->toggleTask($this->get("PARAMS.id"));
-        // Receive feedback on the front end ajax
-        echo $isCompleted;
+        try {
+            echo $this->model->toggleTask($this->get("PARAMS.id"));
+        }
+        catch (Exception $e) {
+            echo $e;
+        }
     }
 
     /**
      * Delete a task.
+     * @return echo if succesful or error
      */
     public function deleteTask()
     {
-        // Add validation that the id belongs to the list that belongs to the user.
-        $this->model->deleteById($this->get("PARAMS.id"));
-        // Receive feedback on the front end ajax
-        echo 1;
+        try {
+            echo $this->model->deleteById($this->get("PARAMS.id")); 
+        }
+        // Invalid id
+        catch (Exception $e) {
+            echo $e;
+        }
     }
     
     /**
@@ -121,5 +132,14 @@ class TaskController extends Controller
         }
 
         return $this->validateForm($errors);
+    }
+
+    /**
+     * Construct the @getTask url internally to return with json object.
+     * @param int $taskId the task id
+     */
+    private function getTaskUrl($taskId)
+    {
+        return $this->get("BASE") . $this->f3->alias("getTask", "id = " . $taskId);
     }
 }

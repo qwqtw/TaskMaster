@@ -10,16 +10,16 @@ class Lists extends Model
     /**
      * Get list filtered by id and user_id.
      * @param int $id the list id
-     * @return array the list
+     * @return object the list
      */
     public function getById($id)
     {
-        return $this->findone([$this->getUserQuery() . " AND  id = ?", $id]);
+        return $this->findone(["id = ? AND " . $this->getUserQuery(), $id]);
     }
 
     /**
      * Get the first list for the user.
-     * @return array the first list found based on list_order
+     * @return object the first list found based on list_order
      */
     public function getFirstList()
     {
@@ -104,10 +104,20 @@ class Lists extends Model
     /**
      * Delete the list entry. Make sure tasks are deleted first.
      * @param int $id the list to delete
+     * @throws Exception if the list id is invalid
+     * @return bool if the delete was succesful
      */
     public function delete($id)
     {
         $this->load(["id = ? AND " . $this->getUserQuery(), $id]);
+
+        // Invalid list id
+        if ($this->dry()) {
+            throw new Exception("Invalid list id");
+        }
+        // Delete the tasks
+        $this->db->exec("DELETE FROM task WHERE list_id = ?", $id);
+        // Delete the list
         $isDeleted = $this->erase();
 
         // Update the list_order of every list after the list we are deleting
