@@ -92,20 +92,20 @@
 
             <!-- Linking jQuery and Bootstrap for functionality -->
             <include href="includes/scripts.html">
-            <script>
-                // Function to toggle the visibility of the mobile contact information section
-                $(document).ready(function () {
-                    $(".mobile-toggle").click(function () {
-                        var contactInfo = $("#mobileContactInfo");
-                        if (contactInfo.css('opacity') == 0) {
-                            contactInfo.css({ 'opacity': 1, 'visibility': 'visible' });
-                        } else {
-                            contactInfo.css({ 'opacity': 0, 'visibility': 'hidden' });
-                        }
+                <script>
+                    // Function to toggle the visibility of the mobile contact information section
+                    $(document).ready(function () {
+                        $(".mobile-toggle").click(function () {
+                            var contactInfo = $("#mobileContactInfo");
+                            if (contactInfo.css('opacity') == 0) {
+                                contactInfo.css({ 'opacity': 1, 'visibility': 'visible' });
+                            } else {
+                                contactInfo.css({ 'opacity': 0, 'visibility': 'hidden' });
+                            }
+                        });
                     });
-                });
 
-            </script>
-            </body>
+                </script>
+                </body>
 
-            </html>
+                </html>
