@@ -42,8 +42,13 @@ class ListController extends Controller
             "title" => trim($this->get("POST.title")),
         ]);
 
-        // If the form is valid, try to update, it will return the title or 0
-        echo ($this->isFormValid()) ? $this->model->updateTitle($listId) : "";
+        if (!$this->isFormValid()) {
+            $this->echoJSON(["error" => $this->get("errors")[0]]);
+            return;
+        }
+
+        // If the form is valid, try to update, it will return the title or error
+        $this->echoJSON(["title" => $this->model->updateTitle($listId)]);
     }
 
     /**
@@ -85,6 +90,9 @@ class ListController extends Controller
 
         if ($this->get("POST.title") == "") {
             array_push($errors, "List name is required.");
+        }
+        else if (!$this->validateMaxLength($this->get("POST.title"), 30)) {
+            array_push($errors, "Title should be 30 characters max.");
         }
 
         return $this->validateForm($errors);

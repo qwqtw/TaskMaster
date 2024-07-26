@@ -99,6 +99,7 @@ class Lists extends Model
         // Solution based on 
         // https://dba.stackexchange.com/questions/36875/arbitrarily-ordering-records-in-a-table
         $filters = ($currentOrder > $newOrder) ? [1, $newOrder, $currentOrder] : [-1, $currentOrder, $newOrder];
+        // Update all effected list_order in one call.
         $this->db->exec("UPDATE list SET list_order = list_order + ? WHERE list_order >= ? AND list_order <= ? AND " . $this->getUserQuery(), $filters);
 
         $this->load(["id = ?", $id]);

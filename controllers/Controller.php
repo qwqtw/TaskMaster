@@ -123,4 +123,25 @@ class Controller
         }
         return true;
     }
+
+    /**
+     * Validate the min length of a given string.
+     * @param string $str the string to evaluate
+     * @param int $minLength the minimum length
+     * @return bool true if string is within length
+     */
+    function validateMinLength($value, $minLength)
+    {
+        return (strlen($value) >= $minLength);
+    }
+    /**
+     * Validate the max length of a given string.
+     * @param string $str the string to evaluate
+     * @param int $maxLength the maximum length
+     * @return bool true if string is within length
+     */
+    function validateMaxLength($str, $maxLength)
+    {
+        return (strlen($str) <= $maxLength);
+    }
 }

@@ -30,7 +30,7 @@
                                     <ul>
                                         <repeat group="{{ @listsRecent }}" value="{{ @list }}">
                                             <a href="{{ @BASE }}{{ 'getList', ['id' => @list['id']] | alias }}" class="text-decoration-none">
-                                                <li data-id="{{ @list['id'] }}" class="list-recent px-4 p-1">
+                                                <li data-id="{{ @list['id'] }}" class="list- d-flex align-items-center px-4 p-1">
                                                     <span class="list-title ms-4">{{ @list["title" ]}}</span>
                                                 </li>
                                             </a>
@@ -45,7 +45,7 @@
                                 <ul id="sortable" aria-dropeffect="move" class="scrollbar">
                                     <repeat group="{{ @lists }}" value="{{ @list }}">
                                         <li id="l-{{ @list['id'] }}" data-id="{{ @list['id'] }}" data-url="{{ @BASE }}{{ 'getList', ['id' => @list['id']] | alias }}" class="list-item {{ @selectedId == @list['id'] ? 'active' : '' }} d-flex align-items-center">
-                                            <span class="sortable-handle ms-3 mx-2"><i class="fas fa-grip-vertical list-icon list-grip"></i></span>
+                                            <span class="sortable-handle ms-2 px-2"><i class="fas fa-grip-vertical list-icon list-grip"></i></span>
                                             <span class="list-title w-75 p-2 text-decoration-none">{{ @list["title"] }}</span>
                                             <div class="menu text-end me-3">
                                                 <button type="button" title="Delete List" class="list-icon list-delete"><i class="fa-solid fa-trash-can"></i></button>
@@ -64,7 +64,15 @@
                             
                             <!--  title of the currently selected list  -->
                             <form id="list-title-form" action="{{ @BASE }}{{ 'editListTitle' | alias }}" data-id="{{ @selectedId }}" method="POST" class="px-4">
-                                <input type="text" name="title" title="Edit Title" value="{{ @selectedTitle ?? 'TODO' }}" class="w-100 ps-2" autocomplete="off">
+                                <input 
+                                    maxlength="35"
+                                    type="text" 
+                                    name="title" 
+                                    title="Edit Title" 
+                                    value="{{ @selectedTitle ?? 'TODO' }}" 
+                                    class="w-100 ps-2" 
+                                    autocomplete="off" 
+                                >
                             </form>
 
                             <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->

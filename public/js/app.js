@@ -18,7 +18,18 @@ $(function()
 
     // Submit the title on focus out.
     $("#list-title-form input").on("focusout", updateTitle);
-    $("#list-title-form").on("submit", updateTitle);
+    // When the input changes, reset the custom validity.
+    $("#list-title-form input").on("input", function(event) {
+        const inputDOM = $("#list-title-form input").get(0);
+        inputDOM.setCustomValidity("");
+        inputDOM.reportValidity();
+    });
+    // Prevent default submit.
+    $("#list-title-form").on("submit", function(event) {
+        $("#list-title-form input").blur(); // Force submit
+        event.preventDefault();
+    });
+
     // Delete list
     $(".list-delete").on("click", deleteList);
 
@@ -94,17 +105,23 @@ function updateTitle(event)
     const form = $("#list-title-form");
     const listId = $("#list-title-form").data("id");
     const input = $("#list-title-form input[name=title]");
+    const inputDOM = input.get(0);
 
     $.post(`${form.attr("action")}`, {"title": input.val()})
-        .done(function(newTitle) {
-            if (newTitle !== "") {
-                // Set up the new title and in the list
+        .done(function(data) {
+            dataTitle = JSON.parse(data);
+
+            if ("error" in dataTitle) {
+                // Solution here
+                // https://stackoverflow.com/questions/30958536/custom-validity-jquery
+                inputDOM.setCustomValidity(dataTitle.error);
+                inputDOM.reportValidity();
+            }
+            // Set up the new title and in the list
+            else  {
+                const newTitle = dataTitle.title;
                 input.val(newTitle);
                 $(`li[data-id="${listId}"] .list-title`).text(newTitle);
-                // Clear focus
-                if (event.type === "submit") {
-                    input.blur();
-                }
             }
         })
 }
@@ -250,22 +267,27 @@ function deleteList(event)
 
     const target = $(event.currentTarget);
     const li = target.closest("li");
+    const title = $(`li[data-id="${li.data("id")}"] .list-title`).text();
 
-    $.ajax({
-        url: li.data("url"),
-        type: "DELETE",
-        success: function(isCompleted) {
-            if (isCompleted) {
-                /* We need to load a new list*/
-                if (li.hasClass("active")) {
-                    window.location.href = li.data("url");
+    isConfirm = confirm("Are you sure you want to delete " + title + "?\nThis action cannot be undone.")
+
+    if (isConfirm) {
+        $.ajax({
+            url: li.data("url"),
+            type: "DELETE",
+            success: function(isCompleted) {
+                if (isCompleted) {
+                    /* We need to load a new list*/
+                    if (li.hasClass("active")) {
+                        window.location.href = li.data("url");
+                    }
+    
+                    $(`li[data-id="${li.data("id")}"]`).remove();
+                    //li.remove();
                 }
-
-                $(`li[data-id="${li.data("id")}"]`).remove();
-                //li.remove();
             }
-        }
-    })
+        })
+    }
 }
 
 
