@@ -99,7 +99,8 @@ class ViewUserTask extends Model
         $options = [];
 
         if ($this->byPriority) {
-            array_push($options, "priority DESC");
+            array_push($options, "is_completed < 1 DESC");
+            array_push($options, "priority > 0 DESC");
         }
         if ($this->byDueDate) {
             array_push($options, "due_date DESC");
