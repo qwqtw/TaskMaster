@@ -18,7 +18,7 @@ $f3->route("GET @register: /register", "RegisterController->render");
 $f3->route("POST @register", "RegisterController->register");
 
 // contact-us.html
-$f3->route("GET @contactUs: /contact-us", "PagesController->contactUs");
+$f3->route("GET @contactUs: /contact-us", "ContactUsController->contactUs");
  
 // app.html
 $f3->route("GET @app: /app", "AppController->render");

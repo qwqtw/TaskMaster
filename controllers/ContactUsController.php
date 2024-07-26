@@ -1,7 +1,7 @@
 <?php
 
 // Handle non-database pages
-class PagesController extends Controller 
+class ContactUsController extends Controller 
 {
     public function contactUs($f3) 
     {
