@@ -19,6 +19,7 @@ class Controller
         $this->set("pageTitle", $this->get("SITENAME"));
         $this->set("errors", []);
         $this->set("css", []);
+        $this->set("scripts", []);
         
 
         // Setup template

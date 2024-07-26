@@ -13,6 +13,23 @@ class AppController extends Controller
         $this->task = new ViewUserTask();
     }
 
+    public function renderSetup()
+    {
+        // Setup the css needed
+        $this->set("css", [
+            "https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css", 
+            "css/app.css", 
+            "css/app-tasks.css",
+        ]);
+        $this->set("scripts", [
+            "https://code.jquery.com/ui/1.13.3/jquery-ui.js",
+            "js/app.js",
+        ]);
+        $this->set("container", "app-container");
+        $this->set("username", $_SESSION["username"]);
+        $this->set("avatar", $_SESSION["avatar"] ?? "public/images/avatar.png");
+    }
+
     /**
      * Render the app page.
      */
@@ -53,16 +70,7 @@ class AppController extends Controller
             $this->loadFirstList();
         }
 
-        // Setup the css needed
-        $this->set("css", [
-            "https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css", 
-            "css/app.css", 
-            "css/app-tasks.css"
-        ]);
-        $this->set("container", "app-container");
-        $this->set("username", $_SESSION["username"]);
-        $this->set("avatar", $_SESSION["avatar"] ?? "public/images/avatar.png");
-
+        $this->renderSetup();
         echo $this->template->render("app.html");
     }
 
