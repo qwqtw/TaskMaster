@@ -24,10 +24,10 @@
                             </form>
 
                             <!-- List Items -->
-                            <div id="lists-container" class="my-4">
+                            <div id="lists-container" class="my-3">
                                 <ul id="sortable" aria-dropeffect="move" class="scrollbar">
                                     <repeat group="{{ @lists }}" value="{{ @list }}">
-                                        <li id="l-{{ @list['id'] }}" data-id="{{ @list['id'] }}" data-url="{{ @BASE }}{{ 'appList', ['id' => @list['id']] | alias }}" class="list-item {{ @selectedId == @list['id'] ? 'active' : '' }} d-flex align-items-center">
+                                        <li id="l-{{ @list['id'] }}" data-id="{{ @list['id'] }}" data-url="{{ @BASE }}{{ 'getList', ['id' => @list['id']] | alias }}" class="list-item {{ @selectedId == @list['id'] ? 'active' : '' }} d-flex align-items-center">
                                             <span class="sortable-handle ms-3 mx-2"><i class="fas fa-grip-vertical list-icon list-grip"></i></span>
                                             <span class="list-title w-75 p-2 text-decoration-none">{{ @list["title"] }}</span>
                                             <div class="menu text-end me-3">
@@ -47,7 +47,7 @@
                             
                             <!--  title of the currently selected list  -->
                             <form id="list-title-form" action="{{ @BASE }}{{ 'editListTitle' | alias }}" data-id="{{ @selectedId }}" method="POST" class="px-4">
-                                <input type="text" name="title" title="Edit Title" value="{{ @selectedTitle ?? 'TODO' }}" class="w-100" autocomplete="off">
+                                <input type="text" name="title" title="Edit Title" value="{{ @selectedTitle ?? 'TODO' }}" class="w-100 ps-2" autocomplete="off">
                             </form>
 
                             <!--  tabs to control which tasks are displayed (all, active, completed, priority) -->
@@ -112,7 +112,7 @@
 
                             <!-- Task add dialog -->
                             <div id="task-add-dialog" class="w-100">
-                                <form action="{{ @BASE }}{{ 'baseTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
+                                <form action="{{ @BASE }}{{ 'rootTask' | alias }}" method="POST" id="task-add-form" class="col-11 col-md-8 align-items-center mx-auto pt-3 px-3 rounded-2">
                                     <input type="hidden" name="id">
                                     <div class="d-flex mb-2">
                                         <div id="task-add-priority" class="input-group input-group-sm me-md-2">

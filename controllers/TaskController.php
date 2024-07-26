@@ -44,7 +44,7 @@ class TaskController extends Controller
                 $taskArray = $task->cast();
 
                 // Build the baseTask url for the li.
-                $taskArray["base_task_url"] = $this->getTaskUrl($taskArray["id"]);
+                $taskArray["task_url"] = $this->getTaskUrl($taskArray["id"]);
 
                 return $this->echoJSON($taskArray);
             }
@@ -78,7 +78,7 @@ class TaskController extends Controller
                 }
                 // Send back json response of the task object
                 $taskArray = $task->cast();
-                $taskArray["base_task_url"] = $this->getTaskUrl($taskArray["id"]);
+                $taskArray["task_url"] = $this->getTaskUrl($taskArray["id"]);
 
                 return $this->echoJSON($taskArray);
             }

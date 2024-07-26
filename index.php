@@ -23,19 +23,21 @@ $f3->route("GET @contactUs: /contact-us", "ContactUsController->contactUs");
 // app.html
 $f3->route("GET @app: /app", "AppController->render");
 
-$f3->route("GET @appList: /app/list/@id", "AppController->setList");
-$f3->route("DELETE @deleteList: /app/list/@id/delete", "ListController->delete");
-$f3->route("GET @updateListOrder: /app/list/@id/@order", "ListController->updateListOrder");
+// List modes
 $f3->route("GET @appListMode: /app/list/mode/@mode", "AppController->setMode");
-$f3->route("GET @appListPriority: /app/list/priority/toggle", "AppController->setByPriority");
+$f3->route("GET @appListPriority: /app/list/priority", "AppController->setByPriority");
 $f3->route("GET @appListDueDate: /app/list/dueDate", "AppController->setByDueDate");
 
-$f3->route("POST @createList: /app/list/create", "ListController->create");
+// Lists
+$f3->route("POST @rootList: /app/list", "ListController->create");
 $f3->route("POST @editListTitle: /app/list/editTitle", "ListController->editTitle");
+$f3->route("GET @getList: /app/list/@id", "AppController->setList");
+$f3->route("DELETE @getList", "ListController->delete");
+$f3->route("GET @updateListOrder: /app/list/@id/@order", "ListController->updateListOrder");
 
 // Tasks
-$f3->route("GET @baseTask: /app/task", null);
-$f3->route("POST @baseTask", "TaskController->createTask");
+$f3->route("GET @rootTask: /app/task", null);
+$f3->route("POST @rootTask", "TaskController->createTask");
 
 $f3->route("GET @getTask: /app/task/@id", "TaskController->getTask");
 $f3->route("POST @getTask", "TaskController->updateTask");

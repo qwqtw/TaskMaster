@@ -252,7 +252,7 @@ function deleteList(event)
     const li = target.closest("li");
 
     $.ajax({
-        'url': `${li.data("url")}/delete`,
+        url: li.data("url"),
         type: "DELETE",
         success: function(isCompleted) {
             if (isCompleted) {
@@ -281,7 +281,7 @@ function createTask(jsonData)
     task.due_date = task.due_date || ""; 
 
     // Task li
-    const li = $(`<li id="t-${task.id}" data-id="${task.id}" data-url="${task.base_task_url}" class="d-flex w-100 mb-4"></li>`);
+    const li = $(`<li id="t-${task.id}" data-id="${task.id}" data-url="${task.task_url}" class="d-flex w-100 mb-4"></li>`);
     li.html(`
         <div>
             <div class="marker priority priority-${task.priority} ${taskCompleted}"><i class="fa-solid fa-circle"></i></div>

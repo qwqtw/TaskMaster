@@ -3,14 +3,12 @@
 class ListController extends Controller
 {
     private $model;
-    private $task;
 
 
     public function __construct($f3)
     {
         parent::__construct($f3);
         $this->model = new Lists();
-        $this->task = new Task();
     }
 
     /**
@@ -27,7 +25,7 @@ class ListController extends Controller
         if ($this->isFormValid()) {
 
             $listId = $this->model->create();
-            $this->f3->reroute("@appList(@id={$listId})");
+            $this->f3->reroute("@getList(@id={$listId})");
         }
         $this->f3->reroute("@app");
     }
@@ -74,7 +72,6 @@ class ListController extends Controller
         if ($isListDeleted && ($_SESSION["listId"] === $listId)) {
             $_SESSION["listId"] = null;
         }
-
         echo $isListDeleted;
     }
 
