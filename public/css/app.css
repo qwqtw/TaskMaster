@@ -49,6 +49,10 @@ aside {
     background-color: #E1E2E6;
 }
 
+aside .bg-color {
+    background-color: rgba(1, 151, 188, 0.05);
+}
+
 /*
     Create list input
 */
@@ -93,15 +97,23 @@ fieldset input[type=text]:focus {
 /*
     List of lists
 */
+#lists-recent a {
+    color: rgba(57, 74, 109, 0.8);
+    font-weight: 500;
+}
+
 #lists-container {
     /*height: 500px;*/
-    height: 60vh;
+    height: 50vh;
 }
 
 aside ul {
     list-style-type: none;
     padding-left: 0;
-    height: 95%;
+}
+/* Scrollabe sortable list of lists */
+aside ul#sortable {
+    height: 90%;
 }
 
 aside ul.scrollbar {

@@ -3,6 +3,7 @@
 class Task extends Model
 {
     private $view;
+    private $lists;
 
 
     public function __construct()
@@ -10,6 +11,7 @@ class Task extends Model
         parent::__construct("task");
 
         $this->view = new ViewUserTask();
+        $this->lists = new Lists();
     }
 
     /**
@@ -31,6 +33,9 @@ class Task extends Model
         $this->copyFields();
         $this->save();
 
+        // Update list timestamp
+        $this->lists->updateTimeStamp($this->list_id);
+
         return $this->id;
     }
 
@@ -47,6 +52,9 @@ class Task extends Model
         $this->load(["id = ?", $id]);
         $this->copyFields();
         $this->update();
+
+        // Update list timestamp
+        $this->lists->updateTimeStamp($this->list_id);
 
         return $this;
     }
@@ -65,6 +73,9 @@ class Task extends Model
         $this->is_completed = !$this->is_completed;
         $this->update();
 
+        // Update list timestamp
+        $this->lists->updateTimeStamp($this->list_id);
+
         return $this->is_completed;
     }
 
@@ -80,26 +91,11 @@ class Task extends Model
         $this->isValidId($id);
 
         $this->load(["id = ?", $id]);
+
+        // Update list timestamp
+        $this->lists->updateTimeStamp($this->list_id);
+
         return $this->erase();
-    }
-
-    /**
-     * Delete the tasks that belong to a list.
-     * @param int $listId the list id containing the tasks
-     * @throws Exception if the list id is invalid
-     * @return bool if the delete was succesful
-     */
-    public function deleteTaskByList($listId)
-    {
-        // Validate the listId belongs to the user or throw an exception
-        if (!$this->view->getByListId($listId)) {
-            throw new Exception("Invalid list id");
-        }
-
-        $this->load(["list_id = ?", $listId]);
-        $isDeleted = $this->db->exec("DELETE FROM task WHERE list_id = ?", $listId);
-
-        return ($this->dry() || $isDeleted > 0);
     }
 
     /**

@@ -100,7 +100,7 @@ function updateTitle(event)
             if (newTitle !== "") {
                 // Set up the new title and in the list
                 input.val(newTitle);
-                $("#l-" + listId + " span.list-title").text(newTitle);
+                $(`li[data-id="${listId}"] .list-title`).text(newTitle);
                 // Clear focus
                 if (event.type === "submit") {
                     input.blur();
@@ -261,7 +261,8 @@ function deleteList(event)
                     window.location.href = li.data("url");
                 }
 
-                li.remove();
+                $(`li[data-id="${li.data("id")}"]`).remove();
+                //li.remove();
             }
         }
     })

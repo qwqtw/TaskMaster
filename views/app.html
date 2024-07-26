@@ -12,16 +12,33 @@
 
                         <!-- Lists -->
                         <aside class="d-none d-md-block offset-lg-1 offset-xl-2 offset-xxl-3 col-md-5 col-lg-4 col-xl-3 col-xxl-2 px-0">
-                            <!--  list creation input field  -->
-                            <form action="{{ @BASE }}{{ 'createList' | alias }}" method="POST" class="my-4 mt-md-5 px-4">
-                                <fieldset class="d-flex flex-column mx-auto text-center">
-                                    <legend class="ms-2">Create list</legend>
-                                    <div class="input-wrapper d-flex align-items-center justify-content-center p-2">
-                                        <input type="text" id="list-name" name="title" title="Create List" class="px-2" autocomplete="off">
-                                        <input type="submit" class="btn-add fa" value="&#x2b">
-                                    </div>
-                                </fieldset>
-                            </form>
+                            <div class="bg-color">
+                                <!--  list creation input field  -->
+                                <form action="{{ @BASE }}{{ 'rootList' | alias }}" method="POST" class="p-4 pt-md-5">
+                                    <fieldset class="d-flex flex-column mx-auto text-center">
+                                        <legend class="ms-2">Create list</legend>
+                                        <div class="input-wrapper d-flex align-items-center justify-content-center p-2">
+                                            <input type="text" id="list-name" name="title" title="Create List" class="px-2" autocomplete="off">
+                                            <input type="submit" class="btn-add fa" value="&#x2b">
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            
+                                <!-- List Recent -->
+                                <div id="lists-recent">
+                                    <h5 class="ms-4 px-2">Recent</h5>
+                                    <ul>
+                                        <repeat group="{{ @listsRecent }}" value="{{ @list }}">
+                                            <a href="{{ @BASE }}{{ 'getList', ['id' => @list['id']] | alias }}" class="text-decoration-none">
+                                                <li data-id="{{ @list['id'] }}" class="list-recent px-4 p-1">
+                                                    <span class="list-title ms-4">{{ @list["title" ]}}</span>
+                                                </li>
+                                            </a>
+                                        </repeat>
+                                    </ul>
+                                </div>
+                                <hr>
+                            </div>
 
                             <!-- List Items -->
                             <div id="lists-container" class="my-3">

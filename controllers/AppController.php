@@ -47,6 +47,7 @@ class AppController extends Controller
         }
 
         $this->set("lists", $currentLists);
+        $this->set("listsRecent", $this->lists->getRecent());
         $this->set("mode", (isset($_SESSION["mode"])) ? $_SESSION["mode"] : "all");
         $this->set("byPriority", (isset($_SESSION["byPriority"])) ? $_SESSION["byPriority"] : false);
         $this->set("byDueDate", (isset($_SESSION["byDueDate"])) ? $_SESSION["byDueDate"] : false);

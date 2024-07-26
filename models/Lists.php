@@ -36,6 +36,12 @@ class Lists extends Model
         return $this->query;
     }
 
+    public function getRecent()
+    {
+        $this->load([$this->getUserQuery() . " ORDER BY last_updated DESC LIMIT 3"]);
+        return $this->query;
+    }
+
     /**
      * Create the list entry.
      * @return int id of the newly created list
@@ -97,6 +103,14 @@ class Lists extends Model
 
         $this->load(["id = ?", $id]);
         $this->list_order = $newOrder;
+
+        $this->update();
+    }
+
+    public function updateTimeStamp($id)
+    {
+        $this->load(["id = ? AND " . $this->getUserQuery(), $id]);
+        $this->last_updated = time();
 
         $this->update();
     }
