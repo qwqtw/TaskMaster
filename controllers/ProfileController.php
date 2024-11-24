@@ -17,7 +17,7 @@ class ProfileController extends Controller
         $this->set("form", "includes/profile-update.html");
         $this->set("container", "profile-container");
         $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
-        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "public/images/avatar.png");        
+        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "https://s3.amazonaws.com/filmfinder-uploads/default-avatar.png");        
 
         // Handle session messages
         $this->set("successMessage", $this->get("SESSION.successMessage") ?? NULL);
@@ -86,40 +86,50 @@ class ProfileController extends Controller
 
 
     // Handle avatar upload
-    private function uploadAvatar($file)
-    {
-        $targetDir = "public/images/avatars/";
-        $targetFile = $targetDir . basename($file["name"]);
-        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+  use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
 
-        // Validate image file
-        $check = getimagesize($file["tmp_name"]);
-        if ($check === false) {
-            return null;
-        }
+private function uploadAvatar($file)
+{
+    // Initialize the S3 client with credentials from environment variables
+    $s3Client = new S3Client([
+        'version' => 'latest',
+        'region'  => getenv('AWS_REGION'),
+        'credentials' => [
+            'key'    => getenv('AWS_ACCESS_KEY_ID'),
+            'secret' => getenv('AWS_SECRET_ACCESS_KEY'),
+        ],
+    ]);
 
-        // Validate file size (limit to 2MB)
-        if ($file["size"] > 2000000) {
-            return null;
-        }
+    // Bucket name from environment variable
+    $bucket = getenv('AWS_BUCKET_NAME');
 
-        // Allow specific file formats
-        if (!in_array($imageFileType, ["jpg", "png", "jpeg", "gif"])) {
-            return null;
-        }
+    // Generate a unique name for the file (to avoid name conflicts)
+    $fileName = uniqid() . '.' . strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
-        // Handle file existence
-        if (file_exists($targetFile)) {
-            $targetFile = $targetDir . uniqid() . "." . $imageFileType;
-        }
+    // Path to the file in the bucket
+    $key = "avatars/{$fileName}";
 
-        // Move uploaded file
-        if (move_uploaded_file($file["tmp_name"], $targetFile)) {
-            return $targetFile;
-        } else {
-            return null;
-        }
+    try {
+        // Upload the file to S3
+        $result = $s3Client->putObject([
+            'Bucket'     => $bucket,
+            'Key'        => $key,
+            'SourceFile' => $file['tmp_name'],
+            'ACL'        => 'public-read',  // Make the file publicly readable
+            'ContentType' => $file['type'], // Set the correct MIME type
+        ]);
+
+        // Return the S3 URL of the uploaded image
+        return $result['ObjectURL'];
+
+    } catch (AwsException $e) {
+        // Log the error and return null if the upload fails
+        error_log("S3 upload error: " . $e->getMessage());
+        return null;
     }
+}
+
 
     // Delete user account
     public function delete()

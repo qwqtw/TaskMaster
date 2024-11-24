@@ -27,7 +27,7 @@ class AppController extends Controller
         ]);
         $this->set("container", "app-container");
         $this->set("username", $_SESSION["username"]);
-        $this->set("avatar", $_SESSION["avatar"] ?? "public/images/avatar.png");
+$this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "https://s3.amazonaws.com/filmfinder-uploads/default-avatar.png");
     }
 
     /**
