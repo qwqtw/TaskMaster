@@ -13,19 +13,25 @@ class Model extends DB\SQL\Mapper
      * Connect to the database
      * @params string $table name of the database to interact with
      */
-   public function __construct($table)
+ public function __construct($table)
     {
         $f3 = Base::instance();
 
-        // Parse DATABASE_URL
-        $db_url = getenv('postgres://uf25fqbbno2qgh:pa633282d2ad1ab62c5f9c0f9c433e3d01c724a8fd70d6426cc456467f057ad4f@c5flugvup2318r.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d5ib0k4kofiqoc');
+        // Parse DATABASE_URL from environment
+        $db_url = getenv('DATABASE_URL'); // Make sure Heroku sets this
         $parsed_url = parse_url($db_url);
 
-        $host = $parsed_url['host'];
-        $dbname = ltrim($parsed_url['path'], '/');
-        $user = $parsed_url['user'];
-        $password = $parsed_url['pass'];
-        $port = $parsed_url['port'];
+        // Ensure the array keys exist before accessing them
+        $host = isset($parsed_url['host']) ? $parsed_url['host'] : null;
+        $dbname = isset($parsed_url['path']) ? ltrim($parsed_url['path'], '/') : null;
+        $user = isset($parsed_url['user']) ? $parsed_url['user'] : null;
+        $password = isset($parsed_url['pass']) ? $parsed_url['pass'] : null;
+        $port = isset($parsed_url['port']) ? $parsed_url['port'] : null;
+
+        // Check if any critical value is missing
+        if (!$host || !$dbname || !$user || !$password || !$port) {
+            throw new Exception('Database connection details are missing.');
+        }
 
         // Connect to PostgreSQL database
         $this->db = new DB\SQL(
