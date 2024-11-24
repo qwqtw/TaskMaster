@@ -13,15 +13,26 @@ class Model extends DB\SQL\Mapper
      * Connect to the database
      * @params string $table name of the database to interact with
      */
-    public function __construct($table)
+   public function __construct($table)
     {
         $f3 = Base::instance();
-        
-        $host = $f3->get("DBHOST") ?? "localhost";
 
-        $this->db = new DB\SQL("mysql:host={$host};dbname={$f3->get('DBNAME')};port={$f3->get('DBPORT')}", 
-            $f3->get("DBUSER"), 
-            $f3->get("DBPASS"));
+        // Parse DATABASE_URL
+        $db_url = getenv('postgres://uf25fqbbno2qgh:pa633282d2ad1ab62c5f9c0f9c433e3d01c724a8fd70d6426cc456467f057ad4f@c5flugvup2318r.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d5ib0k4kofiqoc');
+        $parsed_url = parse_url($db_url);
+
+        $host = $parsed_url['host'];
+        $dbname = ltrim($parsed_url['path'], '/');
+        $user = $parsed_url['user'];
+        $password = $parsed_url['pass'];
+        $port = $parsed_url['port'];
+
+        // Connect to PostgreSQL database
+        $this->db = new DB\SQL(
+            "pgsql:host={$host};dbname={$dbname};port={$port}",
+            $user,
+            $password
+        );
 
         // Create mapper of the given table
         parent::__construct($this->db, $table);
