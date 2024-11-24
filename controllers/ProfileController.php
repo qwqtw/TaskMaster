@@ -20,7 +20,7 @@ class ProfileController extends Controller
         $this->set("form", "includes/profile-update.html");
         $this->set("container", "profile-container");
         $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
-        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "https://filmfinder-uploads.s3.amazonaws.com/default-avatar.png");        
+        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "filmfinder-uploads.s3.us-east-1.amazonaws.com/default-avatar.png");        
 
         // Handle session messages
         $this->set("successMessage", $this->get("SESSION.successMessage") ?? NULL);
