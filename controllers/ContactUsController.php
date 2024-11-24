@@ -16,7 +16,7 @@ class ContactUsController extends Controller
         }
         $this->set("header", $headerFile);
         $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
-        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "filmfinder-uploads.s3.us-east-1.amazonaws.com/default-avatar.png");        
+        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "https://filmfinder-uploads.s3.us-east-1.amazonaws.com/default-avatar.png");        
         echo $this->template->render("contact-us.html");
     }
 }
