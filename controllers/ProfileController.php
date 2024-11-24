@@ -123,11 +123,11 @@ private function uploadAvatar($file, $currentAvatarUrl = null)
         // Path to the file in the bucket
         $key = "avatars/{$fileName}";  // This creates the 'avatars/' folder in the bucket automatically
 
-        try {
-            // Log the file path and MIME type before upload
-            error_log('File path: ' . $file['tmp_name']);
-            error_log('File MIME type: ' . $file['type']);
+        // Log the file path and MIME type before upload
+        error_log('File path: ' . $file['tmp_name']);
+        error_log('File MIME type: ' . $file['type']);
 
+        try {
             // Upload the file to S3
             $result = $s3Client->putObject([
                 'Bucket'     => $bucket,
@@ -152,6 +152,7 @@ private function uploadAvatar($file, $currentAvatarUrl = null)
         return $currentAvatarUrl ?: "https://filmfinder-uploads.s3.us-east-1.amazonaws.com/default-avatar.png";
     }
 }
+
 
 
     // Delete user account
