@@ -13,36 +13,31 @@ class Model extends DB\SQL\Mapper
      * Connect to the database
      * @params string $table name of the database to interact with
      */
- public function __construct($table)
-    {
-        $f3 = Base::instance();
+public function __construct($table)
+{
+    $f3 = Base::instance();
 
-        // Parse DATABASE_URL from environment
-        $db_url = getenv('DATABASE_URL'); // Make sure Heroku sets this
-        $parsed_url = parse_url($db_url);
+    // Parse DATABASE_URL for MySQL (JawsDB)
+    $db_url = getenv('JAWSDB_URL');
+    $parsed_url = parse_url($db_url);
 
-        // Ensure the array keys exist before accessing them
-        $host = isset($parsed_url['host']) ? $parsed_url['host'] : null;
-        $dbname = isset($parsed_url['path']) ? ltrim($parsed_url['path'], '/') : null;
-        $user = isset($parsed_url['user']) ? $parsed_url['user'] : null;
-        $password = isset($parsed_url['pass']) ? $parsed_url['pass'] : null;
-        $port = isset($parsed_url['port']) ? $parsed_url['port'] : null;
+    $host = $parsed_url['host'];
+    $dbname = ltrim($parsed_url['path'], '/');
+    $user = $parsed_url['user'];
+    $password = $parsed_url['pass'];
+    $port = $parsed_url['port'] ?? 3306;  // Default MySQL port
 
-        // Check if any critical value is missing
-        if (!$host || !$dbname || !$user || !$password || !$port) {
-            throw new Exception('Database connection details are missing.');
-        }
+    // Connect to MySQL database (JawsDB)
+    $this->db = new DB\SQL(
+        "mysql:host={$host};dbname={$dbname};port={$port}",
+        $user,
+        $password
+    );
 
-        // Connect to PostgreSQL database
-        $this->db = new DB\SQL(
-            "pgsql:host={$host};dbname={$dbname};port={$port}",
-            $user,
-            $password
-        );
+    // Create mapper of the given table
+    parent::__construct($this->db, $table);
+}
 
-        // Create mapper of the given table
-        parent::__construct($this->db, $table);
-    }
 
     /**
      * Get user_id = {id} prefilled with logged in user for WHERE clauses.
