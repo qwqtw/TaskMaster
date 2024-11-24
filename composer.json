@@ -1,7 +1,11 @@
 {
     "require": {
-        "bcosca/fatfree-core": "^3.8",
-        "pdo": "*",
-        "pdo_mysql": "*"
+        "bcosca/fatfree-core": "^3.8"
+    },
+    "config": {
+        "platform": {
+            "ext-pdo": "*",
+            "ext-pdo_mysql": "*"
+        }
     }
 }
