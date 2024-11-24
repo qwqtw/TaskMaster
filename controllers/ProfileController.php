@@ -21,7 +21,7 @@ public function render()
     $this->set("container", "profile-container");
     $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
 
-    // Fix: Ensure avatar is a valid URL, even if it’s a default one
+    // Use regular S3 URL for default avatar
     $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "https://filmfinder-uploads.s3.us-east-1.amazonaws.com/default-avatar.png");
 
     // Handle session messages
@@ -32,6 +32,7 @@ public function render()
 
     echo $this->template->render("index.html");
 }
+
 
     // Clear session messages
     private function clear($key)
@@ -93,32 +94,34 @@ public function render()
     }
 
     // Handle avatar upload
-    private function uploadAvatar($file)
-    {
-        // Initialize the S3 client with credentials from environment variables
-        $s3Client = new S3Client([
-            'version' => 'latest',
-            'region'  => getenv('AWS_REGION'),
-            'credentials' => [
-                'key'    => getenv('AWS_ACCESS_KEY_ID'),
-                'secret' => getenv('AWS_SECRET_ACCESS_KEY'),
-            ],
-            'debug' => true,  // Enable debugging for AWS SDK
-        ]);
+private function uploadAvatar($file, $currentAvatarUrl = null)
+{
+    // Initialize the S3 client with credentials from environment variables
+    $s3Client = new S3Client([
+        'version' => 'latest',
+        'region'  => getenv('AWS_REGION'),
+        'credentials' => [
+            'key'    => getenv('AWS_ACCESS_KEY_ID'),
+            'secret' => getenv('AWS_SECRET_ACCESS_KEY'),
+        ],
+        'debug' => true,  // Enable debugging for AWS SDK
+    ]);
 
-        // Log the S3 configuration
-        error_log('AWS Region: ' . getenv('AWS_REGION'));
-        error_log('AWS Access Key: ' . getenv('AWS_ACCESS_KEY_ID'));
-        error_log('AWS Secret Key: ' . getenv('AWS_SECRET_ACCESS_KEY'));
+    // Log the S3 configuration
+    error_log('AWS Region: ' . getenv('AWS_REGION'));
+    error_log('AWS Access Key: ' . getenv('AWS_ACCESS_KEY_ID'));
+    error_log('AWS Secret Key: ' . getenv('AWS_SECRET_ACCESS_KEY'));
 
-        // Bucket name from environment variable
-        $bucket = getenv('AWS_BUCKET_NAME');
+    // Bucket name from environment variable
+    $bucket = getenv('AWS_BUCKET_NAME');
 
+    // If a file is provided (i.e., user uploaded a new avatar)
+    if ($file && $file['error'] == 0) {
         // Generate a unique name for the file (to avoid name conflicts)
         $fileName = uniqid() . '.' . strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
         // Path to the file in the bucket
-        $key = "avatars/{$fileName}";
+        $key = "avatars/{$fileName}";  // This creates the 'avatars/' folder in the bucket automatically
 
         try {
             // Log the file path and MIME type before upload
@@ -139,13 +142,17 @@ public function render()
 
             // Return the S3 URL of the uploaded image
             return $result['ObjectURL'];
-
         } catch (AwsException $e) {
             // Log the error and return null if the upload fails
             error_log("S3 upload error: " . $e->getMessage());
             return null;
         }
+    } else {
+        // If no file is uploaded, use the current avatar or fallback to default if none exists
+        return $currentAvatarUrl ?: "https://filmfinder-uploads.s3.us-east-1.amazonaws.com/default-avatar.png";
     }
+}
+
 
     // Delete user account
     public function delete()
