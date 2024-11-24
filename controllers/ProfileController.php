@@ -1,5 +1,5 @@
 <?php
-  use Aws\S3\S3Client;
+use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 
 class ProfileController extends Controller
@@ -49,7 +49,10 @@ class ProfileController extends Controller
         $avatar = null;
         // Check if an avatar file is uploaded and handle the upload
         if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+            error_log('File uploaded successfully: ' . print_r($_FILES['avatar'], true));  // Log file upload details
             $avatar = $this->uploadAvatar($_FILES['avatar']);
+        } else {
+            error_log('File upload error: ' . $_FILES['avatar']['error']);  // Log upload error
         }
 
         // Validate form input
@@ -87,50 +90,60 @@ class ProfileController extends Controller
         $this->render();
     }
 
-
     // Handle avatar upload
-
-private function uploadAvatar($file)
-{
-    // Initialize the S3 client with credentials from environment variables
-    $s3Client = new S3Client([
-        'version' => 'latest',
-        'region'  => getenv('AWS_REGION'),
-        'credentials' => [
-            'key'    => getenv('AWS_ACCESS_KEY_ID'),
-            'secret' => getenv('AWS_SECRET_ACCESS_KEY'),
-        ],
-    ]);
-
-    // Bucket name from environment variable
-    $bucket = getenv('AWS_BUCKET_NAME');
-
-    // Generate a unique name for the file (to avoid name conflicts)
-    $fileName = uniqid() . '.' . strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-
-    // Path to the file in the bucket
-    $key = "avatars/{$fileName}";
-
-    try {
-        // Upload the file to S3
-        $result = $s3Client->putObject([
-            'Bucket'     => $bucket,
-            'Key'        => $key,
-            'SourceFile' => $file['tmp_name'],
-            'ACL'        => 'public-read',  // Make the file publicly readable
-            'ContentType' => $file['type'], // Set the correct MIME type
+    private function uploadAvatar($file)
+    {
+        // Initialize the S3 client with credentials from environment variables
+        $s3Client = new S3Client([
+            'version' => 'latest',
+            'region'  => getenv('AWS_REGION'),
+            'credentials' => [
+                'key'    => getenv('AWS_ACCESS_KEY_ID'),
+                'secret' => getenv('AWS_SECRET_ACCESS_KEY'),
+            ],
+            'debug' => true,  // Enable debugging for AWS SDK
         ]);
 
-        // Return the S3 URL of the uploaded image
-        return $result['ObjectURL'];
+        // Log the S3 configuration
+        error_log('AWS Region: ' . getenv('AWS_REGION'));
+        error_log('AWS Access Key: ' . getenv('AWS_ACCESS_KEY_ID'));
+        error_log('AWS Secret Key: ' . getenv('AWS_SECRET_ACCESS_KEY'));
 
-    } catch (AwsException $e) {
-        // Log the error and return null if the upload fails
-        error_log("S3 upload error: " . $e->getMessage());
-        return null;
+        // Bucket name from environment variable
+        $bucket = getenv('AWS_BUCKET_NAME');
+
+        // Generate a unique name for the file (to avoid name conflicts)
+        $fileName = uniqid() . '.' . strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        // Path to the file in the bucket
+        $key = "avatars/{$fileName}";
+
+        try {
+            // Log the file path and MIME type before upload
+            error_log('File path: ' . $file['tmp_name']);
+            error_log('File MIME type: ' . $file['type']);
+
+            // Upload the file to S3
+            $result = $s3Client->putObject([
+                'Bucket'     => $bucket,
+                'Key'        => $key,
+                'SourceFile' => $file['tmp_name'],
+                'ACL'        => 'public-read',  // Make the file publicly readable
+                'ContentType' => $file['type'], // Set the correct MIME type
+            ]);
+
+            // Log the full result to see if there is an issue
+            error_log('S3 Upload Result: ' . print_r($result, true));
+
+            // Return the S3 URL of the uploaded image
+            return $result['ObjectURL'];
+
+        } catch (AwsException $e) {
+            // Log the error and return null if the upload fails
+            error_log("S3 upload error: " . $e->getMessage());
+            return null;
+        }
     }
-}
-
 
     // Delete user account
     public function delete()
