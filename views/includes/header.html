@@ -59,7 +59,7 @@
                     <li class="nav-item dropdown d-none d-md-block text-center me-2">
                         <div class="nav-link">
                             <div class="avatar-wrapper">
-                                <img src="../{{ @avatar }}" alt="avatar picture" class="avatar-circle">
+                                <img src="{{ @avatar }}" alt="avatar picture" class="avatar-circle">
                             </div>
                         </div>
                         <ul class="dropdown-menu dropdown-menu-end">
@@ -91,14 +91,14 @@
 </header>
 <!-- Linking jQuery and Bootstrap for functionality -->
 
-    <script>
-        // JavaScript for handling account deletion with confirmation
-        document.querySelectorAll('#delete-account-mobile, #delete-account-desktop').forEach(function (element) {
-            element.addEventListener('click', function (event) {
-                if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-                    event.preventDefault();
-                }
-            });
+<script>
+    // JavaScript for handling account deletion with confirmation
+    document.querySelectorAll('#delete-account-mobile, #delete-account-desktop').forEach(function (element) {
+        element.addEventListener('click', function (event) {
+            if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                event.preventDefault();
+            }
         });
+    });
 
-    </script>
+</script>
