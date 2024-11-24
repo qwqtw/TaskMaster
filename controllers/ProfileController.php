@@ -12,24 +12,26 @@ class ProfileController extends Controller
         $this->model = new User();
     }
 
-    public function render()
-    {
-        // Setup the CSS and pass data to the view
-        $this->set("css", ["css/login.css"]);
-        $this->setPageTitle("Update Profile");
-        $this->set("form", "includes/profile-update.html");
-        $this->set("container", "profile-container");
-        $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
-        $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "filmfinder-uploads.s3.us-east-1.amazonaws.com/default-avatar.png");        
+public function render()
+{
+    // Setup the CSS and pass data to the view
+    $this->set("css", ["css/login.css"]);
+    $this->setPageTitle("Update Profile");
+    $this->set("form", "includes/profile-update.html");
+    $this->set("container", "profile-container");
+    $this->set("username", isset($_SESSION["username"]) ? $_SESSION["username"] : "user");
 
-        // Handle session messages
-        $this->set("successMessage", $this->get("SESSION.successMessage") ?? NULL);
-        $this->clear("SESSION.successMessage");
-        $this->set("deleteSuccessMessage", $this->get("SESSION.deleteSuccessMessage") ?? NULL);
-        $this->clear("SESSION.deleteSuccessMessage");
+    // Fix: Ensure avatar is a valid URL, even if it’s a default one
+    $this->set("avatar", isset($_SESSION["avatar"]) ? $_SESSION["avatar"] : "https://filmfinder-uploads.s3.us-east-1.amazonaws.com/default-avatar.png");
 
-        echo $this->template->render("index.html");
-    }
+    // Handle session messages
+    $this->set("successMessage", $this->get("SESSION.successMessage") ?? NULL);
+    $this->clear("SESSION.successMessage");
+    $this->set("deleteSuccessMessage", $this->get("SESSION.deleteSuccessMessage") ?? NULL);
+    $this->clear("SESSION.deleteSuccessMessage");
+
+    echo $this->template->render("index.html");
+}
 
     // Clear session messages
     private function clear($key)
