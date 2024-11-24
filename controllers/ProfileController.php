@@ -1,4 +1,7 @@
 <?php
+  use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
+
 class ProfileController extends Controller
 {
     private $model;
@@ -86,8 +89,6 @@ class ProfileController extends Controller
 
 
     // Handle avatar upload
-  use Aws\S3\S3Client;
-use Aws\Exception\AwsException;
 
 private function uploadAvatar($file)
 {

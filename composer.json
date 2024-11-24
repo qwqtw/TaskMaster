@@ -1,11 +1,12 @@
 {
     "require": {
-        "bcosca/fatfree-core": "^3.8"
+        "bcosca/fatfree-core": "^3.8",
+        "aws/aws-sdk-php": "^3.330"
     },
     "config": {
         "platform": {
-            "ext-pdo": "*",
-            "ext-pdo_mysql": "*"
+            "ext-pdo": "7.4.3",
+            "ext-pdo_mysql": "7.4.3"
         }
     }
 }
